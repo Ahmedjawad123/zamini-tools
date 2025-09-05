@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Zamini Feedback Test</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; }
+    form { max-width: 400px; margin-top: 20px; }
+    input, select, textarea, button { width: 100%; margin: 6px 0; padding: 8px; }
+    #feedback-status { margin-top: 8px; font-weight: bold; color: green; }
+    footer { margin-top: 50px; }
+    .size { margin-top: 10px; font-weight: bold; }
+  </style>
+</head>
+<body>
+
+  <h2>Download Zamini Converter</h2>
+  <p class="size">File size: <span id="file-size">Loading...</span></p>
+
+  <hr>
+
+  <h2>Feedback Form</h2>
+  <form id="contactForm">
+    <label for="software">Select Software:</label>
+    <select name="software" id="software" required>
+      <option value="">--Choose--</option>
+      <option value="Zamini Converter">Zamini Converter</option>
+      <option value="Mini ERP Purchase Module">Mini ERP Purchase Module</option>
+      <option value="Utilities Pack">Utilities Pack</option>
+    </select>
+
+    <input type="text" name="name" placeholder="Your Name (optional)">
+    <input type="email" name="email" placeholder="Your Email (optional)">
+    <textarea name="message" rows="5" placeholder="Your Feedback" required></textarea>
+
+    <button type="submit">Send Feedback</button>
+    <div id="feedback-status"></div>
+  </form>
+
+  <footer>
+    © <span id="year"></span> Ahmed Mini Softwares — Built with Python & ❤️
+  </footer>
+
+  <!-- Use standard EmailJS SDK (no module import) -->
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+
+      // ===== Footer Year =====
+      const yearEl = document.getElementById("year");
+      if(yearEl) yearEl.textContent = new Date().getFullYear();
+
+      // ===== File Size =====
+      const fileSizeSpan = document.getElementById('file-size');
+      const fileUrl = "https://github.com/Ahmedjawad123/Zamini_Converter/releases/download/v1.0.0/Executable_file_.Zamini_Converter_v1.0.0.rar";
+
+      if(fileSizeSpan){
+        fetch(fileUrl, { method: 'HEAD' })
+          .then(resp => {
+            const size = resp.headers.get('content-length');
+            if(size) fileSizeSpan.textContent = (size / (1024 * 1024)).toFixed(2) + " MB";
+            else fileSizeSpan.textContent = "N/A";
+          })
+          .catch(err => {
+            console.error('File size fetch error:', err);
+            fileSizeSpan.textContent = "N/A";
+          });
+      }
+
+      // ===== Initialize EmailJS =====
+      if(typeof emailjs !== "undefined"){
+        emailjs.init('DhW4bXmuP0VP2d8bF'); // Public Key
+        console.log("EmailJS initialized");
+      } else {
+        console.error("EmailJS not loaded!");
+      }
+
+      // ===== Feedback Form =====
+      const feedbackForm = document.getElementById('contactForm');
+      if(feedbackForm){
+        const statusEl = document.getElementById('feedback-status');
+
+        feedbackForm.addEventListener('submit', (e) => {
+          e.preventDefault();
+          statusEl.textContent = "Sending...";
+          console.log("Sending feedback...");
+
+          const templateParams = {
+            software: feedbackForm.software.value || "Not selected",
+            name: feedbackForm.name.value || "Anonymous",
+            email: feedbackForm.email.value || "Not provided",
+            message: feedbackForm.message.value
+          };
+
+          emailjs.send('zamini_musafir', 'template_yz15x2d', templateParams)
+            .then(response => {
+              console.log("EmailJS success:", response);
+              statusEl.textContent = "Feedback sent successfully! Thank you.";
+              feedbackForm.reset();
+            })
+            .catch(err => {
+              console.error("EmailJS error:", err);
+              statusEl.textContent = "Oops! Something went wrong. Check console.";
+            });
+        });
+      }
+
+    });
+  </script>
+
+</body>
+</html>

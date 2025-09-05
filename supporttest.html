@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Support Me Instantly</title>
+<style>
+  body { font-family: Arial, sans-serif; background:#f5f5f5; margin:0; padding:0; display:flex; justify-content:center; align-items:center; min-height:100vh; }
+  .support-box { background:#fff; padding:30px; border-radius:12px; box-shadow:0 0 20px rgba(0,0,0,0.1); width:360px; text-align:center; }
+  h1 { margin-bottom:20px; }
+  .btn { display:block; width:100%; margin:10px 0; padding:12px; font-size:16px; border:none; border-radius:8px; cursor:pointer; font-weight:bold; color:#fff; }
+  .paypal { background:#0070BA; }
+  .coffee { background:#FF813F; }
+  .bank { background:#28a745; }
+  .btn:hover { opacity:0.85; }
+  #ibanBox { display:none; margin-top:10px; padding:10px; background:#f9f9f9; border-radius:8px; word-wrap:break-word; }
+  #paypal-container, #coffee-container { margin-top:20px; }
+</style>
+</head>
+<body>
+
+<div class="support-box">
+  <h1>Support Ahmed Mini Softwares</h1>
+  
+  <!-- PayPal Smart Button Container -->
+  <div id="paypal-container"></div>
+  
+  <!-- Buy Me a Coffee Embedded Widget -->
+  <div id="coffee-container">
+    <script data-name="BMC-Widget" src="https://cdnjs.buymeacoffee.com/1.0.0/widget.prod.min.js" data-id="YOUR_USERNAME" data-description="Support me" data-message="" data-color="#FF813F" data-position="Right" data-x_margin="18" data-y_margin="18"></script>
+  </div>
+
+  <!-- Bank Transfer / IBAN -->
+  <button class="btn bank" id="bankBtn">🏦 Bank Transfer / QR</button>
+  <div id="ibanBox">
+    IBAN: <strong>AE720330000019101190650</strong><br>
+    Bank: ABC Bank<br>
+    QR Code (Optional for mobile banking)
+  </div>
+</div>
+
+<!-- PayPal SDK -->
+<script src="https://www.paypal.com/sdk/js?client-id=YOUR_PAYPAL_CLIENT_ID&currency=AED"></script>
+
+<script>
+// Bank toggle
+const bankBtn = document.getElementById('bankBtn');
+const ibanBox = document.getElementById('ibanBox');
+bankBtn.addEventListener('click', () => {
+  ibanBox.style.display = ibanBox.style.display === 'block' ? 'none' : 'block';
+});
+
+// PayPal Smart Buttons
+paypal.Buttons({
+    style: { layout: 'vertical', color:  'gold', shape:  'rect', label:  'paypal' },
+    createOrder: function(data, actions) {
+        return actions.order.create({
+            purchase_units: [{
+                amount: { value: '5.00' } // preset amount, you can add multiple buttons with different amounts
+            }]
+        });
+    },
+    onApprove: function(data, actions) {
+        return actions.order.capture().then(function(details) {
+            alert('Payment completed! Thank you, ' + details.payer.name.given_name);
+        });
+    },
+    onError: function(err) {
+        console.error(err);
+        alert('Something went wrong with the payment.');
+    }
+}).render('#paypal-container');
+</script>
+
+</body>
+</html>

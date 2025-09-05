@@ -1,0 +1,40 @@
+zamini-tools/                ← main project folder
+├── css/
+│   └── main.css
+├── js/
+│   └── main.js
+├── products/                ← all products live here
+│   ├── pdf-converter/       ← Product 1
+│   │   ├── media/           ← images & optional demo video
+│   │   │   ├── screenshot1.png
+│   │   │   ├── screenshot2.png
+│   │   │   └── demo.mp4
+│   │   ├── source/          ← code/scripts
+│   │   │   ├── main.py
+│   │   │   └── utils.py
+│   │   ├── product/         ← compiled software & instructions
+│   │   │   ├── pdf-converter.exe
+│   │   │   └── readme.txt
+│   │   └── index.html       ← product landing page
+│   │
+│   ├── excel-formatter/     ← Product 2
+│   │   ├── media/
+│   │   │   └── screenshot1.png
+│   │   ├── source/
+│   │   │   └── main.py
+│   │   ├── product/
+│   │   │   ├── excel-formatter.exe
+│   │   │   └── readme.txt
+│   │   └── index.html
+│   │
+│   └── quick-notes/         ← Product 3
+│       ├── media/
+│       │   └── screenshot1.png
+│       ├── source/
+│       │   └── main.py
+│       ├── product/
+│       │   ├── quick-notes.exe
+│       │   └── readme.txt
+│       └── index.html
+│
+└── index.html               ← Homepage linking all products
