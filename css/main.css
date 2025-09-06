@@ -240,3 +240,69 @@ footer { margin-top: 24px; text-align: center; color: #F5DEB3; font-size: 13px; 
   z-index: 9999;
   box-shadow: 0 4px 12px rgba(0,0,0,0.2);
 }
+/* Tooltip Button */
+.tooltip-btn {
+  background-color: #D4AF37;
+  color: #493C2B;
+  padding: 8px 14px;
+  border-radius: 6px;
+  font-weight: 700;
+  cursor: pointer;
+  border: none;
+  position: relative;
+}
+
+.tooltip-text {
+  visibility: hidden;
+  width: 220px;
+  background-color: #FFF8DC;
+  color: #493C2B;
+  text-align: center;
+  border-radius: 6px;
+  padding: 6px;
+  position: absolute;
+  z-index: 10000;
+  top: -35px;
+  right: 0;
+  font-size: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+
+.tooltip-btn:hover .tooltip-text {
+  visibility: visible;
+}
+
+/* PayPal popup */
+.paypal-popup {
+  display: none;
+  position: absolute;
+  top: 45px;
+  right: 0;
+  width: 300px;
+  max-height: 400px;
+  overflow-y: auto;
+  background-color: #FFF8DC;
+  border: 1px solid #D4AF37;
+  border-radius: 8px;
+  padding: 10px;
+  z-index: 9999;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+/* Responsive for mobile */
+@media (max-width: 720px) {
+  .tooltip-btn {
+    width: 100%;
+    text-align: center;
+  }
+
+  .paypal-popup {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    top: auto;
+    width: 90%;
+    max-width: 320px;
+  }
+}
+
