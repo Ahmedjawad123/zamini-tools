@@ -45,7 +45,7 @@
   <!-- HERO -->
   <section id="home" class="hero">
     <div class="hero-left">
-      <span class="badge">v1.0.0</span>
+      <span class="badge">Website v1.0.0</span>
       <h2>Small, reliable desktop apps for stores and shops</h2>
       <p>Build. Ship. Improve. I'm Ahmed — I build simple ERP modules and tools to help store owners manage purchases, stock, and small tasks.</p>
     </div>
@@ -61,7 +61,7 @@
     <div class="projects">
     <!-- Project 1: Zamini Converter -->
       <article class="card">
-        <h3>PDF Converter</h3>
+        <h3>PDF Converter v1.0.0</h3>
         <p class="muted">Convert Word, Excel, Images → PDF quickly and offline.</p>
         <p class="size">Size: 46 MB</p>
 
@@ -85,7 +85,7 @@
         </a>
 
         <!-- Learn more / Demo page -->
-        <a class="btn ghost" href="products/Zamini_Converter_v1.0.0/product_page.html">
+        <a class="btn ghost" href="products/Zamini_Converter_v1.0.0/index.html">
           Learn More
         </a>
       </article>
@@ -128,32 +128,44 @@
 
   <!-- Contact Section -->
   <section id="contact" class="contact">
-    <div>
-      <h3>Contact & Support</h3>
-      <p class="muted">Have a question, need a custom feature, or want the source code? Send me a message.</p>
-      <div style="margin-top:12px">
-        <strong>Email</strong>
-        <div class="muted">zamini.musafir123@gmail.com</div>
+    <h3>Contact & Support</h3>
+    <p class="muted">Have a question, need a custom feature, or want the source code? Send me a message.</p>
+
+    <div class="contact-columns">
+      <!-- Left: About Me -->
+      <div class="panel about-column">
+        <h4>About Me</h4>
+        <p>Hello, I’m Ahmed — developer of these mini softwares. 
+        I create tools to make everyday tasks easier and more efficient.</p>
+        <p>Based in Dubai, I focus on practical solutions for students, teachers, and businesses.</p>
+        <img src="images/ahmed.png" alt="Ahmed Jawad" class="about-photo">
+
       </div>
+
+      <!-- Right: Contact & Form -->
+      <aside class="panel contact-column">
+        <h4>Contact</h4>
+        <p><strong>Email:</strong> zamini.musafir123@gmail.com</p>
+
+        <form id="contactForm">
+          <label for="software">Select Software:</label>
+          <select name="software" id="software" required>
+            <option value="">--Choose--</option>
+            <option value="Zamini Converter">Zamini Converter</option>
+            <option value="Mini ERP Purchase Module">Mini ERP Purchase Module</option>
+            <option value="Utilities Pack">Utilities Pack</option>
+          </select>
+
+          <input type="text" name="name" placeholder="Your Name (optional)">
+          <input type="email" name="email" placeholder="Your Email (optional)">
+          <textarea name="message" rows="5" placeholder="Your Feedback" required></textarea>
+
+          <button class="btn" type="submit">Send Feedback</button>
+        </form>
+      </aside>
     </div>
+  </section>
 
-  <aside class="panel">
-    <form id="contactForm">
-      <label for="software">Select Software:</label>
-      <select name="software" id="software" required>
-        <option value="">--Choose--</option>
-        <option value="Zamini Converter">Zamini Converter</option>
-        <option value="Mini ERP Purchase Module">Mini ERP Purchase Module</option>
-        <option value="Utilities Pack">Utilities Pack</option>
-      </select>
-
-      <input type="text" name="name" placeholder="Your Name (optional)">
-      <input type="email" name="email" placeholder="Your Email (optional)">
-      <textarea name="message" rows="5" placeholder="Your Feedback" required></textarea>
-
-      <button class="btn" type="submit">Send Feedback</button>
-    </form>
-  </aside>
 
   </section>
 
