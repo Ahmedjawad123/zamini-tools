@@ -4,54 +4,73 @@ document.addEventListener('DOMContentLoaded', () => {
   const yearEl = document.getElementById("year");
   if (yearEl) yearEl.textContent = new Date().getFullYear();
 
-const supportBtn = document.getElementById('supportBtn');
-const paypalPopup = document.getElementById('paypalPopup');
-let isPayPalRendered = false;
+  // ===== 2. Support Button & PayPal Popup =====
+  const supportBtn = document.getElementById('supportBtn');
+  const paypalPopup = document.getElementById('paypalPopup');
+  let isPayPalRendered = false;
 
-supportBtn.addEventListener('click', (e) => {
-  e.stopPropagation(); // prevent closing immediately
-  paypalPopup.style.display = paypalPopup.style.display === 'block' ? 'none' : 'block';
+  supportBtn.addEventListener('click', (e) => {
+    e.stopPropagation(); // prevent closing immediately
 
-  if (!isPayPalRendered && typeof paypal !== "undefined") {
-    paypal.Buttons({
-      style: {
-        layout: 'vertical',
-        color: 'gold',
-        shape: 'rect',
-        label: 'paypal',
-        height: 40
-      },
-      createOrder: function(data, actions) {
-        return actions.order.create({
-          purchase_units: [{
-            amount: { value: '5' },
-            description: 'Support Payment'
-          }]
-        });
-      },
-      onApprove: function(data, actions) {
-        return actions.order.capture().then(function(details) {
-          alert('Thank you for your support, ' + details.payer.name.given_name);
-          paypalPopup.style.display = 'none';
-        });
-      },
-      onError: function(err) {
-        console.error(err);
-        alert('Payment could not be processed. Try again.');
-      }
-    }).render('#paypal-button-small');
+    // Toggle popup display
+    paypalPopup.style.display = paypalPopup.style.display === 'block' ? 'none' : 'block';
 
-    isPayPalRendered = true;
-  }
-});
+    // Render PayPal button once
+    if (!isPayPalRendered && typeof paypal !== "undefined") {
+      paypal.Buttons({
+        style: {
+          layout: 'vertical',
+          color: 'gold',
+          shape: 'rect',
+          label: 'paypal',
+          height: 40
+        },
+        createOrder: function(data, actions) {
+          return actions.order.create({
+            purchase_units: [{
+              amount: { value: '5' },
+              description: 'Support Payment'
+            }]
+          });
+        },
+        onApprove: function(data, actions) {
+          return actions.order.capture().then(function(details) {
+            alert('Thank you for your support, ' + details.payer.name.given_name);
+            paypalPopup.style.display = 'none';
+          });
+        },
+        onError: function(err) {
+          console.error(err);
+          alert('Payment could not be processed. Try again.');
+        }
+      }).render('#paypal-button-small');
 
-// Close popup if clicked outside
-window.addEventListener('click', (e) => {
-  if (!e.target.closest('#supportBtn') && !e.target.closest('#paypalPopup')) {
-    paypalPopup.style.display = 'none';
-  }
-});
+      isPayPalRendered = true;
+    }
 
+    // Mobile positioning
+    if (window.innerWidth <= 720) {
+      paypalPopup.style.position = 'fixed';
+      paypalPopup.style.bottom = '20px';
+      paypalPopup.style.right = '20px';
+      paypalPopup.style.top = 'auto';
+      paypalPopup.style.width = '90%';
+      paypalPopup.style.maxWidth = '320px';
+    } else {
+      // Reset for desktop
+      paypalPopup.style.position = 'absolute';
+      paypalPopup.style.top = '45px';
+      paypalPopup.style.right = '0';
+      paypalPopup.style.width = '300px';
+    }
+  });
+
+  // Close popup if clicked outside
+  window.addEventListener('click', (e) => {
+    if (!e.target.closest('#supportBtn') && !e.target.closest('#paypalPopup')) {
+      paypalPopup.style.display = 'none';
+    }
+  });
 
   // ===== 3. File Size Fetch =====
   const fileSizeSpan = document.getElementById('file-size');
