@@ -33,13 +33,16 @@
 
     <!-- Support Me Button -->
     <div style="position:relative;">
-      <button class="support-btn" onclick="toggleSupport()">Support Me</button>
-      <div class="support-dropdown" id="supportDropdown">
-        <a href="#">PayPal</a>
-        <a href="#">Patreon</a>
-        <a href="#">Other</a>
+      <button id="supportBtn" class="tooltip-btn">
+        Support Me
+        <span class="tooltip-text">Please select your country correctly before payment</span>
+      </button>
+
+      <div id="paypalPopup" class="paypal-popup">
+        <div id="paypal-button-small"></div>
       </div>
-    </div>
+    
+
   </header>
 
   <!-- HERO -->
@@ -134,16 +137,13 @@
     <div class="contact-columns">
       <!-- Left: About Me -->
       <div class="panel about-column">
-        <div class="about-wrapper">
-          <h4>About Me</h4>
-          <p>Hello, I’m Ahmed — developer of these mini softwares. 
-          I create tools to make everyday tasks easier and more efficient.</p>
-          <p>Based in Dubai, I focus on practical solutions for students, teachers, and businesses.</p>
-          <img src="images/ahmed.png" alt="Ahmed Jawad" class="about-photo">
+        <h4>About Me</h4>
+        <p>Hello, I’m Ahmed — developer of these mini softwares. 
+        I create tools to make everyday tasks easier and more efficient.</p>
+        <p>Based in Dubai, I focus on practical solutions for students, teachers, and businesses.</p>
+        <img src="images/ahmed.png" alt="Ahmed Jawad" class="about-photo">
 
-        </div>
       </div>
-
 
       <!-- Right: Contact & Form -->
       <aside class="panel contact-column">
@@ -180,6 +180,10 @@
   <!-- Main JS -->
 <!-- EmailJS SDK v4 -->
 <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<!-- PayPal SDK -->
+<script src="https://www.paypal.com/sdk/js?client-id=AbDsUYA-obC2sHFZvv9R4Ce9gYfAqnpuoCNiLDQYeF0cUJdYFSEeuiwRk82Lr3S2NPrMUg97BhCbbVNv&currency=USD"></script>
+
 <script src="js/main.js" defer></script>
+
 </body>
 </html>
