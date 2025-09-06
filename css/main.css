@@ -92,25 +92,6 @@ nav a:hover { background-color: #D4AF37; color: #493C2B; }
   }
 }
 
-/* Contact column fix */
-.contact-column {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;  /* keep content aligned from top */
-}
-
-.contact-column h4,
-.contact-column p {
-  margin-bottom: 10px;
-}
-
-/* Optional: balance both panels to equal height */
-.contact-columns > .panel {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-
 
 
 /* Contact Form */
@@ -180,20 +161,82 @@ footer { margin-top: 24px; text-align: center; color: #F5DEB3; font-size: 13px; 
 .flip-card-back {
   transform: rotateY(180deg);
 }
-
-
 .about-wrapper {
-  text-align: left; /* text aligned to left */
-  display: flex;
-  flex-direction: column;
-  align-items: center; /* keeps the photo centered */
+  text-align: center; /* centers everything */
 }
 
 .about-photo {
-  margin-bottom: 12px;
-  border-radius: 50%;
   width: 150px;
   height: 150px;
-  border: 2px solid #D4AF37;
+  border-radius: 50%;  /* makes it circular */
   object-fit: cover;
+  margin-bottom: 12px;
+  border: 2px solid #D4AF37; /* gold border to match your theme */
+  display: block;
+  margin-left: auto;
+  margin-right: auto; /* makes sure image stays centered */
+}
+/* ===== Support Me Button Tooltip & PayPal ===== */
+.tooltip-btn {
+  background-color: #D4AF37;
+  color: #493C2B;
+  padding: 8px 14px;
+  border-radius: 6px;
+  font-weight: 700;
+  cursor: pointer;
+  border: none;
+  position: relative;
+  display: inline-block;
+}
+
+.tooltip-btn .tooltip-text {
+  visibility: hidden;
+  width: 220px;
+  background-color: #493C2B;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  position: absolute;
+  bottom: 125%;
+  left: 50%;
+  transform: translateX(-50%);
+  opacity: 0;
+  transition: opacity 0.3s;
+  z-index: 100;
+}
+
+.tooltip-btn .tooltip-text::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border-width: 6px;
+  border-style: solid;
+  border-color: #493C2B transparent transparent transparent;
+}
+
+.tooltip-btn:hover .tooltip-text {
+  visibility: visible;
+  opacity: 1;
+}
+
+/* Mini PayPal popup next to button */
+.paypal-popup {
+  display: none; 
+  position: absolute; /* relative to button container */
+  top: 45px;          /* distance below button */
+  right: 0;           /* aligns right edge with button */
+  width: 300px;       /* small width */
+  max-height: 400px;  /* maximum height, scroll if needed */
+  overflow-y: auto;   /* vertical scroll inside popup */
+  background-color: #FFF8DC;
+  border: 1px solid #D4AF37;
+  border-radius: 8px;
+  padding: 10px;
+  z-index: 9999;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
 }
