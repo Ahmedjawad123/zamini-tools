@@ -305,4 +305,47 @@ footer { margin-top: 24px; text-align: center; color: #F5DEB3; font-size: 13px; 
     max-width: 320px;
   }
 }
+/* Header adjustments for mobile */
+@media (max-width: 720px) {
+  header {
+    flex-direction: column;
+    align-items: flex-start; /* keep logo and text aligned left */
+    gap: 8px;
+  }
+
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+  }
+
+  .logo img {
+    width: 50px;   /* smaller logo on mobile */
+    height: 50px;
+    border-radius: 8px;
+  }
+
+  nav {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    gap: 6px;
+  }
+
+  /* Make Support button full width under header on mobile */
+  #supportBtn {
+    width: 100%;
+    text-align: center;
+  }
+
+  /* Adjust PayPal popup for mobile if not already in JS */
+  #paypalPopup {
+    width: 90% !important;
+    max-width: 320px !important;
+    bottom: 20px !important;
+    right: 20px !important;
+    left: auto !important;
+  }
+}
 
