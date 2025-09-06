@@ -178,9 +178,9 @@ footer { margin-top: 24px; text-align: center; color: #F5DEB3; font-size: 13px; 
 
 .flip-card {
   background-color: transparent;
-  width: 100%;
-  max-width: 336px;       /* keeps original max size */
-  aspect-ratio: 336 / 192; /* maintains correct height automatically */
+  width: 100%;           /* fills container width */
+  max-width: 100%;       /* prevents overflow */
+  aspect-ratio: 336 / 192;
   perspective: 1000px;
   margin: 10px auto;
 }
