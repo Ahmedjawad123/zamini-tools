@@ -180,18 +180,20 @@ footer { margin-top: 24px; text-align: center; color: #F5DEB3; font-size: 13px; 
 .flip-card-back {
   transform: rotateY(180deg);
 }
+
+
 .about-wrapper {
-  text-align: right; /* centers everything */
+  text-align: left; /* text aligned to left */
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* keeps the photo centered */
 }
 
 .about-photo {
+  margin-bottom: 12px;
+  border-radius: 50%;
   width: 150px;
   height: 150px;
-  border-radius: 50%;  /* makes it circular */
+  border: 2px solid #D4AF37;
   object-fit: cover;
-  margin-bottom: 12px;
-  border: 2px solid #D4AF37; /* gold border to match your theme */
-  display: block;
-  margin-left: auto;
-  margin-right: auto; /* makes sure image stays centered */
 }
