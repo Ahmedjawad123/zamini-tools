@@ -186,7 +186,7 @@ footer { margin-top: 24px; text-align: center; color: #F5DEB3; font-size: 13px; 
   text-align: left; /* text aligned to left */
   display: flex;
   flex-direction: column;
-  align-items: center; /* keeps the photo centered */
+  align-items: left; /* keeps the photo centered */
 }
 
 .about-photo {
