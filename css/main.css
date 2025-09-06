@@ -179,9 +179,8 @@ footer { margin-top: 24px; text-align: center; color: #F5DEB3; font-size: 13px; 
 .flip-card {
   background-color: transparent;
   width: 100%;
-  max-width: 336px; /* keeps original max size */
-  height: auto;
-  aspect-ratio: 336 / 192; /* maintains correct height based on width */
+  max-width: 336px;       /* keeps original max size */
+  aspect-ratio: 336 / 192; /* maintains correct height automatically */
   perspective: 1000px;
   margin: 10px auto;
 }
@@ -194,7 +193,12 @@ footer { margin-top: 24px; text-align: center; color: #F5DEB3; font-size: 13px; 
   transform-style: preserve-3d;
 }
 
-.flip-card-front, .flip-card-back {
+.flip-card:hover .flip-card-inner {
+  transform: rotateY(180deg);
+}
+
+.flip-card-front,
+.flip-card-back {
   position: absolute;
   width: 100%;
   height: 100%;
@@ -203,21 +207,16 @@ footer { margin-top: 24px; text-align: center; color: #F5DEB3; font-size: 13px; 
   border-radius: 5px;
 }
 
-.flip-card:hover .flip-card-inner { transform: rotateY(180deg); }
-.flip-card-front, .flip-card-back {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  backface-visibility: hidden;
-  border: 1px solid #d2b48c;
-  border-radius: 5px;
-}
-.flip-card-front img, .flip-card-back img {
+.flip-card-front img,
+.flip-card-back img {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
-.flip-card-back { transform: rotateY(180deg); }
+
+.flip-card-back {
+  transform: rotateY(180deg);
+}
 
 /* ===== Support Me Tooltip & PayPal ===== */
 .tooltip-btn {
