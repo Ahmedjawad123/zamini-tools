@@ -181,7 +181,7 @@ footer { margin-top: 24px; text-align: center; color: #F5DEB3; font-size: 13px; 
   transform: rotateY(180deg);
 }
 .about-wrapper {
-  text-align: center; /* centers everything */
+  text-align: right; /* centers everything */
 }
 
 .about-photo {
