@@ -92,6 +92,25 @@ nav a:hover { background-color: #D4AF37; color: #493C2B; }
   }
 }
 
+/* Contact column fix */
+.contact-column {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;  /* keep content aligned from top */
+}
+
+.contact-column h4,
+.contact-column p {
+  margin-bottom: 10px;
+}
+
+/* Optional: balance both panels to equal height */
+.contact-columns > .panel {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
 
 
 /* Contact Form */
