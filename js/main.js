@@ -133,4 +133,33 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  // ===== 6. Google Analytics Click Tracking for Download and Support Me =====
+
+  // Track Support Me
+  if (supportBtn) {
+    supportBtn.addEventListener('click', () => {
+      if (typeof gtag === "function") {
+        gtag('event', 'support_click', {
+          'event_category': 'Button',
+          'event_label': 'Support Me'
+        });
+      }
+    });
+  }
+
+  // Track Download buttons by text content
+  const downloadBtns = Array.from(document.querySelectorAll('a.btn'))
+    .filter(btn => btn.textContent.trim() === 'Download');
+
+  downloadBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      if (typeof gtag === "function") {
+        gtag('event', 'download_click', {
+          'event_category': 'Button',
+          'event_label': 'Download'
+        });
+      }
+    });
+  });
+
 });
