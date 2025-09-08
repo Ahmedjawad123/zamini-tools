@@ -131,15 +131,7 @@ nav a:hover {
   color: #493C2B;
 }
 
-.donation-options input#donate-custom {
-  padding: 6px 10px;
-  border-radius: 6px;
-  border: 1px solid #D4AF37;
-  width: 80px;
-  background-color: #FFF8DC;
-  color: #493C2B;
-  font-weight: 600;
-}
+.donation-options input#don
 
 /* ===== Hero Section ===== */
 .hero-left h2 { color: #FFF8DC; margin-bottom: 10px; }
