@@ -8,12 +8,12 @@ document.addEventListener('DOMContentLoaded', () => {
 const supportBtn = document.getElementById('supportBtn');
 const paypalPopup = document.getElementById('paypalPopup');
 let isPayPalRendered = false;
-let selectedAmount = "5"; // default amount
+let selectedAmount = "5"; // default
 
-// ===== Donation Buttons / Input =====
 const quickBtn = document.getElementById('donate-5');
 const customInput = document.getElementById('donate-custom');
 
+// Quick $5 button
 if (quickBtn) {
   quickBtn.addEventListener('click', () => {
     selectedAmount = "5";
@@ -22,6 +22,7 @@ if (quickBtn) {
   });
 }
 
+// Custom amount input
 if (customInput) {
   customInput.addEventListener('input', () => {
     const val = customInput.value.trim();
@@ -36,10 +37,10 @@ if (supportBtn) {
   supportBtn.addEventListener('click', (e) => {
     e.stopPropagation();
 
-    // Toggle popup display
+    // Toggle popup
     paypalPopup.style.display = paypalPopup.style.display === 'block' ? 'none' : 'block';
 
-    // Track GA4 event
+    // GA4 tracking
     if (typeof gtag === "function") {
       gtag('event', 'support_click', {
         'event_category': 'Button',
@@ -47,7 +48,7 @@ if (supportBtn) {
       });
     }
 
-    // Render PayPal button once
+    // Render PayPal once
     if (!isPayPalRendered && typeof paypal !== "undefined") {
       paypal.Buttons({
         style: { layout: 'vertical', color: 'gold', shape: 'rect', label: 'paypal', height: 40 },
