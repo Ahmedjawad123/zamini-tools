@@ -4,69 +4,82 @@ document.addEventListener('DOMContentLoaded', () => {
   const yearEl = document.getElementById("year");
   if (yearEl) yearEl.textContent = new Date().getFullYear();
 
-  // ===== 2. Support Button & PayPal Popup =====
-  const supportBtn = document.getElementById('supportBtn');
-  const paypalPopup = document.getElementById('paypalPopup');
-  let isPayPalRendered = false;
+// ===== 2. Support Button & PayPal Popup =====
+const supportBtn = document.getElementById('supportBtn');
+const paypalPopup = document.getElementById('paypalPopup');
+let isPayPalRendered = false;
+let selectedAmount = "5"; // default amount
 
-  if (supportBtn) {
-    supportBtn.addEventListener('click', (e) => {
-      e.stopPropagation();
+// ===== Donation Amount Buttons =====
+document.querySelectorAll('.donation-amount').forEach(btn => {
+  btn.addEventListener('click', () => {
+    selectedAmount = btn.dataset.amount;
 
-      // Toggle popup display
-      paypalPopup.style.display = paypalPopup.style.display === 'block' ? 'none' : 'block';
+    // highlight selected button
+    document.querySelectorAll('.donation-amount').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+  });
+});
 
-      // Track GA4 event
-      if (typeof gtag === "function") {
-        gtag('event', 'support_click', {
-          'event_category': 'Button',
-          'event_label': 'Support Me'
-        });
-      }
+if (supportBtn) {
+  supportBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
 
-      // Render PayPal button once
-      if (!isPayPalRendered && typeof paypal !== "undefined") {
-        paypal.Buttons({
-          style: { layout: 'vertical', color: 'gold', shape: 'rect', label: 'paypal', height: 40 },
-          createOrder: (data, actions) => actions.order.create({
-            purchase_units: [{ amount: { value: '5' }, description: 'Support Payment' }]
-          }),
-          onApprove: (data, actions) => actions.order.capture().then(details => {
-            alert('Thank you for your support, ' + details.payer.name.given_name);
-            paypalPopup.style.display = 'none';
-          }),
-          onError: (err) => {
-            console.error(err);
-            alert('Payment could not be processed. Try again.');
-          }
-        }).render('#paypal-button-small');
+    // Toggle popup display
+    paypalPopup.style.display = paypalPopup.style.display === 'block' ? 'none' : 'block';
 
-        isPayPalRendered = true;
-      }
+    // Track GA4 event
+    if (typeof gtag === "function") {
+      gtag('event', 'support_click', {
+        'event_category': 'Button',
+        'event_label': 'Support Me'
+      });
+    }
 
-      // Mobile positioning
-      if (window.innerWidth <= 720) {
-        paypalPopup.style.position = 'fixed';
-        paypalPopup.style.bottom = '20px';
-        paypalPopup.style.right = '20px';
-        paypalPopup.style.top = 'auto';
-        paypalPopup.style.width = '90%';
-        paypalPopup.style.maxWidth = '320px';
-      } else {
-        paypalPopup.style.position = 'absolute';
-        paypalPopup.style.top = '45px';
-        paypalPopup.style.right = '0';
-        paypalPopup.style.width = '300px';
-      }
-    });
+    // Render PayPal button once
+    if (!isPayPalRendered && typeof paypal !== "undefined") {
+      paypal.Buttons({
+        style: { layout: 'vertical', color: 'gold', shape: 'rect', label: 'paypal', height: 40 },
+        createOrder: (data, actions) => actions.order.create({
+          purchase_units: [{ amount: { value: selectedAmount }, description: 'Support Payment' }]
+        }),
+        onApprove: (data, actions) => actions.order.capture().then(details => {
+          alert('Thank you for your support, ' + details.payer.name.given_name);
+          paypalPopup.style.display = 'none';
+        }),
+        onError: (err) => {
+          console.error(err);
+          alert('Payment could not be processed. Try again.');
+        }
+      }).render('#paypal-button-small');
 
-    // Close popup if clicked outside
-    window.addEventListener('click', (e) => {
-      if (!e.target.closest('#supportBtn') && !e.target.closest('#paypalPopup')) {
-        paypalPopup.style.display = 'none';
-      }
-    });
-  }
+      isPayPalRendered = true;
+    }
+
+    // Mobile positioning
+    if (window.innerWidth <= 720) {
+      paypalPopup.style.position = 'fixed';
+      paypalPopup.style.bottom = '20px';
+      paypalPopup.style.right = '20px';
+      paypalPopup.style.top = 'auto';
+      paypalPopup.style.width = '90%';
+      paypalPopup.style.maxWidth = '320px';
+    } else {
+      paypalPopup.style.position = 'absolute';
+      paypalPopup.style.top = '45px';
+      paypalPopup.style.right = '0';
+      paypalPopup.style.width = '300px';
+    }
+  });
+
+  // Close popup if clicked outside
+  window.addEventListener('click', (e) => {
+    if (!e.target.closest('#supportBtn') && !e.target.closest('#paypalPopup')) {
+      paypalPopup.style.display = 'none';
+    }
+  });
+}
+
 
   // ===== 3. File Size Fetch =====
   const fileSizeSpan = document.getElementById('file-size');
