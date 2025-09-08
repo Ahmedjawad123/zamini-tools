@@ -10,16 +10,27 @@ const paypalPopup = document.getElementById('paypalPopup');
 let isPayPalRendered = false;
 let selectedAmount = "5"; // default amount
 
-// ===== Donation Amount Buttons =====
-document.querySelectorAll('.donation-amount').forEach(btn => {
-  btn.addEventListener('click', () => {
-    selectedAmount = btn.dataset.amount;
+// ===== Donation Buttons / Input =====
+const quickBtn = document.getElementById('donate-5');
+const customInput = document.getElementById('donate-custom');
 
-    // highlight selected button
-    document.querySelectorAll('.donation-amount').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
+if (quickBtn) {
+  quickBtn.addEventListener('click', () => {
+    selectedAmount = "5";
+    quickBtn.classList.add('active');
+    if (customInput) customInput.value = "";
   });
-});
+}
+
+if (customInput) {
+  customInput.addEventListener('input', () => {
+    const val = customInput.value.trim();
+    if (val && !isNaN(val) && Number(val) > 0) {
+      selectedAmount = val;
+      quickBtn.classList.remove('active');
+    }
+  });
+}
 
 if (supportBtn) {
   supportBtn.addEventListener('click', (e) => {
