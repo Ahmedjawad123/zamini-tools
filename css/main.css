@@ -327,3 +327,33 @@ footer { margin-top: 24px; text-align: center; color: #F5DEB3; font-size: 13px; 
   .contact-columns { grid-template-columns: 1fr; }
   nav { display: flex; flex-wrap: wrap; gap: 6px; }
 }
+
+
+
+
+paypal.Buttons({
+  style: {
+    layout: 'vertical',
+    color: 'gold',
+    shape: 'rect',
+    label: 'paypal',
+    height: 40
+  },
+  commit: true, // removes the “By continuing…” message
+  createOrder: (data, actions) => {
+    const amountInput = document.getElementById('donate-custom');
+    let value = document.getElementById('donate-5').classList.contains('active') ? '5' : amountInput.value || '5';
+    return actions.order.create({
+      purchase_units: [{ amount: { value: value }, description: 'Support Payment' }]
+    });
+  },
+  onApprove: (data, actions) => actions.order.capture().then(details => {
+    alert('Thank you for your support, ' + details.payer.name.given_name);
+    document.getElementById('paypalPopup').style.display = 'none';
+  }),
+  onError: (err) => {
+    console.error(err);
+    alert('Payment could not be processed. Try again.');
+  }
+}).render('#paypal-button-small');
+
