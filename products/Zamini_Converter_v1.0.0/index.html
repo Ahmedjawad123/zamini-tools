@@ -83,61 +83,49 @@
   
   </div>
 
-
-      <div class="help">
-        <h2>How to Use Zamini PDF Converter V1.1.0</h2>
-        <h3>Getting Started</h3>
-        <ol>
-          <li>Click <b>Add Files</b> or <b>Drag & Drop</b> to select files.</li>
-          <li>Type a file name for the PDF (default: date & time).</li>
-          <li>Click <b>Single PDF</b> to merge all files.</li>
-          <li>Click <b>Separate PDFs</b> to convert each file individually.</li>
-          <li>Track progress using the progress bar.</li>
-        </ol>
-
-        <h3>File Management</h3>
-        <ul>
-          <li><b>Move Up / Move Down</b> — change file order</li>
-          <li><b>Delete Selected</b> — remove files</li>
-          <li><b>Reset</b> — clear all files</li>
-        </ul>
-
-        <h3>Requirements</h3>
-        <ul>
-          <li><b>Microsoft Office</b> — required for Word, Excel, PowerPoint</li>
-        </ul>
-
-        <h3>Supported File Types</h3>
-        <ul>
-          <li>PDF: .pdf</li>
-          <li>Images: .jpg, .jpeg, .png, .webp, .bmp, .tiff, .gif, .ico, .jfif</li>
-          <li>Word: .docx, .doc</li>
-          <li>Excel: .xlsx, .xls</li>
-          <li>PowerPoint: .pptx, .ppt</li>
-          <li>Text: .txt, .log, .csv, .tsv, .md</li>
-          <li>Code: .py, .c, .cpp, .java, .js, .sh, .bat</li>
-          <li>Config/Data: .json, .xml, .yaml, .yml, .ini, .conf</li>
-          <li>Web: .html, .css</li>
-        </ul>
-
-        <p style="text-align:center; font-weight:bold; margin-top:10px;">
-          Enjoy converting your files offline!
-        </p>
-      </div>
+  
+  <div class="demo-grid" style="display: flex; gap: 20px; align-items: flex-start; flex-wrap: wrap; margin-top: 20px;">
+  
+    <!-- Detailed Help -->
+    <div class="help" style="flex: 1; min-width: 300px;">
+      <h2>How to Use Zamini PDF Converter V1.1.0</h2>
+      <h3>Getting Started</h3>
+      <ol>
+        <li>Click <b>Add Files</b> or <b>Drag & Drop</b> to select files.</li>
+        <li>Type a file name for the PDF (default: date & time).</li>
+        <li>Click <b>Single PDF</b> to merge all files.</li>
+        <li>Click <b>Separate PDFs</b> to convert each file individually.</li>
+        <li>Track progress using the progress bar.</li>
+      </ol>
+  
+      <h3>File Management</h3>
+      <ul>
+        <li><b>Move Up / Move Down</b> — change file order</li>
+        <li><b>Delete Selected</b> — remove files</li>
+        <li><b>Reset</b> — clear all files</li>
+      </ul>
+  
+      <h3>Requirements</h3>
+      <ul>
+        <li><b>Microsoft Office</b> — required for Word, Excel, PowerPoint</li>
+      </ul>
+  
+      <h3>Supported File Types</h3>
+      <ul>
+        <li>PDF: .pdf</li>
+        <li>Images: .jpg, .jpeg, .png, .webp, .bmp, .tiff, .gif, .ico, .jfif</li>
+        <li>Word: .docx, .doc</li>
+        <li>Excel: .xlsx, .xls</li>
+        <li>PowerPoint: .pptx, .ppt</li>
+        <li>Text: .txt, .log, .csv, .tsv, .md</li>
+        <li>Code: .py, .c, .cpp, .java, .js, .sh, .bat</li>
+        <li>Config/Data: .json, .xml, .yaml, .yml, .ini, .conf</li>
+        <li>Web: .html, .css</li>
+      </ul>
     </div>
-
-    <div class="rating">
-      <h3>Rate this Tool:</h3>
-      <div class="stars">
-        <span data-value="1">&#9733;</span>
-        <span data-value="2">&#9733;</span>
-        <span data-value="3">&#9733;</span>
-        <span data-value="4">&#9733;</span>
-        <span data-value="5">&#9733;</span>
-      </div>
-    </div>
-
-    <div class="comments">
+  
+    <!-- Reviews / Comments -->
+    <div class="comments" style="flex: 1; min-width: 300px;">
       <h3>Write a Review:</h3>
       <input type="text" id="review-name" placeholder="Name or Email (required)">
       <input type="text" id="review-location" placeholder="Location/Country (optional)">
@@ -145,6 +133,8 @@
       <button class="btn secondary" id="submit-review">Submit</button>
       <ul class="comment-list" id="review-list"></ul>
     </div>
+  
+  </div>
 
   </div>
 </main>
@@ -158,5 +148,6 @@
 
 </body>
 </html>
+
 
 
