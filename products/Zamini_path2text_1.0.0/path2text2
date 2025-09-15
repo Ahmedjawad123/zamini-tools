@@ -1,0 +1,57 @@
+import os
+import tkinter as tk
+from tkinter import filedialog, messagebox
+
+def folder_and_files_fullpath(directory_path):
+    # Get the folder name to use as default file name
+    folder_name = os.path.basename(os.path.normpath(directory_path))
+    default_filename = f"{folder_name}_structure.txt"
+
+    # Ask user where to save the file with folder name as default
+    output_file = filedialog.asksaveasfilename(
+        defaultextension=".txt",
+        filetypes=[("Text Files", "*.txt")],
+        initialfile=default_filename,
+        title="Save output as"
+    )
+
+    if not output_file:
+        return  # User cancelled save dialog
+
+    try:
+        with open(output_file, "w", encoding="utf-8") as f:
+            for root, dirs, files in os.walk(directory_path):
+                # Compute relative path and indentation
+                rel_root = os.path.relpath(root, directory_path)
+                indent_level = 0 if rel_root == "." else rel_root.count(os.sep) + 1
+                folder_display = os.path.basename(root) if rel_root != "." else os.path.basename(directory_path)
+                
+                # Write folder
+                f.write(f"{'    ' * (indent_level-1)}[Folder] {folder_display}\n")
+                
+                # Write files
+                for file in files:
+                    f.write(f"{'    ' * indent_level}[File] {file}\n")
+
+        messagebox.showinfo("Success", f"Full folder & file path list saved to:\n{output_file}")
+    except Exception as e:
+        messagebox.showerror("Error", str(e))
+
+def browse_folder():
+    folder_path = filedialog.askdirectory()
+    if folder_path:
+        folder_and_files_fullpath(folder_path)
+
+# GUI Setup
+root = tk.Tk()
+root.title("Folder & File Path Viewer")
+root.geometry("370x180")
+root.resizable(False, False)
+
+label = tk.Label(root, text="Click below to select a folder", pady=20)
+label.pack()
+
+btn = tk.Button(root, text="Select Folder", command=browse_folder, bg="#6c63ff", fg="white", padx=10, pady=5)
+btn.pack()
+
+root.mainloop()
