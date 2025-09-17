@@ -151,7 +151,35 @@ if (supportBtn) {
         });
     });
   }
+  // ===== 7. Updates Subscription Form =====
+  const updatesForm = document.getElementById('updatesForm');
+  if (updatesForm) {
+    const updatesStatus = document.getElementById('updates-status');
+  
+    updatesForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      updatesStatus.textContent = "Subscribing...";
+  
+      const templateParams = {
+        email: updatesForm.email.value
+      };
+  
+      emailjs.send('zamini_musafir', 'template_updates', templateParams)
+        .then(() => {
+          updatesStatus.textContent = "Subscribed successfully! You'll get updates soon.";
+          updatesForm.reset();
+        })
+        .catch(err => {
+          console.error("EmailJS error:", err);
+          updatesStatus.textContent = "Oops! Something went wrong. Try again.";
+        });
+    });
+  }
 
+
+
+
+  
   // ===== 6. Track Download Buttons =====
   const downloadBtns = Array.from(document.querySelectorAll('a.btn'))
     .filter(btn => btn.textContent.trim() === 'Download');
@@ -168,3 +196,4 @@ if (supportBtn) {
   });
 
 });
+gtag('event', 'subscribe_click', { 'event_category': 'Button', 'event_label': 'Updates' });
