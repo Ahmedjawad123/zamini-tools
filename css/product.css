@@ -226,3 +226,32 @@ footer {
     height: 35px; 
   }
 }
+
+
+
+
+.comment-list {
+  list-style: none; /* remove bullets */
+  padding: 0;
+  margin: 0;
+}
+
+.review-item {
+  background-color: #FFF8DC; /* light background */
+  border: 1px solid #D4AF37; /* gold border */
+  border-radius: 8px;
+  padding: 10px 15px;
+  margin-bottom: 10px;
+}
+
+.review-header {
+  font-weight: bold;
+  margin-bottom: 5px;
+  color: #333;
+}
+
+.review-text {
+  font-style: italic;
+  color: #555;
+}
+
