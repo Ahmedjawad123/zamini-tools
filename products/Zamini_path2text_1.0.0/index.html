@@ -3,38 +3,56 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PDF Converter Demo - Ahmed Mini Softwares</title>
-<link rel="stylesheet" href="../../css/product.css">
-
+<title>Zamini Path2Text Demo - Ahmed Mini Softwares</title>
+<link rel="stylesheet" href="/zamini-tools/css/product.css">
+<style>
+  /* Layout styles */
+  .demo-grid {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+  }
+  .screenshot img#main-img {
+    max-width: 100%;
+    border-radius: 8px;
+  }
+  .thumbs img {
+    width: 80px;
+    cursor: pointer;
+    border-radius: 4px;
+  }
+  .thumbs img.active {
+    border: 2px solid #D4AF37;
+  }
+  .info ul, .help ul, .help ol {
+    margin-left: 20px;
+  }
+  .btn {
+    display: inline-block;
+    padding: 8px 15px;
+    background-color: #D4AF37;
+    color: #000;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+    margin-top: 10px;
+  }
+</style>
 </head>
 <body>
 
 <header>
   <nav class="navbar">
     <ul>
-    <li><a href="../../index.html">Home</a></li>
+      <li><a href="/zamini-tools/index.html">Home</a></li>
       <li><a href="#about">About</a></li>
       <li><a href="#projects">Projects</a></li>
-      <li><a href="https://youtu.be/g0uL0nnPh64" target="_blank" class="active">Demo</a></li>
+      <li><a href="#" class="active">Demo</a></li>
       <li style="position: relative;">
         <button id="supportBtn" class="btn support">Support Me</button>
-
-        <!-- PayPal Popup -->
-        <div id="paypalPopup" class="paypal-popup" style="
-          display: none;
-          position: absolute;
-          top: 45px;
-          right: 0;
-          width: 300px;
-          max-height: 400px;
-          overflow-y: auto;
-          background-color: #FFF8DC;
-          border: 1px solid #D4AF37;
-          border-radius: 8px;
-          padding: 10px;
-          z-index: 9999;
-          box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-        ">
+        <div id="paypalPopup" class="paypal-popup" style="display:none; position:absolute; top:45px; right:0; width:300px; max-height:400px; overflow-y:auto; background-color:#FFF8DC; border:1px solid #D4AF37; border-radius:8px; padding:10px; z-index:9999; box-shadow:0 4px 12px rgba(0,0,0,0.2);">
           <div id="paypal-button-small"></div>
         </div>
       </li>
@@ -43,76 +61,90 @@
 </header>
 
 <main class="demo">
-  <h1>PDF Converter</h1>
-  <p class="subtitle">Convert Word, Excel, and Images to PDF in seconds.</p>
+  <h1>Zamini Path2Text</h1>
+  <p class="subtitle">Generate a complete text file listing all folders and files in a directory.</p>
 
+  <!-- Screenshot + Key Features -->
   <div class="demo-grid">
-    <div class="screenshot">
-      <!-- Main image and thumbnails -->
-      <img id="main-img" src="media/step1_download.jpg" alt="PDF Converter Step 1">
-
+    <div class="screenshot" style="flex:1; min-width:300px;">
+      <img id="main-img" src="media/step1_select_folder.JPG" alt="Path2Text Step 1">
       <div class="thumbs">
-        <img src="media/step1_download.jpg" class="active" alt="Step 1" data-caption="Step 1: Download RAR">
-        <img src="media/step2_open_rar.jpg" alt="Step 2" data-caption="Step 2: Open RAR File">
-        <img src="media/step3_select_files.jpg" alt="Step 3" data-caption="Step 3: Select Files">
-        <img src="media/step4_software_view.jpg" alt="Step 4" data-caption="Step 4: View in Software">
-        <img src="media/step5_rename.jpg" alt="Step 5" data-caption="Step 5: Rename Files">
-        <img src="media/step6_output.jpg" alt="Step 6" data-caption="Step 6: Output Folder">
+        <img src="media/step1_select_folder.JPG" class="active" alt="Step 1">
+        <img src="media/step2_choose_save.JPG" alt="Step 2">
+        <img src="media/step3_generated_file.JPG" alt="Step 3">
       </div>
-
     </div>
 
-    <div class="info">
-      <h2>Key Features</h2>
+    <div class="info" style="flex:1; min-width:300px;">
+      <h2>Quick Features</h2>
       <ul>
-        <li>Fast & Lightweight (no extra installs)</li>
-        <li>Convert Word, Excel, Images → PDF</li>
-        <li>Simple & Clean Interface</li>
-        <li>Works Offline</li>
+        <li>Lists all folders and files in a directory</li>
+        <li>Output format: [FolderName]_YYYY-MM-DD_HH-MM-SS.txt</li>
+        <li>Simple Add Files / Drag & Drop interface</li>
       </ul>
 
-      <p class="meta">
-        <strong>File Size:</strong> 3.2 MB <br>
-        <strong>Version:</strong> 1.0.0 <br>
-        <strong>Format:</strong> EXE (Windows)
-      </p>
+      <h2>Usage</h2>
+      <ul>
+        <li>Select folder (Add Files or Drag & Drop)</li>
+        <li>Choose save location for the output file</li>
+        <li>View the generated folder/file listing</li>
+      </ul>
+
+      <h2>Who Can Use It</h2>
+      <ul>
+        <li>Teachers & Students – manage project files</li>
+        <li>Office Workers – backup documents</li>
+        <li>Print Shops – generate folder/file lists</li>
+        <li>Anyone – overview folder structures offline</li>
+      </ul>
+
+      <h2>About</h2>
+      <ul>
+        <li>Developed in: Ajman, UAE</li>
+        <li>Brand: Zamini Musafir (Tools, Media, Games)</li>
+        <li>Contact: zamini.musafir123@gmail.com</li>
+        <li>YouTube: Zamini Musafir</li>
+      </ul>
 
       <div class="cta">
-        <button class="btn">Download Demo</button>
-        <button class="btn secondary">Buy Full Version</button>
-      </div>
-
-      <!-- Rating -->
-      <div class="rating">
-        <h3>Rate this Tool:</h3>
-        <div class="stars">
-          <span data-value="1">&#9733;</span>
-          <span data-value="2">&#9733;</span>
-          <span data-value="3">&#9733;</span>
-          <span data-value="4">&#9733;</span>
-          <span data-value="5">&#9733;</span>
-        </div>
-      </div>
-
-      <!-- Reviews -->
-      <div class="comments">
-        <h3>Write a Review:</h3>
-        <input type="text" id="review-name" placeholder="Name or Email (required)">
-        <input type="text" id="review-location" placeholder="Location/Country (optional)">
-        <textarea id="review-text" placeholder="Write your review..."></textarea>
-        <button class="btn secondary" id="submit-review">Submit</button>
-        <ul class="comment-list" id="review-list"></ul>
+        <a class="btn" href="https://github.com/Ahmedjawad123/Zamini_path2text_1.0.0/releases/download/v1.0.0/Zamini_path2text_v1.0.0.rar" download>Download</a>
       </div>
     </div>
   </div>
-</main>
 
+  <!-- Help + Reviews -->
+  <div class="demo-grid">
+    <div class="help" style="flex:1; min-width:300px;">
+      <h2>How to Use Zamini Path2Text</h2>
+      <ol>
+        <li>Click <b>Add Folder</b> or <b>Drag & Drop</b> to select a folder</li>
+        <li>Choose where to save the output text file</li>
+        <li>Click <b>Generate</b> to create the folder/file listing</li>
+        <li>Open the generated text file to view full folder structure</li>
+      </ol>
+    </div>
+
+    <div class="comments" style="flex:1; min-width:300px;">
+      <h3>Write a Review:</h3>
+      <input type="text" id="review-name" placeholder="Name or Email (required)">
+      <input type="text" id="review-location" placeholder="Location/Country (optional)">
+      <textarea id="review-text" placeholder="Write your review..."></textarea>
+      <button class="btn secondary" id="submit-review">Submit</button>
+      <ul class="comment-list" id="review-list"></ul>
+    </div>
+  </div>
+
+</main>
 
 <footer>
   © <span id="year"></span> Ahmed Mini Softwares — Built with Python & ❤️
 </footer>
 
-<script src="../../js/product.js"></script>
+<script>
+  document.getElementById('year').innerText = new Date().getFullYear();
+</script>
+
+<script src="/zamini-tools/js/product.js"></script>
 <script src="https://www.paypal.com/sdk/js?client-id=AbDsUYA-obC2sHFZvv9R4Ce9gYfAqnpuoCNiLDQYeF0cUJdYFSEeuiwRk82Lr3S2NPrMUg97BhCbbVNv&currency=USD"></script>
 
 </body>
