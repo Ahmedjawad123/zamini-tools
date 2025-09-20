@@ -1,65 +1,78 @@
-// Set current year in footer
+// ----------------------------
+// Footer Year
+// ----------------------------
 document.getElementById("year").textContent = new Date().getFullYear();
 
-// Main image change with caption
+// ----------------------------
+// Main Image & Thumbnails
+// ----------------------------
 const mainImg = document.getElementById("main-img");
-const captionText = document.getElementById("caption-text"); // optional if caption element exists
 const thumbs = document.querySelectorAll(".thumbs img");
 
 thumbs.forEach(img => {
   img.addEventListener("click", () => {
     mainImg.src = img.src;
-    if(captionText) captionText.textContent = img.dataset.caption;
     thumbs.forEach(t => t.classList.remove("active"));
     img.classList.add("active");
   });
 });
 
 // Double-click zoom
-mainImg.addEventListener("dblclick", () => { 
-  window.open(mainImg.src, "_blank"); 
+mainImg.addEventListener("dblclick", () => {
+  window.open(mainImg.src, "_blank");
 });
 
-// Star rating
-const stars = document.querySelectorAll(".stars span");
-let selectedRating = 0;
-stars.forEach(star => {
-  star.addEventListener("click", () => {
-    selectedRating = star.dataset.value;
-    stars.forEach(s => s.classList.remove("selected"));
-    for(let i=0;i<selectedRating;i++){ stars[i].classList.add("selected"); }
-  });
-});
-
+// ----------------------------
 // Reviews
-const submitReview = document.getElementById("submit-review");
-const reviewList = document.getElementById("review-list");
+// ----------------------------
+const submitBtn = document.getElementById('submit-review');
+const reviewList = document.getElementById('review-list');
+const reviewName = document.getElementById('review-name');
+const reviewLocation = document.getElementById('review-location');
+const reviewText = document.getElementById('review-text');
 
-submitReview.addEventListener("click", () => {
-  const name = document.getElementById("review-name").value.trim();
-  const location = document.getElementById("review-location").value.trim();
-  const text = document.getElementById("review-text").value.trim();
+submitBtn.addEventListener('click', function() {
+  const name = reviewName.value.trim();
+  const location = reviewLocation.value.trim();
+  const text = reviewText.value.trim();
 
-  if(!name || !text){ 
-    alert("Name/Email and Review text are required."); 
-    return; 
+  if (!name || !text) {
+    alert('Please enter your name/email and review text.');
+    return;
   }
 
-  const li = document.createElement("li");
-  li.innerHTML = `<strong>${name}</strong>${location ? ' (' + location + ')' : ''} <br>
-                  <em>${new Date().toLocaleString()}</em> <br>
-                  ${text} <br>
-                  <strong>Rating:</strong> ${selectedRating || 'N/A'} ★`;
-  reviewList.appendChild(li);
+  // Create new review item
+  const li = document.createElement('li');
+  li.classList.add('review-item');
+  li.style.backgroundColor = "#1e1e1e"; // optional dark bg for contrast
+  li.style.color = "#f0f0f0"; // light text for readability
+  li.style.padding = "8px";
+  li.style.borderRadius = "5px";
+  li.style.marginBottom = "8px";
 
-  document.getElementById("review-name").value = "";
-  document.getElementById("review-location").value = "";
-  document.getElementById("review-text").value = "";
-  selectedRating = 0;
-  stars.forEach(s => s.classList.remove("selected"));
+  const header = document.createElement('div');
+  header.classList.add('review-header');
+  header.innerHTML = `<b>${name}${location ? ', ' + location : ''}</b> <span class="review-stars">★★★★★</span>`;
+
+  const reviewDiv = document.createElement('div');
+  reviewDiv.classList.add('review-text');
+  reviewDiv.innerText = `"${text}"`;
+
+  li.appendChild(header);
+  li.appendChild(reviewDiv);
+
+  // Prepend new review at top
+  reviewList.insertBefore(li, reviewList.firstChild);
+
+  // Clear input fields
+  reviewName.value = '';
+  reviewLocation.value = '';
+  reviewText.value = '';
 });
 
+// ----------------------------
 // PayPal Support Button
+// ----------------------------
 const supportBtn = document.getElementById('supportBtn');
 const paypalPopup = document.getElementById('paypalPopup');
 let isPayPalRendered = false;
@@ -98,49 +111,3 @@ window.addEventListener('click', (e) => {
     paypalPopup.style.display = 'none';
   }
 });
-
-
-
-
-// Select elements
-const submitBtn = document.getElementById('submit-review');
-const reviewList = document.getElementById('review-list');
-const reviewName = document.getElementById('review-name');
-const reviewLocation = document.getElementById('review-location');
-const reviewText = document.getElementById('review-text');
-
-// Handle submit
-submitBtn.addEventListener('click', function() {
-  const name = reviewName.value.trim();
-  const location = reviewLocation.value.trim();
-  const text = reviewText.value.trim();
-
-  if (!name || !text) {
-    alert('Please enter your name/email and review text.');
-    return;
-  }
-
-  // Create new review item
-  const li = document.createElement('li');
-  li.classList.add('review-item');
-  
-  const header = document.createElement('div');
-  header.classList.add('review-header');
-  header.innerHTML = `<b>${name}${location ? ', ' + location : ''}</b> <span class="review-stars">★★★★★</span>`;
-
-  const reviewDiv = document.createElement('div');
-  reviewDiv.classList.add('review-text');
-  reviewDiv.innerText = `"${text}"`;
-
-  li.appendChild(header);
-  li.appendChild(reviewDiv);
-
-  // Add to review list at top
-  reviewList.insertBefore(li, reviewList.firstChild);
-
-  // Clear input fields
-  reviewName.value = '';
-  reviewLocation.value = '';
-  reviewText.value = '';
-});
-
