@@ -23,15 +23,20 @@ mainImg.addEventListener("dblclick", () => {
 });
 
 // ----------------------------
-// Reviews
+// Reviews & Comment Approval
 // ----------------------------
 const submitBtn = document.getElementById('submit-review');
 const reviewList = document.getElementById('review-list');
 const reviewName = document.getElementById('review-name');
 const reviewLocation = document.getElementById('review-location');
 const reviewText = document.getElementById('review-text');
+let selectedRating = 5; // default rating, can integrate star selection
 
-submitBtn.addEventListener('click', function() {
+// Array to store comments
+let comments = [];
+
+// Submit comment
+submitBtn.addEventListener('click', () => {
   const name = reviewName.value.trim();
   const location = reviewLocation.value.trim();
   const text = reviewText.value.trim();
@@ -41,34 +46,76 @@ submitBtn.addEventListener('click', function() {
     return;
   }
 
-  // Create new review item
-  const li = document.createElement('li');
-  li.classList.add('review-item');
-  li.style.backgroundColor = "#1e1e1e"; // optional dark bg for contrast
-  li.style.color = "#f0f0f0"; // light text for readability
-  li.style.padding = "8px";
-  li.style.borderRadius = "5px";
-  li.style.marginBottom = "8px";
+  // Add comment as pending
+  comments.push({
+    name: name,
+    location: location,
+    text: text,
+    rating: selectedRating,
+    approved: false
+  });
 
-  const header = document.createElement('div');
-  header.classList.add('review-header');
-  header.innerHTML = `<b>${name}${location ? ', ' + location : ''}</b> <span class="review-stars">★★★★★</span>`;
-
-  const reviewDiv = document.createElement('div');
-  reviewDiv.classList.add('review-text');
-  reviewDiv.innerText = `"${text}"`;
-
-  li.appendChild(header);
-  li.appendChild(reviewDiv);
-
-  // Prepend new review at top
-  reviewList.insertBefore(li, reviewList.firstChild);
-
-  // Clear input fields
   reviewName.value = '';
   reviewLocation.value = '';
   reviewText.value = '';
+
+  displayComments();
 });
+
+// Display comments (approved first, pending after)
+function displayComments() {
+  reviewList.innerHTML = '';
+
+  comments.forEach((c, index) => {
+    const li = document.createElement('li');
+    li.classList.add('review-item');
+    li.style.padding = "8px";
+    li.style.borderRadius = "5px";
+    li.style.marginBottom = "8px";
+
+    if (c.approved) {
+      li.style.backgroundColor = "#1e1e1e";
+      li.style.color = "#f0f0f0";
+      li.innerHTML = `
+        <div class="review-header">
+          <b>${c.name}${c.location ? ', ' + c.location : ''}</b>
+          <span class="review-stars">${'★'.repeat(c.rating)}</span>
+        </div>
+        <div class="review-text">"${c.text}"</div>
+      `;
+    } else {
+      li.style.backgroundColor = "#333";
+      li.style.color = "#fff";
+      li.innerHTML = `
+        <b>${c.name}${c.location ? ', ' + c.location : ''}</b> - Pending Approval
+        <button class="approve-btn" data-index="${index}">Approve</button>
+        <button class="delete-btn" data-index="${index}">Delete</button>
+      `;
+    }
+
+    reviewList.appendChild(li);
+  });
+
+  // Attach approve/delete handlers for pending comments
+  document.querySelectorAll('.approve-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const i = btn.dataset.index;
+      comments[i].approved = true;
+      displayComments();
+    });
+  });
+
+  document.querySelectorAll('.delete-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const i = btn.dataset.index;
+      comments.splice(i, 1);
+      displayComments();
+    });
+  });
+}
+
+// Initialize display
+displayComments();
 
 // ----------------------------
 // PayPal Support Button
@@ -105,7 +152,7 @@ supportBtn.addEventListener('click', (e) => {
   }
 });
 
-// Close popup when clicking outside
+// Close PayPal popup on outside click
 window.addEventListener('click', (e) => {
   if (!e.target.closest('#supportBtn') && !e.target.closest('#paypalPopup')) {
     paypalPopup.style.display = 'none';
