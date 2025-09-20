@@ -1,147 +1,252 @@
+learn more and download should be in one row in product one , right?
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Zamini Path2Text Demo - Ahmed Mini Softwares</title>
-<link rel="stylesheet" href="/zamini-tools/css/product.css">
-<style>
-  .demo-grid {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    align-items: flex-start;
-    flex-wrap: wrap;
-    margin-bottom: 20px;
-  }
-  .screenshot img#main-img {
-    max-width: 100%;
-    border-radius: 8px;
-  }
-  .thumbs img {
-    width: 80px;
-    cursor: pointer;
-    border-radius: 4px;
-  }
-  .thumbs img.active {
-    border: 2px solid #D4AF37;
-  }
-  .info ul, .help ul, .help ol {
-    margin-left: 20px;
-  }
-  .btn {
-    display: inline-block;
-    padding: 8px 15px;
-    background-color: #D4AF37;
-    color: #000;
-    text-decoration: none;
-    border-radius: 5px;
-    font-weight: bold;
-    margin-top: 10px;
-  }
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ahmed Mini Softwares</title>
+
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-BH3Q2E9N2S"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-BH3Q2E9N2S');
+  </script>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <!-- Main CSS -->
+  <link rel="stylesheet" href="css/main.css">
 </head>
 <body>
 
+<!-- HEADER -->
 <header>
-  <nav class="navbar">
-    <ul>
-      <li><a href="/zamini-tools/index.html">Home</a></li>
-      <li><a href="#about">About</a></li>
-      <li><a href="#projects">Projects</a></li>
-      <li><a href="#" class="active">Demo</a></li>
-      <li style="position: relative;">
-        <button id="supportBtn" class="btn support">Support Me</button>
-        <div id="paypalPopup" class="paypal-popup" style="display:none; position:absolute; top:45px; right:0; width:300px; max-height:400px; overflow-y:auto; background-color:#FFF8DC; border:1px solid #D4AF37; border-radius:8px; padding:10px; z-index:9999; box-shadow:0 4px 12px rgba(0,0,0,0.2);">
-          <div id="paypal-button-small"></div>
-        </div>
-      </li>
-    </ul>
+  <div class="brand">
+    <div class="logo">
+      <img src="images/Zamini_Musafir_logo.ico" alt="Logo">
+    </div>
+    <div>
+      <h1>Ahmed Mini Softwares</h1>
+      <div style="color:#F5DEB3; font-size:13px;">Small ERP • Utilities • Tools</div>
+    </div>
+  </div>
+
+  <nav>
+    <a href="#home">Home</a>
+    <a href="#projects">Projects</a>
+    <a href="#about">About</a>
+    <a href="#contact">Contact</a>
+    <a href="#updates" class="btn ghost">Updates</a>
+
   </nav>
+
+  <!-- Support Me Button -->
+  <div class="support-container">
+    <button id="supportBtn" class="tooltip-btn">
+      Support Me
+      <span class="tooltip-text">Please select your country correctly before payment</span>
+    </button>
+  
+    <!-- PayPal Popup -->
+    <div id="paypalPopup" class="paypal-popup">
+      <div class="donation-options">
+        <button id="donate-5" class="donation-amount active">$5</button>
+        <input id="donate-custom" type="number" placeholder="Other amount" min="1" />
+      </div>
+      <div id="paypal-button-small"></div>
+    </div>
+  </div>
+
+
+  </div>
 </header>
 
-<main class="demo">
-  <h1>Zamini Path2Text</h1>
-  <p class="subtitle">Generate a complete text file listing all folders and files in a directory.</p>
+  <!-- HERO -->
+  <section id="home" class="hero">
+    <div class="hero-left">
+      <span class="badge">Website v1.0.0</span>
+      <h2>Small, reliable desktop apps for stores and shops</h2>
+      <p>Build. Ship. Improve. I'm Ahmed — I build simple ERP modules and tools to help store owners manage purchases, stock, and small tasks.</p>
+    </div>
+    <aside class="hero-right">
+      <strong>Featured</strong>
+      <div class="muted" style="font-size:13px;margin-top:6px;">Mini ERP - Purchase Module</div>
+    </aside>
+  </section>
 
-  <!-- Main Screenshot + Key Details -->
-  <div class="demo-grid">
-    <div class="screenshot" style="flex:1; min-width:300px;">
-      <img id="main-img" src="media/step1_select_folder.JPG" alt="Path2Text Main Screenshot">
-      <div class="thumbs">
-        <img src="media/step1_select_folder.JPG" class="active" alt="Step 1">
-        <img src="media/step2_choose_save.JPG" alt="Step 2">
-        <img src="media/step3_generated_file.JPG" alt="Step 3">
+  <!-- Projects Section -->
+  <section id="projects">
+    <h3>Projects</h3>
+    <div class="projects">
+      <article class="card">
+        <h3>Zamini All-in-One PDF v1.1.0 (Latest)</h3>
+        <p class="muted">Convert Word, Excel, Images → PDF quickly and offline.</p>
+        <p class="size">Size: 48 MB</p>
+        
+        <!-- Update date -->
+        <p style="font-size:12px; color:#999; margin-top:2px;">
+          Updated on: <strong>17 September 2025</strong>
+        </p>
+      
+        <!-- Flip card preview -->
+        <div class="flip-card">
+          <div class="flip-card-inner">
+            <div class="flip-card-front">
+              <img src="products/Zamini_PDF_Converter_v1.1.0/media/Zamini_Converter_page1.jpg" alt="Page 1">
+            </div>
+            <div class="flip-card-back">
+              <img src="products/Zamini_PDF_Converter_v1.1.0/media/Zamini_Converter_page2.jpg" alt="Page 2">
+            </div>
+          </div>
+        </div>
+      
+        <!-- Old version note -->
+        <p style="font-size:12px; color:#999; margin-top:5px;">
+          Previous version: <a href="https://github.com/Ahmedjawad123/Zamini_Converter_v1.0.0/releases/download/v1.0.0/Executable_file_.Zamini_Converter_v1.0.0.rar" style="color:#fff;">v1.0.0</a>
+          (Updated on: <strong>15 August 2025</strong>)
+        </p>
+      
+        <!-- Download & Learn More buttons -->
+        <a class="btn" href="https://github.com/Ahmedjawad123/Zamini_PDF_Converter_v1.1.0/releases/download/Zamini_PDF_Converter_v1.1.0/Zamini_PDF_Converter_v1.1.0.rar" download>
+          Download v1.1.0
+        </a>
+        <a class="btn ghost" href="products/Zamini_PDF_Converter_v1.1.0/index.html">
+          Learn More
+        </a>
+      </article>
+
+      
+      <!-- Project 1b: Zamini Path2Text -->
+      <article class="card">
+        <h3>Zamini Path2Text v1.0.0</h3>
+        <p class="muted">Generate a complete text listing of all folders & files in a selected directory.</p>
+        <p class="size">Size: 12 MB</p>
+
+                        <!-- Flip card preview -->
+          <div class="flip-card">
+            <div class="flip-card-inner">
+              <!-- Front side: Page 1 -->
+              <div class="flip-card-front">
+                <img src="products/Zamini_path2text_1.0.0/media/Zamini_Path2Text_page1.jpg" alt="Page 1">
+              </div>
+              <!-- Back side: Page 2 -->
+              <div class="flip-card-back">
+                <img src="products/Zamini_path2text_1.0.0/media/Zamini_Path2Text_page2.jpg" alt="Page 2">
+              </div>
+            </div>
+          </div>
+      
+        <a class="btn" href="https://github.com/Ahmedjawad123/Zamini_path2text_1.0.0/releases/download/Zamini_Path2Text_v1.0.0/Zamini_path2text_1.0.0.rar" download>
+          Download
+        </a>
+
+        <a class="btn ghost" href="products/Zamini_Path2Text_v1.0.0/index.html">
+          Learn More
+        </a>
+      </article>
+
+      <!-- Project 2: Mini ERP Purchase Module -->
+      <article class="card">
+        <h3>Mini ERP Purchase Module</h3>
+        <p class="muted">Manage Purchase order, update stock automatically and generate simple purchase report.</p>
+        <p class="size">Coming Soon</p>
+        <a class="btn disabled" href="#">Coming Soon</a>
+      </article>
+
+      <!-- Project 3 -->
+      <article class="card">
+        <h3>Utilities Pack</h3>
+        <p class="muted">CSV helpers, quick rename, backup script — small tools for store owners.</p>
+        <p class="size">Coming Soon</p>
+        <a class="btn disabled" href="#">Coming Soon</a>
+      </article>
+    </div>
+  </section>
+
+  <!-- About Section -->
+  <section id="about" class="about">
+    <div class="panel">
+      <h4>Why these tools?</h4>
+      <p class="muted">
+        I build small, focused apps that solve one problem well. 
+        Easy to run on Windows, and quick to customize.
+      </p>
+    </div>
+    <div class="panel">
+      <h4>Roadmap</h4>
+      <ul>
+        <li>Autocomplete & smarter product search</li>
+        <li>Location & multi-store support</li>
+        <li>Sales module & reporting</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section id="contact" class="contact">
+    <h3>Contact & Support</h3>
+    <p class="muted">Have a question, need a custom feature, or want the source code? Send me a message.</p>
+
+    <div class="contact-columns">
+      <!-- Left: About Me -->
+      <div class="panel about-column">
+        <h4>About Me</h4>
+        <p>Hello, I’m Ahmed — developer of these mini softwares. 
+        I create tools to make everyday tasks easier and more efficient.</p>
+        <p>Based in Dubai, I focus on practical solutions for students, teachers, and businesses.</p>
+        <img src="images/ahmed.png" alt="Ahmed Jawad" class="about-photo">
+
       </div>
+
+      <!-- Right: Contact & Form -->
+      <aside class="panel contact-column">
+        <h4>Contact</h4>
+        <p><strong>Email:</strong> zamini.musafir123@gmail.com</p>
+
+        <form id="contactForm">
+          <label for="software">Select Software:</label>
+          <select name="software" id="software" required>
+            <option value="">--Choose--</option>
+            <option value="Zamini Converter">Zamini Converter</option>
+            <option value="Mini ERP Purchase Module">Mini ERP Purchase Module</option>
+            <option value="Utilities Pack">Utilities Pack</option>
+          </select>
+
+          <input type="text" name="name" placeholder="Your Name (optional)">
+          <input type="email" name="email" placeholder="Your Email (optional)">
+          <textarea name="message" rows="5" placeholder="Your Feedback" required></textarea>
+
+          <button class="btn" type="submit">Send Feedback</button>
+        </form>
+      </aside>
     </div>
+  </section>
 
-    <div class="info" style="flex:1; min-width:300px;">
-      <h2>Quick Details</h2>
-      <ul>
-        <li>Lists all folders and files in a directory</li>
-        <li>Output format: [FolderName]_YYYY-MM-DD_HH-MM-SS.txt</li>
-        <li>Simple Add Files / Drag & Drop interface</li>
-        <li>File Size: 12 MB</li>
-        <li>Version: 1.0.0</li>
-        <li>Format: EXE (Windows)</li>
-      </ul>
 
-      <div class="cta">
-        <a class="btn" href="https://github.com/Ahmedjawad123/Zamini_path2text_1.0.0/releases/download/v1.0.0/Zamini_path2text_v1.0.0.rar" download>Download</a>
-      </div>
-    </div>
-  </div>
+  </section>
 
-  <!-- Usage, Who Can Use, About -->
-  <div class="demo-grid">
-    <div class="help" style="flex:1; min-width:300px;">
-      <h2>Usage</h2>
-      <ul>
-        <li>Select folder (Add Files or Drag & Drop)</li>
-        <li>Choose save location for the output file</li>
-        <li>Click <b>Generate</b> to create the folder/file listing</li>
-        <li>Open the generated text file to view full folder structure</li>
-      </ul>
+  <!-- Footer -->
+  <footer>
+    © <span id="year"></span> Ahmed Mini Softwares — Built with Python & ❤️
+  </footer>
+  <!-- Updates Section -->
+  <section id="updates" class="updates">
+    <h3>Get the Latest Updates</h3>
+    <p>Subscribe to receive notifications when new versions are released.</p>
+    <form id="updatesForm">
+      <input type="email" name="email" placeholder="Your Email" required>
+      <button type="submit" class="btn">Subscribe</button>
+      <div id="updates-status" style="margin-top:6px; color:green;"></div>
+    </form>
+  </section>
 
-      <h2>Who Can Use It</h2>
-      <ul>
-        <li>Teachers & Students – manage project files</li>
-        <li>Office Workers – backup documents</li>
-        <li>Print Shops – generate folder/file lists</li>
-        <li>Anyone – overview folder structures offline</li>
-      </ul>
-
-      <h2>About</h2>
-      <ul>
-        <li>Developed in: Ajman, UAE</li>
-        <li>Brand: Zamini Musafir (Tools, Media, Games)</li>
-        <li>Contact: zamini.musafir123@gmail.com</li>
-        <li>YouTube: Zamini Musafir</li>
-      </ul>
-    </div>
-
-    <div class="comments" style="flex:1; min-width:300px;">
-      <h3>Write a Review:</h3>
-      <input type="text" id="review-name" placeholder="Name or Email (required)">
-      <input type="text" id="review-location" placeholder="Location/Country (optional)">
-      <textarea id="review-text" placeholder="Write your review..."></textarea>
-      <button class="btn secondary" id="submit-review">Submit</button>
-      <ul class="comment-list" id="review-list"></ul>
-    </div>
-  </div>
-
-</main>
-
-<footer>
-  © <span id="year"></span> Ahmed Mini Softwares — Built with Python & ❤️
-</footer>
-
-<script>
-  document.getElementById('year').innerText = new Date().getFullYear();
-</script>
-
-<script src="/zamini-tools/js/product.js"></script>
-<script src="https://www.paypal.com/sdk/js?client-id=AbDsUYA-obC2sHFZvv9R4Ce9gYfAqnpuoCNiLDQYeF0cUJdYFSEeuiwRk82Lr3S2NPrMUg97BhCbbVNv&currency=USD"></script>
-
+  <!-- Main JS -->
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <script src="https://www.paypal.com/sdk/js?client-id=AbDsUYA-obC2sHFZvv9R4Ce9gYfAqnpuoCNiLDQYeF0cUJdYFSEeuiwRk82Lr3S2NPrMUg97BhCbbVNv&currency=USD"></script>
+  <script src="js/main.js" defer></script>
 </body>
-</html>
+</html> \
