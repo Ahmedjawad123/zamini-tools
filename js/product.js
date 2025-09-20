@@ -98,3 +98,49 @@ window.addEventListener('click', (e) => {
     paypalPopup.style.display = 'none';
   }
 });
+
+
+
+
+// Select elements
+const submitBtn = document.getElementById('submit-review');
+const reviewList = document.getElementById('review-list');
+const reviewName = document.getElementById('review-name');
+const reviewLocation = document.getElementById('review-location');
+const reviewText = document.getElementById('review-text');
+
+// Handle submit
+submitBtn.addEventListener('click', function() {
+  const name = reviewName.value.trim();
+  const location = reviewLocation.value.trim();
+  const text = reviewText.value.trim();
+
+  if (!name || !text) {
+    alert('Please enter your name/email and review text.');
+    return;
+  }
+
+  // Create new review item
+  const li = document.createElement('li');
+  li.classList.add('review-item');
+  
+  const header = document.createElement('div');
+  header.classList.add('review-header');
+  header.innerHTML = `<b>${name}${location ? ', ' + location : ''}</b> <span class="review-stars">★★★★★</span>`;
+
+  const reviewDiv = document.createElement('div');
+  reviewDiv.classList.add('review-text');
+  reviewDiv.innerText = `"${text}"`;
+
+  li.appendChild(header);
+  li.appendChild(reviewDiv);
+
+  // Add to review list at top
+  reviewList.insertBefore(li, reviewList.firstChild);
+
+  // Clear input fields
+  reviewName.value = '';
+  reviewLocation.value = '';
+  reviewText.value = '';
+});
+
