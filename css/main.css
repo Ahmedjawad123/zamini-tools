@@ -386,3 +386,14 @@ paypal.Buttons({
   pointer-events: none; /* so it doesn’t block clicks */
 }
 
+.card.disabled {
+  opacity: 0.5;              /* makes it look lighter */
+  pointer-events: none;      /* prevents clicking links/buttons */
+  filter: grayscale(80%);    /* optional: black & white effect */
+}
+
+.card.disabled img {
+  opacity: 0.7;
+}
+
+
