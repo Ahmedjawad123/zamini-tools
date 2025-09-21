@@ -376,6 +376,7 @@ paypal.Buttons({
 
 
 
+
 .card .coming-soon {
   position: absolute;
   top: 12px;
@@ -386,14 +387,14 @@ paypal.Buttons({
   border-radius: 6px;
   font-size: 12px;
   font-weight: 600;
-  pointer-events: none; /* so it doesn’t block clicks */
+  pointer-events: none; /* keep it non-blocking */
 }
 
-
-/* ===== Dim Coming Soon Cards ===== */
+/* Dim Coming Soon Cards slightly, but keep flip working */
 .card.disabled {
-  position: relative;         /* needed for overlay */
-  pointer-events: none;       /* disable clicks */
+  position: relative;         
+  pointer-events: auto;       /* allow hover for flip */
+  filter: brightness(0.9);    /* slight dim effect */
 }
 
 .card.disabled::after {
@@ -403,13 +404,13 @@ paypal.Buttons({
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0,0,0,0.5); /* dark semi-transparent overlay */
-  border-radius: 12px;         /* match card radius */
-  z-index: 5;                  /* above card content */
+  background-color: rgba(0,0,0,0.15); /* lighter overlay */
+  border-radius: 12px;         
+  z-index: 1;                  /* below flip content */
+  pointer-events: none;        /* don’t block hover */
 }
 
 .card.disabled img,
 .card.disabled .btn {
-  opacity: 0.7;                /* fade images and buttons */
+  opacity: 0.85;               /* subtle dim */
 }
-
