@@ -416,3 +416,13 @@ paypal.Buttons({
 .card.disabled .btn {
   opacity: 0.85;               /* subtle dim */
 }
+
+
+.section-title {
+  text-align: center;
+  font-size: 1.5em;       /* slightly bigger */
+  font-weight: 700;
+  color: #F5DEB3;          /* matches your palette */
+  margin: 30px 0 15px 0;   /* spacing above/below */
+}
+
