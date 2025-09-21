@@ -274,6 +274,16 @@ footer {
   font-style: italic;
   color: #f0f0f0; /* light gray for comment text */
 }
+.review-item.pending .review-text {
+  display: none; /* hide text until approved */
+}
+
+.review-item.pending::after {
+  content: " (Pending approval)";
+  color: #FFD700;
+  font-weight: bold;
+}
+
 
 
 
