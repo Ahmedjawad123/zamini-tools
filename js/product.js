@@ -23,7 +23,7 @@ mainImg.addEventListener("dblclick", () => {
 });
 
 // ----------------------------
-// Reviews
+// Reviews with Pending Approval
 // ----------------------------
 const submitBtn = document.getElementById('submit-review');
 const reviewList = document.getElementById('review-list');
@@ -41,10 +41,9 @@ submitBtn.addEventListener('click', function() {
     return;
   }
 
-  // Create new review item
+  // Create new review item and mark as pending
   const li = document.createElement('li');
-  li.classList.add('review-item'); // CSS handles background, padding, margin, color
-
+  li.classList.add('review-item', 'pending'); // pending class
 
   const header = document.createElement('div');
   header.classList.add('review-header');
@@ -58,7 +57,7 @@ submitBtn.addEventListener('click', function() {
   li.appendChild(reviewDiv);
 
   // Prepend new review at top
-  reviewList.insertBefore(li, reviewList.firstChild);
+  reviewList.prepend(li);
 
   // Clear input fields
   reviewName.value = '';
@@ -107,4 +106,3 @@ window.addEventListener('click', (e) => {
     paypalPopup.style.display = 'none';
   }
 });
-
