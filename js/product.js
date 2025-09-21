@@ -43,12 +43,8 @@ submitBtn.addEventListener('click', function() {
 
   // Create new review item
   const li = document.createElement('li');
-  li.classList.add('review-item');
-  li.style.backgroundColor = "#1e1e1e"; // optional dark bg for contrast
-  li.style.color = "#f0f0f0"; // light text for readability
-  li.style.padding = "8px";
-  li.style.borderRadius = "5px";
-  li.style.marginBottom = "8px";
+  li.classList.add('review-item'); // CSS handles background, padding, margin, color
+
 
   const header = document.createElement('div');
   header.classList.add('review-header');
@@ -111,3 +107,4 @@ window.addEventListener('click', (e) => {
     paypalPopup.style.display = 'none';
   }
 });
+
