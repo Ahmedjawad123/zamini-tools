@@ -373,4 +373,16 @@ paypal.Buttons({
     alert('Payment could not be processed. Try again.');
   }
 }).render('#paypal-button-small');
+.card .coming-soon {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background-color: rgba(245, 222, 179, 0.5); /* light, semi-transparent */
+  color: #493C2B; /* darker text for readability */
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  pointer-events: none; /* so it doesn’t block clicks */
+}
 
