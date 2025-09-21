@@ -381,14 +381,16 @@ paypal.Buttons({
   position: absolute;
   top: 12px;
   right: 12px;
-  background-color: rgba(245, 222, 179, 0.5); /* light, semi-transparent */
-  color: #493C2B; /* darker text for readability */
+  background-color: rgba(212, 175, 55, 0.95); /* solid golden, more visible */
+  color: #FFF8DC; /* light text for contrast */
   padding: 4px 8px;
   border-radius: 6px;
   font-size: 12px;
-  font-weight: 600;
-  pointer-events: none; /* keep it non-blocking */
+  font-weight: 700;
+  pointer-events: none;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.3); /* subtle shadow for text readability */
 }
+
 
 /* Dim Coming Soon Cards slightly, but keep flip working */
 .card.disabled {
