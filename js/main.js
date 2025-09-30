@@ -57,6 +57,20 @@ if (typeof firebase === "undefined") {
     listenDownloadCount(productName);
   });
 }
+// ===== Total Views Counter =====
+const viewsDoc = db.collection("siteStats").doc("totalViews");
+
+// Increment view count once per page load
+viewsDoc.set({ count: firebase.firestore.FieldValue.increment(1) }, { merge: true })
+  .catch(err => console.error("Failed to increment views:", err));
+
+// Listen for real-time updates
+viewsDoc.onSnapshot(doc => {
+  const totalEl = document.getElementById("totalViews");
+  if (doc.exists && totalEl) {
+    totalEl.textContent = doc.data().count || 0;
+  }
+});
 
 
 
