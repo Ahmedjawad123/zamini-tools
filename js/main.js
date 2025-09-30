@@ -12,7 +12,6 @@ if (typeof firebase === "undefined") {
     measurementId: "G-YVCFZ783GR"
   };
 
-  // Only initialize once
   if (!firebase.apps.length) {
     firebase.initializeApp(firebaseConfig);
 
@@ -24,7 +23,6 @@ if (typeof firebase === "undefined") {
     }
   }
 
-  // ✅ Initialize db once, outside the if block
   const db = firebase.firestore();
 
   // ===== Increment and track download counts =====
@@ -34,43 +32,38 @@ if (typeof firebase === "undefined") {
       .catch(err => console.error("Failed to increment download:", err));
   }
 
-  // ===== Real-time listener for download counts =====
   function listenDownloadCount(productName) {
     const docRef = db.collection("downloads").doc(productName);
     const countEl = document.querySelector(`.download-count[data-product="${productName}"]`);
 
     if (countEl) {
       docRef.onSnapshot(doc => {
-        if (doc.exists) {
-          countEl.textContent = doc.data().count || 0;
-        } else {
-          countEl.textContent = 0;
-        }
+        countEl.textContent = doc.exists ? doc.data().count || 0 : 0;
       });
     }
   }
 
-  // ===== Initialize for all products =====
   document.querySelectorAll('a.btn[data-product]').forEach(btn => {
     const productName = btn.dataset.product;
     btn.addEventListener('click', () => incrementDownload(productName));
     listenDownloadCount(productName);
   });
+
+  // ===== Total Views Counter =====
+  const viewsDoc = db.collection("siteStats").doc("totalViews");
+
+  // Increment view count once per page load
+  viewsDoc.set({ count: firebase.firestore.FieldValue.increment(1) }, { merge: true })
+    .catch(err => console.error("Failed to increment views:", err));
+
+  // Listen for real-time updates
+  viewsDoc.onSnapshot(doc => {
+    const totalEl = document.getElementById("totalViews");
+    if (doc.exists && totalEl) {
+      totalEl.textContent = doc.data().count || 0;
+    }
+  });
 }
-// ===== Total Views Counter =====
-const viewsDoc = db.collection("siteStats").doc("totalViews");
-
-// Increment view count once per page load
-viewsDoc.set({ count: firebase.firestore.FieldValue.increment(1) }, { merge: true })
-  .catch(err => console.error("Failed to increment views:", err));
-
-// Listen for real-time updates
-viewsDoc.onSnapshot(doc => {
-  const totalEl = document.getElementById("totalViews");
-  if (doc.exists && totalEl) {
-    totalEl.textContent = doc.data().count || 0;
-  }
-});
 
 
 
