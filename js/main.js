@@ -1,66 +1,50 @@
-// ===== 0. Firebase Initialization =====
-if (typeof firebase === "undefined") {
-  console.error("Firebase SDK not loaded!");
-} else {
-  const firebaseConfig = {
-    apiKey: "AIzaSyDUUMyJDZXdGa1LyxcESOcth3e3ZPovt-0",
-    authDomain: "zaminimusafir.firebaseapp.com",
-    projectId: "zaminimusafir",
-    storageBucket: "zaminimusafir.firebasestorage.app",
-    messagingSenderId: "1066132693199",
-    appId: "1:1066132693199:web:8b87e2c3270434891d17ba",
-    measurementId: "G-YVCFZ783GR"
-  };
-
-  // Only initialize once
-  if (!firebase.apps.length) {
-    firebase.initializeApp(firebaseConfig);
-
-    if (firebase.analytics) {
-      firebase.analytics();
-      console.log("Firebase Analytics initialized.");
-    } else {
-      console.warn("Firebase Analytics not loaded — heartbeats disabled.");
-    }
-  }
-
-  // ✅ Initialize db once, outside the if block
-  const db = firebase.firestore();
-
-  // ===== Increment and track download counts =====
-  function incrementDownload(productName) {
-    const docRef = db.collection("downloads").doc(productName);
-    docRef.set({ count: firebase.firestore.FieldValue.increment(1) }, { merge: true })
-      .catch(err => console.error("Failed to increment download:", err));
-  }
-
-  // ===== Real-time listener for download counts =====
-  function listenDownloadCount(productName) {
-    const docRef = db.collection("downloads").doc(productName);
-    const countEl = document.querySelector(`.download-count[data-product="${productName}"]`);
-
-    if (countEl) {
-      docRef.onSnapshot(doc => {
-        if (doc.exists) {
-          countEl.textContent = doc.data().count || 0;
-        } else {
-          countEl.textContent = 0;
-        }
-      });
-    }
-  }
-
-  // ===== Initialize for all products =====
-  document.querySelectorAll('a.btn[data-product]').forEach(btn => {
-    const productName = btn.dataset.product;
-    btn.addEventListener('click', () => incrementDownload(productName));
-    listenDownloadCount(productName);
-  });
-}
-
-
-
+// main.js
 document.addEventListener('DOMContentLoaded', () => {
+
+  // ===== 0. Firebase Initialization =====
+  if (typeof firebase === "undefined") {
+    console.error("Firebase SDK not loaded!");
+  } else {
+    const firebaseConfig = {
+      apiKey: "AIzaSyDUUMyJDZXdGa1LyxcESOcth3e3ZPovt-0",
+      authDomain: "zaminimusafir.firebaseapp.com",
+      projectId: "zaminimusafir",
+      storageBucket: "zaminimusafir.firebasestorage.app",
+      messagingSenderId: "1066132693199",
+      appId: "1:1066132693199:web:8b87e2c3270434891d17ba",
+      measurementId: "G-YVCFZ783GR"
+    };
+
+    if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
+    if (firebase.analytics) firebase.analytics();
+
+    const db = firebase.firestore();
+
+    // Increment download count
+    function incrementDownload(productName) {
+      db.collection("downloads").doc(productName)
+        .set({ count: firebase.firestore.FieldValue.increment(1) }, { merge: true })
+        .catch(err => console.error("Failed to increment download:", err));
+    }
+
+    // Listen for real-time updates
+    function listenDownloadCount(productName) {
+      const countEl = document.querySelector(`.download-count[data-product="${productName}"]`);
+      if (!countEl) return;
+
+      db.collection("downloads").doc(productName)
+        .onSnapshot(doc => {
+          countEl.textContent = doc.exists ? doc.data().count || 0 : 0;
+        });
+    }
+
+    // Initialize for all products
+    document.querySelectorAll('a.btn[data-product]').forEach(btn => {
+      const productName = btn.dataset.product;
+      btn.addEventListener('click', () => incrementDownload(productName));
+      listenDownloadCount(productName);
+    });
+  }
 
   // ===== 1. Footer Year =====
   const yearEl = document.getElementById("year");
@@ -70,7 +54,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const supportBtn = document.getElementById('supportBtn');
   const paypalPopup = document.getElementById('paypalPopup');
   let isPayPalRendered = false;
-  let selectedAmount = "5"; // default
+  let selectedAmount = "5";
 
   const quickBtn = document.getElementById('donate-5');
   const customInput = document.getElementById('donate-custom');
@@ -90,19 +74,10 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   if (supportBtn) {
-    supportBtn.addEventListener('click', (e) => {
+    supportBtn.addEventListener('click', e => {
       e.stopPropagation();
       paypalPopup.style.display = paypalPopup.style.display === 'block' ? 'none' : 'block';
 
-      // GA4 tracking
-      if (typeof gtag === "function") {
-        gtag('event', 'support_click', {
-          'event_category': 'Button',
-          'event_label': 'Support Me'
-        });
-      }
-
-      // Render PayPal button once
       if (!isPayPalRendered && typeof paypal !== "undefined") {
         paypal.Buttons({
           style: { layout: 'vertical', color: 'gold', shape: 'rect', label: 'paypal', height: 40 },
@@ -113,7 +88,7 @@ document.addEventListener('DOMContentLoaded', () => {
             alert('Thank you for your support, ' + details.payer.name.given_name);
             paypalPopup.style.display = 'none';
           }),
-          onError: (err) => {
+          onError: err => {
             console.error(err);
             alert('Payment could not be processed. Try again.');
           }
@@ -138,7 +113,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
 
-    window.addEventListener('click', (e) => {
+    window.addEventListener('click', e => {
       if (!e.target.closest('#supportBtn') && !e.target.closest('#paypalPopup')) {
         paypalPopup.style.display = 'none';
       }
@@ -176,7 +151,7 @@ document.addEventListener('DOMContentLoaded', () => {
       feedbackForm.appendChild(statusEl);
     }
 
-    feedbackForm.addEventListener('submit', (e) => {
+    feedbackForm.addEventListener('submit', e => {
       e.preventDefault();
       statusEl.textContent = "Sending...";
 
@@ -203,7 +178,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const updatesForm = document.getElementById('updatesForm');
   if (updatesForm) {
     const updatesStatus = document.getElementById('updates-status');
-    updatesForm.addEventListener('submit', (e) => {
+    updatesForm.addEventListener('submit', e => {
       e.preventDefault();
       updatesStatus.textContent = "Subscribing...";
       const templateParams = { email: updatesForm.email.value };
@@ -220,7 +195,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // ===== 7. Track Download Buttons =====
+  // ===== 7. Track Download Buttons with GA4 =====
   document.querySelectorAll('a.btn').forEach(btn => {
     if (btn.textContent.trim().includes('Download')) {
       btn.addEventListener('click', () => {
@@ -231,7 +206,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  // ===== 8. GA4 Subscribe Click Event (Optional) =====
+  // ===== 8. GA4 Subscribe Click Event =====
   if (typeof gtag === "function") {
     gtag('event', 'subscribe_click', { 'event_category': 'Button', 'event_label': 'Updates' });
   }
