@@ -1,4 +1,4 @@
-// ===== 0. Firebase Initialization =====
+// ===== Firebase Initialization =====
 if (typeof firebase === "undefined") {
   console.error("Firebase SDK not loaded!");
 } else {
@@ -12,6 +12,7 @@ if (typeof firebase === "undefined") {
     measurementId: "G-YVCFZ783GR"
   };
 
+  // Initialize Firebase only once
   if (!firebase.apps.length) {
     firebase.initializeApp(firebaseConfig);
 
@@ -25,44 +26,49 @@ if (typeof firebase === "undefined") {
 
   const db = firebase.firestore();
 
-  // ===== Increment and track download counts =====
-  function incrementDownload(productName) {
-    const docRef = db.collection("downloads").doc(productName);
-    docRef.set({ count: firebase.firestore.FieldValue.increment(1) }, { merge: true })
-      .catch(err => console.error("Failed to increment download:", err));
-  }
+  document.addEventListener('DOMContentLoaded', () => {
 
-  function listenDownloadCount(productName) {
-    const docRef = db.collection("downloads").doc(productName);
-    const countEl = document.querySelector(`.download-count[data-product="${productName}"]`);
+    // ===== Download Counters =====
+    document.querySelectorAll('a.btn[data-product]').forEach(btn => {
+      const productName = btn.dataset.product;
 
-    if (countEl) {
-      docRef.onSnapshot(doc => {
-        countEl.textContent = doc.exists ? doc.data().count || 0 : 0;
+      // Increment count on click
+      btn.addEventListener('click', () => {
+        const docRef = db.collection("downloads").doc(productName);
+        docRef.set({ count: firebase.firestore.FieldValue.increment(1) }, { merge: true })
+          .catch(err => console.error("Failed to increment download:", err));
       });
-    }
-  }
 
-  document.querySelectorAll('a.btn[data-product]').forEach(btn => {
-    const productName = btn.dataset.product;
-    btn.addEventListener('click', () => incrementDownload(productName));
-    listenDownloadCount(productName);
-  });
+      // Listen for real-time updates
+      const docRef = db.collection("downloads").doc(productName);
+      const countEl = document.querySelector(`.download-count[data-product="${productName}"]`);
+      if (countEl) {
+        docRef.onSnapshot(doc => {
+          countEl.textContent = doc.exists ? doc.data().count || 0 : 0;
+        });
+      }
+    });
 
-  // ===== Total Views Counter =====
-  const viewsDoc = db.collection("siteStats").doc("totalViews");
+    // ===== Total Views Counter =====
+    const viewsDoc = db.collection("siteStats").doc("totalViews");
 
-  // Increment view count once per page load
-  viewsDoc.set({ count: firebase.firestore.FieldValue.increment(1) }, { merge: true })
-    .catch(err => console.error("Failed to increment views:", err));
+    // Increment view count once per page load
+    viewsDoc.update({
+      count: firebase.firestore.FieldValue.increment(1)
+    }).catch(err => {
+      // If document doesn't exist yet, create it
+      viewsDoc.set({ count: 1 }).catch(e => console.error("Failed to set views:", e));
+    });
 
-  // Listen for real-time updates
-  viewsDoc.onSnapshot(doc => {
-    const totalEl = document.getElementById("totalViews");
-    if (doc.exists && totalEl) {
-      totalEl.textContent = doc.data().count || 0;
-    }
-  });
+    // Listen for real-time updates
+    viewsDoc.onSnapshot(doc => {
+      const totalEl = document.getElementById("totalViews");
+      if (doc.exists && totalEl) {
+        totalEl.textContent = doc.data().count || 0;
+      }
+    });
+
+  }); // DOMContentLoaded
 }
 
 
