@@ -1,4 +1,4 @@
-// ===== 0. Firebase Initialization =====
+// ===== Firebase Initialization =====
 if (typeof firebase === "undefined") {
   console.error("Firebase SDK not loaded!");
 } else {
@@ -12,52 +12,62 @@ if (typeof firebase === "undefined") {
     measurementId: "G-YVCFZ783GR"
   };
 
-  // Initialize Firebase only once
   if (!firebase.apps.length) {
     firebase.initializeApp(firebaseConfig);
-
-    if (firebase.analytics) {
-      firebase.analytics();
-      console.log("Firebase Analytics initialized.");
-    } else {
-      console.warn("Firebase Analytics not loaded — heartbeats disabled.");
-    }
+    if (firebase.analytics) firebase.analytics();
   }
 
   const db = firebase.firestore();
 
   // ===== Increment download count =====
-  function incrementDownload(productName) {
-    const docRef = db.collection("downloads").doc(productName);
-    docRef.set(
-      { count: firebase.firestore.FieldValue.increment(1) },
-      { merge: true } // preserves existing count
-    ).catch(err => console.error("Failed to increment download:", err));
+  async function incrementDownload(productName) {
+    try {
+      const docRef = db.collection("downloads").doc(productName);
+      await docRef.set(
+        { count: firebase.firestore.FieldValue.increment(1) },
+        { merge: true } // preserve existing count
+      );
+    } catch (err) {
+      console.error("Failed to increment download:", err);
+    }
   }
 
-  // ===== Listen & show total download count =====
-  function listenDownloadCount(productName) {
+  // ===== Initialize download counts =====
+  async function initializeDownloadCount(productName) {
     const docRef = db.collection("downloads").doc(productName);
     const countEl = document.querySelector(`.download-count[data-product="${productName}"]`);
-
     if (!countEl) return;
 
-    docRef.onSnapshot(doc => {
-      if (doc.exists) {
-        countEl.textContent = doc.data().count || 0;
-      } else {
-        docRef.set({ count: 0 }, { merge: true });
+    try {
+      const doc = await docRef.get();
+      if (!doc.exists) {
+        await docRef.set({ count: 0 }, { merge: true });
         countEl.textContent = 0;
+      } else {
+        countEl.textContent = doc.data().count || 0;
+      }
+    } catch (err) {
+      console.error("Failed to read/download count:", err);
+      countEl.textContent = 0;
+    }
+
+    // Listen for real-time updates
+    docRef.onSnapshot(docSnap => {
+      if (docSnap.exists) {
+        countEl.textContent = docSnap.data().count || 0;
       }
     });
   }
 
-  // ===== Initialize download buttons =====
+  // ===== Attach events to all download buttons =====
   document.querySelectorAll('a.btn[data-product]').forEach(btn => {
     const productName = btn.dataset.product;
 
+    // Click event increments count
     btn.addEventListener('click', () => incrementDownload(productName));
-    listenDownloadCount(productName);
+
+    // Initialize & show total count
+    initializeDownloadCount(productName);
   });
 }
 
