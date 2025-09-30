@@ -19,57 +19,54 @@ if (typeof firebase === "undefined") {
 
   const db = firebase.firestore();
 
+  // ===== Ensure download doc exists and get current count =====
+  async function getDownloadCount(productName) {
+    const docRef = db.collection("downloads").doc(productName);
+    const doc = await docRef.get();
+    if (!doc.exists) {
+      await docRef.set({ count: 0 });
+      return 0;
+    } else {
+      return doc.data().count || 0;
+    }
+  }
+
   // ===== Increment download count =====
   async function incrementDownload(productName) {
-    try {
-      const docRef = db.collection("downloads").doc(productName);
-      await docRef.set(
-        { count: firebase.firestore.FieldValue.increment(1) },
-        { merge: true } // preserve existing count
-      );
-    } catch (err) {
-      console.error("Failed to increment download:", err);
-    }
-  }
-
-  // ===== Initialize download counts =====
-  async function initializeDownloadCount(productName) {
     const docRef = db.collection("downloads").doc(productName);
-    const countEl = document.querySelector(`.download-count[data-product="${productName}"]`);
-    if (!countEl) return;
-
-    try {
-      const doc = await docRef.get();
-      if (!doc.exists) {
-        await docRef.set({ count: 0 }, { merge: true });
-        countEl.textContent = 0;
-      } else {
-        countEl.textContent = doc.data().count || 0;
-      }
-    } catch (err) {
-      console.error("Failed to read/download count:", err);
-      countEl.textContent = 0;
-    }
-
-    // Listen for real-time updates
-    docRef.onSnapshot(docSnap => {
-      if (docSnap.exists) {
-        countEl.textContent = docSnap.data().count || 0;
-      }
-    });
+    await docRef.set({ count: firebase.firestore.FieldValue.increment(1) }, { merge: true });
   }
 
-  // ===== Attach events to all download buttons =====
-  document.querySelectorAll('a.btn[data-product]').forEach(btn => {
+  // ===== Initialize all download buttons =====
+  document.querySelectorAll('a.btn[data-product]').forEach(async (btn) => {
     const productName = btn.dataset.product;
+    const countEl = document.querySelector(`.download-count[data-product="${productName}"]`);
 
-    // Click event increments count
-    btn.addEventListener('click', () => incrementDownload(productName));
+    // Show current count on page load
+    if (countEl) {
+      const count = await getDownloadCount(productName);
+      countEl.textContent = count;
+    }
 
-    // Initialize & show total count
-    initializeDownloadCount(productName);
+    // Increment on click
+    btn.addEventListener('click', async () => {
+      await incrementDownload(productName);
+      const newCount = await getDownloadCount(productName);
+      if (countEl) countEl.textContent = newCount;
+    });
+
+    // Real-time listener for live updates
+    const docRef = db.collection("downloads").doc(productName);
+    docRef.onSnapshot(doc => {
+      if (doc.exists && countEl) countEl.textContent = doc.data().count || 0;
+    });
   });
 }
+
+
+
+
+
 
 // ===== 1. Footer Year =====
 document.addEventListener('DOMContentLoaded', () => {
