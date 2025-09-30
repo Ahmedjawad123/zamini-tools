@@ -81,6 +81,52 @@
   <!-- Firebase Analytics -->
   <script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-analytics-compat.js"></script>
 
+  
+  <script>
+    // Initialize Firebase (compat already included in your head)
+    const db = firebase.firestore();
+  
+    // Increment download count reliably
+    function incrementDownload(productName) {
+      const docRef = db.collection("downloads").doc(productName);
+      docRef.get().then(docSnap => {
+        if (!docSnap.exists) {
+          // If the document does not exist, create it with count = 1
+          docRef.set({ count: 1 });
+        } else {
+          // Increment the count
+          docRef.update({ count: firebase.firestore.FieldValue.increment(1) });
+        }
+      }).catch(err => console.error("Failed to increment download:", err));
+    }
+  
+    // Listen to real-time download counts
+    function listenDownloadCount(productName) {
+      const docRef = db.collection("downloads").doc(productName);
+      const countEl = document.querySelector(`.download-count[data-product="${productName}"]`);
+      if (countEl) {
+        docRef.onSnapshot(docSnap => {
+          if (docSnap.exists) {
+            countEl.textContent = docSnap.data().count || 0;
+          } else {
+            countEl.textContent = 0;
+          }
+        });
+      }
+    }
+  
+    // Initialize buttons
+    document.querySelectorAll('a.btn[data-product]').forEach(btn => {
+      const productName = btn.dataset.product;
+      btn.addEventListener('click', () => incrementDownload(productName));
+      listenDownloadCount(productName);
+    });
+  </script>
+
+
+
+  
+
   <!-- Main JS -->
   <script src="js/main.js" defer></script>
 </head>
