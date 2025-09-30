@@ -15,13 +15,7 @@ if (typeof firebase === "undefined") {
   // Initialize Firebase only once
   if (!firebase.apps.length) {
     firebase.initializeApp(firebaseConfig);
-
-    if (firebase.analytics) {
-      firebase.analytics();
-      console.log("Firebase Analytics initialized.");
-    } else {
-      console.warn("Firebase Analytics not loaded — heartbeats disabled.");
-    }
+    if (firebase.analytics) firebase.analytics();
   }
 
   const db = firebase.firestore();
@@ -51,20 +45,56 @@ if (typeof firebase === "undefined") {
 
     // ===== Total Views Counter =====
     const viewsDoc = db.collection("siteStats").doc("totalViews");
-
     // Increment view count once per page load
-    viewsDoc.update({
-      count: firebase.firestore.FieldValue.increment(1)
-    }).catch(err => {
-      // If document doesn't exist yet, create it
-      viewsDoc.set({ count: 1 }).catch(e => console.error("Failed to set views:", e));
-    });
-
+    viewsDoc.update({ count: firebase.firestore.FieldValue.increment(1) })
+      .catch(() => viewsDoc.set({ count: 1 }));
     // Listen for real-time updates
     viewsDoc.onSnapshot(doc => {
       const totalEl = document.getElementById("totalViews");
-      if (doc.exists && totalEl) {
-        totalEl.textContent = doc.data().count || 0;
+      if (doc.exists && totalEl) totalEl.textContent = doc.data().count || 0;
+    });
+
+    // ===== Updates & Notifications =====
+    const updatesRef = db.collection("updates");
+    const userId = "guest"; // change to user UID if you implement auth
+    const readKey = `readUpdates_${userId}`;
+    let readUpdates = JSON.parse(localStorage.getItem(readKey)) || [];
+
+    function updateBadge(count) {
+      const badgeEl = document.getElementById("updatesBadge");
+      if (badgeEl) badgeEl.textContent = count;
+    }
+
+    updatesRef.orderBy("date", "desc").onSnapshot(snapshot => {
+      const allUpdates = [];
+      snapshot.forEach(doc => allUpdates.push({ id: doc.id, ...doc.data() }));
+
+      // Count unread
+      const unreadCount = allUpdates.filter(u => !readUpdates.includes(u.id)).length;
+      updateBadge(unreadCount);
+
+      // Display updates in updates section
+      const updatesContainer = document.getElementById("updatesContainer");
+      if (updatesContainer) {
+        updatesContainer.innerHTML = "";
+        allUpdates.forEach(u => {
+          const div = document.createElement("div");
+          div.className = "update-item";
+          div.innerHTML = `
+            <strong>${u.title}</strong> <em>${new Date(u.date.seconds * 1000).toLocaleDateString()}</em>
+            <p>${u.description}</p>
+            <a href="${u.link || '#'}" class="btn mark-read">Mark as Read</a>
+          `;
+          updatesContainer.appendChild(div);
+
+          // Mark as read
+          div.querySelector(".mark-read").addEventListener("click", () => {
+            if (!readUpdates.includes(u.id)) readUpdates.push(u.id);
+            localStorage.setItem(readKey, JSON.stringify(readUpdates));
+            updateBadge(allUpdates.filter(x => !readUpdates.includes(x.id)).length);
+            div.style.opacity = "0.6"; // visually mark read
+          });
+        });
       }
     });
 
