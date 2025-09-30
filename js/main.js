@@ -22,8 +22,11 @@ if (typeof firebase === "undefined") {
   // ===== Ensure document exists =====
   async function ensureDoc(productName) {
     const docRef = db.collection("downloads").doc(productName);
-    const doc = await docRef.get();
-    if (!doc.exists) await docRef.set({ count: 0 });
+    let doc = await docRef.get();
+    if (!doc.exists) {
+      await docRef.set({ count: 0 });
+      doc = await docRef.get(); // re-fetch after creation
+    }
     return docRef;
   }
 
@@ -43,7 +46,7 @@ if (typeof firebase === "undefined") {
 
     // Show current count on page load
     const doc = await docRef.get();
-    if (countEl) countEl.textContent = doc.data().count || 0;
+    if (countEl && doc.data()) countEl.textContent = doc.data().count;
 
     // Increment on click
     btn.addEventListener('click', async () => {
@@ -52,7 +55,9 @@ if (typeof firebase === "undefined") {
 
     // Real-time updates
     docRef.onSnapshot(doc => {
-      if (countEl && doc.exists) countEl.textContent = doc.data().count || 0;
+      if (countEl && doc.exists && doc.data()) {
+        countEl.textContent = doc.data().count;
+      }
     });
   });
 }
