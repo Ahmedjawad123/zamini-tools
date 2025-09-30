@@ -57,31 +57,6 @@ if (typeof firebase === "undefined") {
   });
 }
 
-// ===== Footer Year =====
-document.addEventListener('DOMContentLoaded', () => {
-  const yearEl = document.getElementById("year");
-  if (yearEl) yearEl.textContent = new Date().getFullYear();
-});
-
-// ===== Optional: File size fetch example =====
-document.addEventListener('DOMContentLoaded', () => {
-  const fileSizeSpan = document.getElementById('file-size');
-  if (fileSizeSpan) {
-    const fileUrl = fileSizeSpan.dataset.fileUrl; // set in HTML as data-file-url
-    fetch(fileUrl, { method: 'HEAD' })
-      .then(resp => {
-        const size = resp.headers.get('content-length');
-        fileSizeSpan.textContent = size ? (size / (1024 * 1024)).toFixed(2) + " MB" : "N/A";
-      })
-      .catch(err => {
-        console.error('File size fetch error:', err);
-        fileSizeSpan.textContent = "N/A";
-      });
-  }
-});
-
-}
-
 
 
 document.addEventListener('DOMContentLoaded', () => {
