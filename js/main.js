@@ -12,6 +12,7 @@ if (typeof firebase === "undefined") {
     measurementId: "G-YVCFZ783GR"
   };
 
+  // Initialize Firebase only once
   if (!firebase.apps.length) {
     firebase.initializeApp(firebaseConfig);
 
@@ -25,14 +26,16 @@ if (typeof firebase === "undefined") {
 
   const db = firebase.firestore();
 
-  // ===== Increment and track download counts =====
+  // ===== Increment download count =====
   function incrementDownload(productName) {
     const docRef = db.collection("downloads").doc(productName);
-    docRef.set({ count: firebase.firestore.FieldValue.increment(1) }, { merge: true })
-      .catch(err => console.error("Failed to increment download:", err));
+    docRef.set(
+      { count: firebase.firestore.FieldValue.increment(1) },
+      { merge: true } // preserves existing count
+    ).catch(err => console.error("Failed to increment download:", err));
   }
 
-  // ===== Real-time listener for download counts =====
+  // ===== Listen & show total download count =====
   function listenDownloadCount(productName) {
     const docRef = db.collection("downloads").doc(productName);
     const countEl = document.querySelector(`.download-count[data-product="${productName}"]`);
@@ -49,17 +52,33 @@ if (typeof firebase === "undefined") {
     });
   }
 
-  // ===== Attach to DOM after it's ready =====
-  document.addEventListener('DOMContentLoaded', () => {
-    // Initialize for all products
-    document.querySelectorAll('a.btn[data-product]').forEach(btn => {
-      const productName = btn.dataset.product;
+  // ===== Initialize download buttons =====
+  document.querySelectorAll('a.btn[data-product]').forEach(btn => {
+    const productName = btn.dataset.product;
 
-      btn.addEventListener('click', () => incrementDownload(productName));
-      listenDownloadCount(productName);
-    });
+    btn.addEventListener('click', () => incrementDownload(productName));
+    listenDownloadCount(productName);
   });
 }
+
+// ===== 1. Footer Year =====
+document.addEventListener('DOMContentLoaded', () => {
+  const yearEl = document.getElementById("year");
+  if (yearEl) yearEl.textContent = new Date().getFullYear();
+});
+
+// ===== 2. Optional: File size fetch example =====
+const fileSizeSpan = document.getElementById('file-size');
+if (fileSizeSpan) {
+  const fileUrl = fileSizeSpan.dataset.fileUrl; // set in HTML as data-file-url
+  fetch(fileUrl, { method: 'HEAD' })
+    .then(resp => {
+      const size = resp.headers.get('content-length');
+      fileSizeSpan.textContent = size ? (size / (1024 * 1024)).toFixed(2) + " MB" : "N/A";
+    })
+    .catch(err => { fileSizeSpan.textContent = "N/A"; console.error(err); });
+}
+
 
 
 
