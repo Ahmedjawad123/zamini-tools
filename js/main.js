@@ -12,22 +12,26 @@ if (typeof firebase === "undefined") {
     measurementId: "G-YVCFZ783GR"
   };
 
-  // Initialize Firebase only once
   if (!firebase.apps.length) {
     firebase.initializeApp(firebaseConfig);
-    if (firebase.analytics) firebase.analytics();
+    if (firebase.analytics) {
+      firebase.analytics();
+      console.log("Firebase Analytics initialized.");
+    } else {
+      console.warn("Firebase Analytics not loaded — heartbeats disabled.");
+    }
   }
 
   const db = firebase.firestore();
 
-  document.addEventListener('DOMContentLoaded', () => {
+  document.addEventListener("DOMContentLoaded", () => {
 
     // ===== Download Counters =====
     document.querySelectorAll('a.btn[data-product]').forEach(btn => {
       const productName = btn.dataset.product;
 
       // Increment count on click
-      btn.addEventListener('click', () => {
+      btn.addEventListener("click", () => {
         const docRef = db.collection("downloads").doc(productName);
         docRef.set({ count: firebase.firestore.FieldValue.increment(1) }, { merge: true })
           .catch(err => console.error("Failed to increment download:", err));
@@ -45,18 +49,23 @@ if (typeof firebase === "undefined") {
 
     // ===== Total Views Counter =====
     const viewsDoc = db.collection("siteStats").doc("totalViews");
+
     // Increment view count once per page load
     viewsDoc.update({ count: firebase.firestore.FieldValue.increment(1) })
-      .catch(() => viewsDoc.set({ count: 1 }));
+      .catch(err => {
+        // If document doesn't exist yet, create it
+        viewsDoc.set({ count: 1 }).catch(e => console.error("Failed to set views:", e));
+      });
+
     // Listen for real-time updates
     viewsDoc.onSnapshot(doc => {
       const totalEl = document.getElementById("totalViews");
       if (doc.exists && totalEl) totalEl.textContent = doc.data().count || 0;
     });
 
-    // ===== Updates & Notifications =====
+    // ===== Updates Section =====
     const updatesRef = db.collection("updates");
-    const userId = "guest"; // change to user UID if you implement auth
+    const userId = "guest"; // Replace with user ID if you have authentication
     const readKey = `readUpdates_${userId}`;
     let readUpdates = JSON.parse(localStorage.getItem(readKey)) || [];
 
