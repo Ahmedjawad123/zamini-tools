@@ -1,4 +1,4 @@
- // ===== 0. Firebase Initialization =====
+// ===== Firebase Initialization =====
 if (typeof firebase === "undefined") {
   console.error("Firebase SDK not loaded!");
 } else {
@@ -12,45 +12,34 @@ if (typeof firebase === "undefined") {
     measurementId: "G-YVCFZ783GR"
   };
 
-  // Only initialize once
   if (!firebase.apps.length) {
     firebase.initializeApp(firebaseConfig);
-
-    if (firebase.analytics) {
-      firebase.analytics();
-      console.log("Firebase Analytics initialized.");
-    } else {
-      console.warn("Firebase Analytics not loaded — heartbeats disabled.");
-    }
+    if (firebase.analytics) firebase.analytics();
   }
 
-  // ✅ Initialize db once, outside the if block
   const db = firebase.firestore();
 
-  // ===== Increment and track download counts =====
+  // ===== Increment download count =====
   function incrementDownload(productName) {
     const docRef = db.collection("downloads").doc(productName);
-    docRef.set({ count: firebase.firestore.FieldValue.increment(1) }, { merge: true })
-      .catch(err => console.error("Failed to increment download:", err));
+    docRef.set({
+      count: firebase.firestore.FieldValue.increment(1)
+    }, { merge: true }).catch(err => console.error(err));
   }
 
-  // ===== Real-time listener for download counts =====
+  // ===== Listen for real-time updates =====
   function listenDownloadCount(productName) {
-    const docRef = db.collection("downloads").doc(productName);
     const countEl = document.querySelector(`.download-count[data-product="${productName}"]`);
+    if (!countEl) return;
 
-    if (countEl) {
-      docRef.onSnapshot(doc => {
-        if (doc.exists) {
-          countEl.textContent = doc.data().count || 0;
-        } else {
-          countEl.textContent = 0;
-        }
-      });
-    }
+    const docRef = db.collection("downloads").doc(productName);
+    docRef.onSnapshot(doc => {
+      if (doc.exists) countEl.textContent = doc.data().count || 0;
+      else countEl.textContent = 0;
+    });
   }
 
-  // ===== Initialize for all products =====
+  // ===== Initialize all products =====
   document.querySelectorAll('a.btn[data-product]').forEach(btn => {
     const productName = btn.dataset.product;
     btn.addEventListener('click', () => incrementDownload(productName));
