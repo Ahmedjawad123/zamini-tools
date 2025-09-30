@@ -19,16 +19,12 @@ if (typeof firebase === "undefined") {
 
   const db = firebase.firestore();
 
-  // ===== Ensure download doc exists and get current count =====
-  async function getDownloadCount(productName) {
+  // ===== Ensure document exists =====
+  async function ensureDoc(productName) {
     const docRef = db.collection("downloads").doc(productName);
     const doc = await docRef.get();
-    if (!doc.exists) {
-      await docRef.set({ count: 0 });
-      return 0;
-    } else {
-      return doc.data().count || 0;
-    }
+    if (!doc.exists) await docRef.set({ count: 0 });
+    return docRef;
   }
 
   // ===== Increment download count =====
@@ -38,53 +34,52 @@ if (typeof firebase === "undefined") {
   }
 
   // ===== Initialize all download buttons =====
-  document.querySelectorAll('a.btn[data-product]').forEach(async (btn) => {
+  document.querySelectorAll('a.btn[data-product]').forEach(async btn => {
     const productName = btn.dataset.product;
     const countEl = document.querySelector(`.download-count[data-product="${productName}"]`);
 
+    // Ensure document exists
+    const docRef = await ensureDoc(productName);
+
     // Show current count on page load
-    if (countEl) {
-      const count = await getDownloadCount(productName);
-      countEl.textContent = count;
-    }
+    const doc = await docRef.get();
+    if (countEl) countEl.textContent = doc.data().count || 0;
 
     // Increment on click
     btn.addEventListener('click', async () => {
       await incrementDownload(productName);
-      const newCount = await getDownloadCount(productName);
-      if (countEl) countEl.textContent = newCount;
     });
 
-    // Real-time listener for live updates
-    const docRef = db.collection("downloads").doc(productName);
+    // Real-time updates
     docRef.onSnapshot(doc => {
-      if (doc.exists && countEl) countEl.textContent = doc.data().count || 0;
+      if (countEl && doc.exists) countEl.textContent = doc.data().count || 0;
     });
   });
 }
 
-
-
-
-
-
-// ===== 1. Footer Year =====
+// ===== Footer Year =====
 document.addEventListener('DOMContentLoaded', () => {
   const yearEl = document.getElementById("year");
   if (yearEl) yearEl.textContent = new Date().getFullYear();
 });
 
-// ===== 2. Optional: File size fetch example =====
-const fileSizeSpan = document.getElementById('file-size');
-if (fileSizeSpan) {
-  const fileUrl = fileSizeSpan.dataset.fileUrl; // set in HTML as data-file-url
-  fetch(fileUrl, { method: 'HEAD' })
-    .then(resp => {
-      const size = resp.headers.get('content-length');
-      fileSizeSpan.textContent = size ? (size / (1024 * 1024)).toFixed(2) + " MB" : "N/A";
-    })
-    .catch(err => { fileSizeSpan.textContent = "N/A"; console.error(err); });
-}
+// ===== Optional: File size fetch example =====
+document.addEventListener('DOMContentLoaded', () => {
+  const fileSizeSpan = document.getElementById('file-size');
+  if (fileSizeSpan) {
+    const fileUrl = fileSizeSpan.dataset.fileUrl; // set in HTML as data-file-url
+    fetch(fileUrl, { method: 'HEAD' })
+      .then(resp => {
+        const size = resp.headers.get('content-length');
+        fileSizeSpan.textContent = size ? (size / (1024 * 1024)).toFixed(2) + " MB" : "N/A";
+      })
+      .catch(err => {
+        console.error('File size fetch error:', err);
+        fileSizeSpan.textContent = "N/A";
+      });
+  }
+});
+
 
 
 
