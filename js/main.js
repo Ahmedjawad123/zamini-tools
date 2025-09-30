@@ -1,4 +1,4 @@
-// ===== 0. Firebase Initialization =====
+why is it vanishing after i refrensh i mean download count? // ===== 0. Firebase Initialization =====
 if (typeof firebase === "undefined") {
   console.error("Firebase SDK not loaded!");
 } else {
@@ -12,7 +12,7 @@ if (typeof firebase === "undefined") {
     measurementId: "G-YVCFZ783GR"
   };
 
-  // Initialize Firebase once
+  // Only initialize once
   if (!firebase.apps.length) {
     firebase.initializeApp(firebaseConfig);
 
@@ -24,28 +24,14 @@ if (typeof firebase === "undefined") {
     }
   }
 
-  // Initialize Firestore
+  // ✅ Initialize db once, outside the if block
   const db = firebase.firestore();
 
-  // ===== Increment and track download counts with guaranteed save =====
+  // ===== Increment and track download counts =====
   function incrementDownload(productName) {
     const docRef = db.collection("downloads").doc(productName);
-
-    docRef.get()
-      .then(doc => {
-        if (!doc.exists) {
-          // Document doesn't exist → create with count 1
-          docRef.set({ count: 1 })
-            .then(() => console.log(`[${productName}] Document created with count 1`))
-            .catch(err => console.error(`[${productName}] Failed to create document:`, err));
-        } else {
-          // Document exists → increment count
-          docRef.update({ count: firebase.firestore.FieldValue.increment(1) })
-            .then(() => console.log(`[${productName}] Count incremented`))
-            .catch(err => console.error(`[${productName}] Failed to increment count:`, err));
-        }
-      })
-      .catch(err => console.error(`[${productName}] Error fetching document:`, err));
+    docRef.set({ count: firebase.firestore.FieldValue.increment(1) }, { merge: true })
+      .catch(err => console.error("Failed to increment download:", err));
   }
 
   // ===== Real-time listener for download counts =====
@@ -53,38 +39,21 @@ if (typeof firebase === "undefined") {
     const docRef = db.collection("downloads").doc(productName);
     const countEl = document.querySelector(`.download-count[data-product="${productName}"]`);
 
-    if (!countEl) return;
-
-    docRef.onSnapshot(doc => {
-      if (doc.exists) {
-        const count = doc.data().count || 0;
-        countEl.textContent = count;
-        console.log(`[${productName}] Real-time count: ${count}`);
-      } else {
-        countEl.textContent = 0;
-        console.log(`[${productName}] Document does not exist yet`);
-      }
-    }, err => console.error(`[${productName}] Snapshot listener error:`, err));
+    if (countEl) {
+      docRef.onSnapshot(doc => {
+        if (doc.exists) {
+          countEl.textContent = doc.data().count || 0;
+        } else {
+          countEl.textContent = 0;
+        }
+      });
+    }
   }
 
-  // ===== Initialize all product buttons =====
+  // ===== Initialize for all products =====
   document.querySelectorAll('a.btn[data-product]').forEach(btn => {
     const productName = btn.dataset.product;
-
-    // Click → increment + GA4 tracking
-    btn.addEventListener('click', () => {
-      incrementDownload(productName);
-
-      if (typeof gtag === "function") {
-        gtag('event', 'download_click', {
-          event_category: 'Button',
-          event_label: productName
-        });
-        console.log(`[${productName}] GA4 event sent`);
-      }
-    });
-
-    // Listen for real-time updates
+    btn.addEventListener('click', () => incrementDownload(productName));
     listenDownloadCount(productName);
   });
 }
