@@ -3,67 +3,54 @@ if (typeof firebase === "undefined") {
   console.error("Firebase SDK not loaded!");
 } else {
   const firebaseConfig = {
-    apiKey: "AIzaSyDUUMyJDZXdGa1LyxcESOcth3e3ZPovt-0",
+    apiKey: "YOUR_API_KEY_HERE",
     authDomain: "zaminimusafir.firebaseapp.com",
     projectId: "zaminimusafir",
-    storageBucket: "zaminimusafir.firebasestorage.app",
-    messagingSenderId: "1066132693199",
-    appId: "1:1066132693199:web:8b87e2c3270434891d17ba",
-    measurementId: "G-YVCFZ783GR"
+    storageBucket: "zaminimusafir.appspot.com",
+    messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+    appId: "YOUR_APP_ID",
+    measurementId: "YOUR_MEASUREMENT_ID"
   };
 
-  // Initialize Firebase once
-  if (!firebase.apps.length) {
-    firebase.initializeApp(firebaseConfig);
-    if (firebase.analytics) {
-      firebase.analytics();
-      console.log("Firebase Analytics initialized.");
-    } else {
-      console.warn("Firebase Analytics not loaded — heartbeats disabled.");
-    }
-  }
-
+  firebase.initializeApp(firebaseConfig);
   const db = firebase.firestore();
+  firebase.analytics();
+  console.log("Firebase initialized successfully.");
+}
 
-  // ===== Download Count Setup =====
-  document.querySelectorAll('a.btn[data-product]').forEach(btn => {
-    const productName = btn.dataset.product;
+// ===== Download Count Handling =====
+document.addEventListener("DOMContentLoaded", () => {
+  const downloadButtons = document.querySelectorAll("a[data-product]");
+  
+  downloadButtons.forEach(btn => {
+    const productName = btn.getAttribute("data-product");
+    const counterElem = document.querySelector(`.download-count[data-product="${productName}"]`);
 
-    console.log("Download button detected for:", productName);
+    if (!counterElem) return;
 
-    const countEl = document.querySelector(`.download-count[data-product="${productName}"]`);
-
-    if (!countEl) {
-      console.warn("No element found for product:", productName);
-      return;
-    }
-
+    // Load initial count from Firestore
     const docRef = db.collection("downloads").doc(productName);
-
-    // Initialize document if it doesn't exist
     docRef.get().then(doc => {
-      if (!doc.exists) {
-        console.log(`Creating initial download doc for ${productName}`);
+      if (doc.exists) {
+        counterElem.textContent = doc.data().count || 0;
+      } else {
         docRef.set({ count: 0 });
+        counterElem.textContent = 0;
       }
-    }).catch(err => console.error("Error initializing download doc:", err));
+    }).catch(err => console.error("Error fetching download count:", err));
 
-    // Real-time listener
-    docRef.onSnapshot(doc => {
-      const count = doc.exists ? doc.data().count || 0 : 0;
-      countEl.textContent = count;
-      console.log(`Real-time count for ${productName}:`, count);
-    });
-
-    // Increment on click
-    btn.addEventListener('click', () => {
-      console.log("Clicked download for:", productName);
+    // Increment count on click
+    btn.addEventListener("click", () => {
       docRef.set({ count: firebase.firestore.FieldValue.increment(1) }, { merge: true })
-        .then(() => console.log("Incremented count for:", productName))
-        .catch(err => console.error("Failed to increment count:", err));
+        .then(() => {
+          // Update UI immediately
+          let current = parseInt(counterElem.textContent) || 0;
+          counterElem.textContent = current + 1;
+        })
+        .catch(err => console.error("Error updating download count:", err));
     });
   });
-}
+});
 
 
 
