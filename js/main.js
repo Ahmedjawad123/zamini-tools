@@ -19,42 +19,61 @@ if (typeof firebase === "undefined") {
 
   const db = firebase.firestore();
 
-  // ===== Ensure document exists =====
-  async function ensureDoc(productName) {
-    const docRef = db.collection("downloads").doc(productName);
-    const doc = await docRef.get();
-    if (!doc.exists) await docRef.set({ count: 0 });
-    return docRef;
+  // ===== Initialize download counts =====
+  async function initDownloadCount() {
+    const buttons = document.querySelectorAll('a.btn[data-product]');
+
+    buttons.forEach(async (btn) => {
+      const productName = btn.dataset.product;
+      const countEl = document.querySelector(`.download-count[data-product="${productName}"]`);
+
+      const docRef = db.collection("downloads").doc(productName);
+
+      // Ensure document exists or force create it
+      await docRef.get().then(async (doc) => {
+        if (!doc.exists) {
+          console.log(`Creating Firestore doc for: ${productName}`);
+          await docRef.set({ count: 0 });
+        }
+      }).catch(err => console.error("Firestore error:", err));
+
+      // Show initial count
+      docRef.get().then(doc => {
+        if (countEl && doc.exists) countEl.textContent = doc.data().count || 0;
+      });
+
+      // Increment on click
+      btn.addEventListener('click', async () => {
+        try {
+          await docRef.set(
+            { count: firebase.firestore.FieldValue.increment(1) },
+            { merge: true }
+          );
+        } catch (err) {
+          console.error("Increment error:", err);
+        }
+      });
+
+      // Real-time updates
+      docRef.onSnapshot(doc => {
+        if (countEl && doc.exists) countEl.textContent = doc.data().count || 0;
+      });
+    });
   }
 
-  // ===== Increment download count =====
-  async function incrementDownload(productName) {
-    const docRef = db.collection("downloads").doc(productName);
-    await docRef.set({ count: firebase.firestore.FieldValue.increment(1) }, { merge: true });
-  }
-
-  // ===== Initialize all download buttons =====
-  document.querySelectorAll('a.btn[data-product]').forEach(async btn => {
-    const productName = btn.dataset.product;
-    const countEl = document.querySelector(`.download-count[data-product="${productName}"]`);
-
-    const docRef = await ensureDoc(productName);
-
-    // Show current count on page load
-    const doc = await docRef.get();
-    if (countEl) countEl.textContent = doc.data().count || 0;
-
-    // Increment on click
-    btn.addEventListener('click', async () => {
-      await incrementDownload(productName);
-    });
-
-    // Real-time updates
-    docRef.onSnapshot(doc => {
-      if (countEl && doc.exists) countEl.textContent = doc.data().count || 0;
-    });
-  });
+  // Call initialization
+  initDownloadCount();
 }
+
+
+
+
+
+
+
+
+
+
 
 // ===== DOMContentLoaded =====
 document.addEventListener('DOMContentLoaded', () => {
