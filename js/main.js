@@ -28,6 +28,51 @@ if (typeof firebase === "undefined") {
   }
 }
 
+
+const db = firebase.firestore();
+
+// ===== Increment and track download counts =====
+function incrementDownload(productName) {
+  const docRef = db.collection("downloads").doc(productName);
+
+  // Increment count
+  docRef.set({ count: firebase.firestore.FieldValue.increment(1) }, { merge: true })
+    .catch(err => console.error("Failed to increment download:", err));
+}
+
+// ===== Real-time listener for download counts =====
+function listenDownloadCount(productName) {
+  const docRef = db.collection("downloads").doc(productName);
+  const countEl = document.querySelector(`.download-count[data-product="${productName}"]`);
+
+  if (countEl) {
+    docRef.onSnapshot(doc => {
+      if (doc.exists) {
+        const count = doc.data().count || 0;
+        countEl.textContent = count;
+      } else {
+        countEl.textContent = 0;
+      }
+    });
+  }
+}
+
+// ===== Initialize for all products =====
+document.querySelectorAll('a.btn[data-product]').forEach(btn => {
+  const productName = btn.dataset.product;
+
+  // Increment count on click
+  btn.addEventListener('click', () => {
+    incrementDownload(productName);
+  });
+
+  // Listen for real-time updates
+  listenDownloadCount(productName);
+});
+
+
+
+
 document.addEventListener('DOMContentLoaded', () => {
 
   // ===== 1. Footer Year =====
