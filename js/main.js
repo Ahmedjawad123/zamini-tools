@@ -1,20 +1,24 @@
-// Firebase configuration
-const firebaseConfig = {
-  apiKey: "AIzaSyDUUMyJDZXdGa1LyxcESOcth3e3ZPovt-0",
-  authDomain: "zaminimusafir.firebaseapp.com",
-  projectId: "zaminimusafir",
-  storageBucket: "zaminimusafir.firebasestorage.app",
-  messagingSenderId: "1066132693199",
-  appId: "1:1066132693199:web:8b87e2c3270434891d17ba",
-  measurementId: "G-YVCFZ783GR"
-};
+// ===== 0. Firebase Initialization =====
+if (typeof firebase === "undefined") {
+  console.error("Firebase SDK not loaded!");
+} else {
+  const firebaseConfig = {
+    apiKey: "AIzaSyDUUMyJDZXdGa1LyxcESOcth3e3ZPovt-0",
+    authDomain: "zaminimusafir.firebaseapp.com",
+    projectId: "zaminimusafir",
+    storageBucket: "zaminimusafir.firebasestorage.app",
+    messagingSenderId: "1066132693199",
+    appId: "1:1066132693199:web:8b87e2c3270434891d17ba",
+    measurementId: "G-YVCFZ783GR"
+  };
 
-// Initialize Firebase
-const app = firebase.initializeApp(firebaseConfig);
-const db = firebase.firestore();
-const analytics = firebase.analytics();
-
-
+  // Only initialize once
+  if (!firebase.apps.length) {
+    const app = firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+    const analytics = firebase.analytics();
+  }
+}
 
 document.addEventListener('DOMContentLoaded', () => {
 
@@ -22,94 +26,84 @@ document.addEventListener('DOMContentLoaded', () => {
   const yearEl = document.getElementById("year");
   if (yearEl) yearEl.textContent = new Date().getFullYear();
 
-// ===== 2. Support Button & PayPal Popup =====
-const supportBtn = document.getElementById('supportBtn');
-const paypalPopup = document.getElementById('paypalPopup');
-let isPayPalRendered = false;
-let selectedAmount = "5"; // default
+  // ===== 2. Support Button & PayPal =====
+  const supportBtn = document.getElementById('supportBtn');
+  const paypalPopup = document.getElementById('paypalPopup');
+  let isPayPalRendered = false;
+  let selectedAmount = "5"; // default
 
-const quickBtn = document.getElementById('donate-5');
-const customInput = document.getElementById('donate-custom');
+  const quickBtn = document.getElementById('donate-5');
+  const customInput = document.getElementById('donate-custom');
 
-// Quick $5 button
-if (quickBtn) {
-  quickBtn.addEventListener('click', () => {
+  if (quickBtn) quickBtn.addEventListener('click', () => {
     selectedAmount = "5";
     quickBtn.classList.add('active');
     if (customInput) customInput.value = "";
   });
-}
 
-// Custom amount input
-if (customInput) {
-  customInput.addEventListener('input', () => {
+  if (customInput) customInput.addEventListener('input', () => {
     const val = customInput.value.trim();
     if (val && !isNaN(val) && Number(val) > 0) {
       selectedAmount = val;
       quickBtn.classList.remove('active');
     }
   });
-}
 
-if (supportBtn) {
-  supportBtn.addEventListener('click', (e) => {
-    e.stopPropagation();
+  if (supportBtn) {
+    supportBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      paypalPopup.style.display = paypalPopup.style.display === 'block' ? 'none' : 'block';
 
-    // Toggle popup
-    paypalPopup.style.display = paypalPopup.style.display === 'block' ? 'none' : 'block';
+      // GA4 tracking
+      if (typeof gtag === "function") {
+        gtag('event', 'support_click', {
+          'event_category': 'Button',
+          'event_label': 'Support Me'
+        });
+      }
 
-    // GA4 tracking
-    if (typeof gtag === "function") {
-      gtag('event', 'support_click', {
-        'event_category': 'Button',
-        'event_label': 'Support Me'
-      });
-    }
+      // Render PayPal button once
+      if (!isPayPalRendered && typeof paypal !== "undefined") {
+        paypal.Buttons({
+          style: { layout: 'vertical', color: 'gold', shape: 'rect', label: 'paypal', height: 40 },
+          createOrder: (data, actions) => actions.order.create({
+            purchase_units: [{ amount: { value: selectedAmount }, description: 'Support Payment' }]
+          }),
+          onApprove: (data, actions) => actions.order.capture().then(details => {
+            alert('Thank you for your support, ' + details.payer.name.given_name);
+            paypalPopup.style.display = 'none';
+          }),
+          onError: (err) => {
+            console.error(err);
+            alert('Payment could not be processed. Try again.');
+          }
+        }).render('#paypal-button-small');
 
-    // Render PayPal once
-    if (!isPayPalRendered && typeof paypal !== "undefined") {
-      paypal.Buttons({
-        style: { layout: 'vertical', color: 'gold', shape: 'rect', label: 'paypal', height: 40 },
-        createOrder: (data, actions) => actions.order.create({
-          purchase_units: [{ amount: { value: selectedAmount }, description: 'Support Payment' }]
-        }),
-        onApprove: (data, actions) => actions.order.capture().then(details => {
-          alert('Thank you for your support, ' + details.payer.name.given_name);
-          paypalPopup.style.display = 'none';
-        }),
-        onError: (err) => {
-          console.error(err);
-          alert('Payment could not be processed. Try again.');
-        }
-      }).render('#paypal-button-small');
+        isPayPalRendered = true;
+      }
 
-      isPayPalRendered = true;
-    }
+      // Mobile positioning
+      if (window.innerWidth <= 720) {
+        paypalPopup.style.position = 'fixed';
+        paypalPopup.style.bottom = '20px';
+        paypalPopup.style.right = '20px';
+        paypalPopup.style.top = 'auto';
+        paypalPopup.style.width = '90%';
+        paypalPopup.style.maxWidth = '320px';
+      } else {
+        paypalPopup.style.position = 'absolute';
+        paypalPopup.style.top = '45px';
+        paypalPopup.style.right = '0';
+        paypalPopup.style.width = '300px';
+      }
+    });
 
-    // Mobile positioning
-    if (window.innerWidth <= 720) {
-      paypalPopup.style.position = 'fixed';
-      paypalPopup.style.bottom = '20px';
-      paypalPopup.style.right = '20px';
-      paypalPopup.style.top = 'auto';
-      paypalPopup.style.width = '90%';
-      paypalPopup.style.maxWidth = '320px';
-    } else {
-      paypalPopup.style.position = 'absolute';
-      paypalPopup.style.top = '45px';
-      paypalPopup.style.right = '0';
-      paypalPopup.style.width = '300px';
-    }
-  });
-
-  // Close popup if clicked outside
-  window.addEventListener('click', (e) => {
-    if (!e.target.closest('#supportBtn') && !e.target.closest('#paypalPopup')) {
-      paypalPopup.style.display = 'none';
-    }
-  });
-}
-
+    window.addEventListener('click', (e) => {
+      if (!e.target.closest('#supportBtn') && !e.target.closest('#paypalPopup')) {
+        paypalPopup.style.display = 'none';
+      }
+    });
+  }
 
   // ===== 3. File Size Fetch =====
   const fileSizeSpan = document.getElementById('file-size');
@@ -119,8 +113,7 @@ if (supportBtn) {
     fetch(fileUrl, { method: 'HEAD' })
       .then(resp => {
         const size = resp.headers.get('content-length');
-        if (size) fileSizeSpan.textContent = (size / (1024 * 1024)).toFixed(2) + " MB";
-        else fileSizeSpan.textContent = "N/A";
+        fileSizeSpan.textContent = size ? (size / (1024 * 1024)).toFixed(2) + " MB" : "N/A";
       })
       .catch(err => {
         console.error('File size fetch error:', err);
@@ -129,11 +122,7 @@ if (supportBtn) {
   }
 
   // ===== 4. Initialize EmailJS =====
-  if (typeof emailjs !== "undefined") {
-    emailjs.init('DhW4bXmuP0VP2d8bF');
-  } else {
-    console.error("EmailJS not loaded!");
-  }
+  if (typeof emailjs !== "undefined") emailjs.init('DhW4bXmuP0VP2d8bF');
 
   // ===== 5. Feedback Form =====
   const feedbackForm = document.getElementById('contactForm');
@@ -159,7 +148,7 @@ if (supportBtn) {
       };
 
       emailjs.send('zamini_musafir', 'template_yz15x2d', templateParams)
-        .then(response => {
+        .then(() => {
           statusEl.textContent = "Feedback sent successfully! Thank you.";
           feedbackForm.reset();
         })
@@ -169,22 +158,19 @@ if (supportBtn) {
         });
     });
   }
-  // ===== 7. Updates Subscription Form =====
+
+  // ===== 6. Updates Form =====
   const updatesForm = document.getElementById('updatesForm');
   if (updatesForm) {
     const updatesStatus = document.getElementById('updates-status');
-  
     updatesForm.addEventListener('submit', (e) => {
       e.preventDefault();
       updatesStatus.textContent = "Subscribing...";
-  
-      const templateParams = {
-        email: updatesForm.email.value
-      };
-  
+      const templateParams = { email: updatesForm.email.value };
+
       emailjs.send('zamini_musafir', 'template_updates', templateParams)
         .then(() => {
-          updatesStatus.textContent = "Subscribed successfully! You'll get updates soon.";
+          updatesStatus.textContent = "Subscribed successfully!";
           updatesForm.reset();
         })
         .catch(err => {
@@ -194,24 +180,20 @@ if (supportBtn) {
     });
   }
 
-
-
-
-  
-  // ===== 6. Track Download Buttons =====
-  const downloadBtns = Array.from(document.querySelectorAll('a.btn'))
-    .filter(btn => btn.textContent.trim() === 'Download');
-
-  downloadBtns.forEach(btn => {
-    btn.addEventListener('click', () => {
-      if (typeof gtag === "function") {
-        gtag('event', 'download_click', {
-          'event_category': 'Button',
-          'event_label': 'Download'
-        });
-      }
-    });
+  // ===== 7. Track Download Buttons =====
+  document.querySelectorAll('a.btn').forEach(btn => {
+    if (btn.textContent.trim().includes('Download')) {
+      btn.addEventListener('click', () => {
+        if (typeof gtag === "function") {
+          gtag('event', 'download_click', { 'event_category': 'Button', 'event_label': 'Download' });
+        }
+      });
+    }
   });
 
+  // ===== 8. GA4 Subscribe Click Event (Optional) =====
+  if (typeof gtag === "function") {
+    gtag('event', 'subscribe_click', { 'event_category': 'Button', 'event_label': 'Updates' });
+  }
+
 });
-gtag('event', 'subscribe_click', { 'event_category': 'Button', 'event_label': 'Updates' });
