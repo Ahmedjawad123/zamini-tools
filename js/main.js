@@ -1,4 +1,4 @@
-why is it vanishing after i refrensh i mean download count? // ===== 0. Firebase Initialization =====
+ // ===== 0. Firebase Initialization =====
 if (typeof firebase === "undefined") {
   console.error("Firebase SDK not loaded!");
 } else {
