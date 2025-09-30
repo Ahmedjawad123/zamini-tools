@@ -17,6 +17,8 @@ if (typeof firebase === "undefined") {
     if (firebase.analytics) {
       firebase.analytics();
       console.log("Firebase Analytics initialized.");
+    } else {
+      console.warn("Firebase Analytics not loaded — heartbeats disabled.");
     }
   }
 
@@ -25,36 +27,33 @@ if (typeof firebase === "undefined") {
   // ===== Download Count =====
   document.querySelectorAll('a.btn[data-product]').forEach(btn => {
     const productName = btn.dataset.product;
+
+    // Debug: confirm button found
+    console.log("Download button detected for:", productName);
+
+    // Real-time listener
     const countEl = document.querySelector(`.download-count[data-product="${productName}"]`);
-    if (!countEl) return;
-
-    const docRef = db.collection("downloads").doc(productName);
-
-    // Ensure document exists, then attach listener
-    docRef.get().then(doc => {
-      if (!doc.exists) {
-        // create doc with count = 0
-        return docRef.set({ count: 0 });
-      }
-    }).then(() => {
-      // Real-time listener
-      docRef.onSnapshot(doc => {
-        const count = doc.exists && doc.data().count ? doc.data().count : 0;
-        countEl.textContent = count;
-      });
-    }).catch(err => console.error(err));
+    if (countEl) {
+      db.collection("downloads").doc(productName)
+        .onSnapshot(doc => {
+          const count = doc.exists ? doc.data().count || 0 : 0;
+          countEl.textContent = count;
+          console.log(`Real-time count updated for ${productName}:`, count);
+        });
+    } else {
+      console.warn("No element found for product:", productName);
+    }
 
     // Increment on click
     btn.addEventListener('click', () => {
-      docRef.set({
-        count: firebase.firestore.FieldValue.increment(1)
-      }, { merge: true })
-      .then(() => console.log("Incremented count for:", productName))
-      .catch(err => console.error("Failed to increment count:", err));
+      console.log("Clicked download for:", productName);
+      db.collection("downloads").doc(productName)
+        .set({ count: firebase.firestore.FieldValue.increment(1) }, { merge: true })
+        .then(() => console.log("Incremented count for:", productName))
+        .catch(err => console.error("Failed to increment count:", err));
     });
   });
 }
-
 
 
 
