@@ -19,45 +19,41 @@ if (typeof firebase === "undefined") {
 
   const db = firebase.firestore();
 
-  // ===== Ensure document exists =====
   async function ensureDoc(productName) {
     const docRef = db.collection("downloads").doc(productName);
-    let doc = await docRef.get();
-    if (!doc.exists) {
-      await docRef.set({ count: 0 });
-      doc = await docRef.get(); // re-fetch after creation
-    }
+    const doc = await docRef.get();
+    if (!doc.exists) await docRef.set({ count: 0 });
     return docRef;
   }
 
-  // ===== Increment download count =====
   async function incrementDownload(productName) {
     const docRef = db.collection("downloads").doc(productName);
     await docRef.set({ count: firebase.firestore.FieldValue.increment(1) }, { merge: true });
   }
 
-  // ===== Initialize all download buttons =====
-  document.querySelectorAll('a.btn[data-product]').forEach(async btn => {
-    const productName = btn.dataset.product;
-    const countEl = document.querySelector(`.download-count[data-product="${productName}"]`);
+  document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('a.btn[data-product]').forEach(async btn => {
+      const productName = btn.dataset.product;
+      const countEl = document.querySelector(`.download-count[data-product="${productName}"]`);
 
-    // Ensure document exists
-    const docRef = await ensureDoc(productName);
+      // Ensure document exists
+      const docRef = await ensureDoc(productName);
 
-    // Show current count on page load
-    const doc = await docRef.get();
-    if (countEl && doc.data()) countEl.textContent = doc.data().count;
+      // Show current count
+      const doc = await docRef.get();
+      if (countEl && doc.data()) countEl.textContent = doc.data().count;
 
-    // Increment on click
-    btn.addEventListener('click', async () => {
-      await incrementDownload(productName);
-    });
+      // Increment on click
+      btn.addEventListener('click', async () => {
+        await incrementDownload(productName);
+      });
 
-    // Real-time updates
-    docRef.onSnapshot(doc => {
-      if (countEl && doc.exists && doc.data()) {
-        countEl.textContent = doc.data().count;
-      }
+      // Real-time updates
+      docRef.onSnapshot(doc => {
+        if (countEl && doc.exists && doc.data()) {
+          countEl.textContent = doc.data().count;
+        }
+      });
     });
   });
 }
