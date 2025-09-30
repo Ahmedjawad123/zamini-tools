@@ -1,3 +1,21 @@
+// Firebase configuration
+const firebaseConfig = {
+  apiKey: "AIzaSyDUUMyJDZXdGa1LyxcESOcth3e3ZPovt-0",
+  authDomain: "zaminimusafir.firebaseapp.com",
+  projectId: "zaminimusafir",
+  storageBucket: "zaminimusafir.firebasestorage.app",
+  messagingSenderId: "1066132693199",
+  appId: "1:1066132693199:web:8b87e2c3270434891d17ba",
+  measurementId: "G-YVCFZ783GR"
+};
+
+// Initialize Firebase
+const app = firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
+const analytics = firebase.analytics();
+
+
+
 document.addEventListener('DOMContentLoaded', () => {
 
   // ===== 1. Footer Year =====
