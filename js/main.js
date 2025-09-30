@@ -17,43 +17,44 @@ if (typeof firebase === "undefined") {
     if (firebase.analytics) {
       firebase.analytics();
       console.log("Firebase Analytics initialized.");
-    } else {
-      console.warn("Firebase Analytics not loaded — heartbeats disabled.");
     }
   }
 
   const db = firebase.firestore();
 
-  // ===== Download Count =====
+  // ===== Download Count with default document creation =====
   document.querySelectorAll('a.btn[data-product]').forEach(btn => {
     const productName = btn.dataset.product;
+    const countEl = document.querySelector(`.download-count[data-product="${productName}"]`);
 
-    // Debug: confirm button found
-    console.log("Download button detected for:", productName);
+    if (!countEl) return;
+
+    const docRef = db.collection("downloads").doc(productName);
+
+    // Ensure document exists
+    docRef.get().then(doc => {
+      if (!doc.exists) {
+        docRef.set({ count: 0 }).then(() => {
+          console.log("Created default download doc for:", productName);
+        });
+      }
+    });
 
     // Real-time listener
-    const countEl = document.querySelector(`.download-count[data-product="${productName}"]`);
-    if (countEl) {
-      db.collection("downloads").doc(productName)
-        .onSnapshot(doc => {
-          const count = doc.exists ? doc.data().count || 0 : 0;
-          countEl.textContent = count;
-          console.log(`Real-time count updated for ${productName}:`, count);
-        });
-    } else {
-      console.warn("No element found for product:", productName);
-    }
+    docRef.onSnapshot(doc => {
+      const count = doc.exists ? doc.data().count || 0 : 0;
+      countEl.textContent = count;
+    });
 
     // Increment on click
     btn.addEventListener('click', () => {
-      console.log("Clicked download for:", productName);
-      db.collection("downloads").doc(productName)
-        .set({ count: firebase.firestore.FieldValue.increment(1) }, { merge: true })
+      docRef.set({ count: firebase.firestore.FieldValue.increment(1) }, { merge: true })
         .then(() => console.log("Incremented count for:", productName))
         .catch(err => console.error("Failed to increment count:", err));
     });
   });
 }
+
 
 
 
