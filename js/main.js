@@ -1,50 +1,64 @@
-// main.js
-document.addEventListener('DOMContentLoaded', () => {
+// ===== Firebase Initialization =====
+if (typeof firebase === "undefined") {
+  console.error("Firebase SDK not loaded!");
+} else {
+  const firebaseConfig = {
+    apiKey: "AIzaSyDUUMyJDZXdGa1LyxcESOcth3e3ZPovt-0",
+    authDomain: "zaminimusafir.firebaseapp.com",
+    projectId: "zaminimusafir",
+    storageBucket: "zaminimusafir.firebasestorage.app",
+    messagingSenderId: "1066132693199",
+    appId: "1:1066132693199:web:8b87e2c3270434891d17ba",
+    measurementId: "G-YVCFZ783GR"
+  };
 
-  // ===== 0. Firebase Initialization =====
-  if (typeof firebase === "undefined") {
-    console.error("Firebase SDK not loaded!");
-  } else {
-    const firebaseConfig = {
-      apiKey: "AIzaSyDUUMyJDZXdGa1LyxcESOcth3e3ZPovt-0",
-      authDomain: "zaminimusafir.firebaseapp.com",
-      projectId: "zaminimusafir",
-      storageBucket: "zaminimusafir.firebasestorage.app",
-      messagingSenderId: "1066132693199",
-      appId: "1:1066132693199:web:8b87e2c3270434891d17ba",
-      measurementId: "G-YVCFZ783GR"
-    };
-
-    if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
-    if (firebase.analytics) firebase.analytics();
-
-    const db = firebase.firestore();
-
-    // Increment download count
-    function incrementDownload(productName) {
-      db.collection("downloads").doc(productName)
-        .set({ count: firebase.firestore.FieldValue.increment(1) }, { merge: true })
-        .catch(err => console.error("Failed to increment download:", err));
+  if (!firebase.apps.length) {
+    firebase.initializeApp(firebaseConfig);
+    if (firebase.analytics) {
+      firebase.analytics();
+      console.log("Firebase Analytics initialized.");
+    } else {
+      console.warn("Firebase Analytics not loaded — heartbeats disabled.");
     }
+  }
 
-    // Listen for real-time updates
-    function listenDownloadCount(productName) {
-      const countEl = document.querySelector(`.download-count[data-product="${productName}"]`);
-      if (!countEl) return;
+  const db = firebase.firestore();
 
+  // ===== Download Count =====
+  document.querySelectorAll('a.btn[data-product]').forEach(btn => {
+    const productName = btn.dataset.product;
+
+    // Debug: confirm button found
+    console.log("Download button detected for:", productName);
+
+    // Real-time listener
+    const countEl = document.querySelector(`.download-count[data-product="${productName}"]`);
+    if (countEl) {
       db.collection("downloads").doc(productName)
         .onSnapshot(doc => {
-          countEl.textContent = doc.exists ? doc.data().count || 0 : 0;
+          const count = doc.exists ? doc.data().count || 0 : 0;
+          countEl.textContent = count;
+          console.log(`Real-time count updated for ${productName}:`, count);
         });
+    } else {
+      console.warn("No element found for product:", productName);
     }
 
-    // Initialize for all products
-    document.querySelectorAll('a.btn[data-product]').forEach(btn => {
-      const productName = btn.dataset.product;
-      btn.addEventListener('click', () => incrementDownload(productName));
-      listenDownloadCount(productName);
+    // Increment on click
+    btn.addEventListener('click', () => {
+      console.log("Clicked download for:", productName);
+      db.collection("downloads").doc(productName)
+        .set({ count: firebase.firestore.FieldValue.increment(1) }, { merge: true })
+        .then(() => console.log("Incremented count for:", productName))
+        .catch(err => console.error("Failed to increment count:", err));
     });
-  }
+  });
+}
+
+
+
+
+
 
   // ===== 1. Footer Year =====
   const yearEl = document.getElementById("year");
