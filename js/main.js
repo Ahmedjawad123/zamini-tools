@@ -30,32 +30,35 @@ if (typeof firebase === "undefined") {
 
     const docRef = db.collection("downloads").doc(productName);
 
-    // Ensure document exists with default count
+    // Ensure document exists, then attach listener
     docRef.get().then(doc => {
       if (!doc.exists) {
-        docRef.set({ count: 0 })
-          .then(() => console.log("Created default download doc for:", productName))
-          .catch(err => console.error(err));
+        // create doc with count = 0
+        return docRef.set({ count: 0 });
       }
-    });
-
-    // Real-time listener
-    docRef.onSnapshot(doc => {
-      const count = doc.exists ? doc.data().count || 0 : 0;
-      countEl.textContent = count;
-    });
+    }).then(() => {
+      // Real-time listener
+      docRef.onSnapshot(doc => {
+        const count = doc.exists && doc.data().count ? doc.data().count : 0;
+        countEl.textContent = count;
+      });
+    }).catch(err => console.error(err));
 
     // Increment on click
     btn.addEventListener('click', () => {
-      docRef.update({ count: firebase.firestore.FieldValue.increment(1) })
-        .then(() => console.log("Incremented count for:", productName))
-        .catch(err => {
-          console.warn("Document missing, creating it with count = 1...");
-          docRef.set({ count: 1 }).catch(e => console.error(e));
-        });
+      docRef.set({
+        count: firebase.firestore.FieldValue.increment(1)
+      }, { merge: true })
+      .then(() => console.log("Incremented count for:", productName))
+      .catch(err => console.error("Failed to increment count:", err));
     });
   });
 }
+
+
+
+
+
 
 // ===== Footer Year =====
 const yearEl = document.getElementById("year");
