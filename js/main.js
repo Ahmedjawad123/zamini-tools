@@ -1,44 +1,62 @@
-document.addEventListener('DOMContentLoaded', () => {
+// ===== 0. Firebase Initialization =====
+if (typeof firebase === "undefined") {
+  console.error("Firebase SDK not loaded!");
+} else {
+  const firebaseConfig = {
+    apiKey: "AIzaSyDUUMyJDZXdGa1LyxcESOcth3e3ZPovt-0",
+    authDomain: "zaminimusafir.firebaseapp.com",
+    projectId: "zaminimusafir",
+    storageBucket: "zaminimusafir.firebasestorage.app",
+    messagingSenderId: "1066132693199",
+    appId: "1:1066132693199:web:8b87e2c3270434891d17ba",
+    measurementId: "G-YVCFZ783GR"
+  };
 
-  // ===== Footer Year =====
-  const yearEl = document.getElementById("year");
-  if (yearEl) yearEl.textContent = new Date().getFullYear();
+  // Only initialize once
+  if (!firebase.apps.length) {
+    firebase.initializeApp(firebaseConfig);
 
-  // ===== Download buttons with Firebase =====
+    if (firebase.analytics) {
+      firebase.analytics();
+      console.log("Firebase Analytics initialized.");
+    } else {
+      console.warn("Firebase Analytics not loaded — heartbeats disabled.");
+    }
+  }
+
+  // ✅ Initialize db once, outside the if block
   const db = firebase.firestore();
 
+  // ===== Increment and track download counts =====
   function incrementDownload(productName) {
     const docRef = db.collection("downloads").doc(productName);
-    docRef.get().then(docSnap => {
-      if (!docSnap.exists) {
-        docRef.set({ count: 1 });
-      } else {
-        docRef.update({ count: firebase.firestore.FieldValue.increment(1) });
-      }
-    }).catch(err => console.error("Download count error:", err));
+    docRef.set({ count: firebase.firestore.FieldValue.increment(1) }, { merge: true })
+      .catch(err => console.error("Failed to increment download:", err));
   }
 
+  // ===== Real-time listener for download counts =====
   function listenDownloadCount(productName) {
+    const docRef = db.collection("downloads").doc(productName);
     const countEl = document.querySelector(`.download-count[data-product="${productName}"]`);
-    if (!countEl) return;
-    db.collection("downloads").doc(productName)
-      .onSnapshot(docSnap => {
-        countEl.textContent = docSnap.exists ? (docSnap.data().count || 0) : 0;
+
+    if (countEl) {
+      docRef.onSnapshot(doc => {
+        if (doc.exists) {
+          countEl.textContent = doc.data().count || 0;
+        } else {
+          countEl.textContent = 0;
+        }
       });
+    }
   }
 
+  // ===== Initialize for all products =====
   document.querySelectorAll('a.btn[data-product]').forEach(btn => {
     const productName = btn.dataset.product;
     btn.addEventListener('click', () => incrementDownload(productName));
     listenDownloadCount(productName);
-
-    // GA4 tracking (optional)
-    btn.addEventListener('click', () => {
-      if (typeof gtag === "function") {
-        gtag('event', 'download_click', { event_category: 'Button', event_label: productName });
-      }
-    });
   });
+}
 
 
 
