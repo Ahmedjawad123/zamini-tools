@@ -14,62 +14,49 @@ if (typeof firebase === "undefined") {
 
   // Only initialize once
   if (!firebase.apps.length) {
-    const app = firebase.initializeApp(firebaseConfig);
-    const db = firebase.firestore();
-    
-    let analytics;
+    firebase.initializeApp(firebaseConfig);
+
     if (firebase.analytics) {
-      analytics = firebase.analytics();
+      firebase.analytics();
       console.log("Firebase Analytics initialized.");
     } else {
       console.warn("Firebase Analytics not loaded — heartbeats disabled.");
     }
-
   }
-}
 
+  // ✅ Initialize db once, outside the if block
+  const db = firebase.firestore();
 
-const db = firebase.firestore();
-
-// ===== Increment and track download counts =====
-function incrementDownload(productName) {
-  const docRef = db.collection("downloads").doc(productName);
-
-  // Increment count
-  docRef.set({ count: firebase.firestore.FieldValue.increment(1) }, { merge: true })
-    .catch(err => console.error("Failed to increment download:", err));
-}
-
-// ===== Real-time listener for download counts =====
-function listenDownloadCount(productName) {
-  const docRef = db.collection("downloads").doc(productName);
-  const countEl = document.querySelector(`.download-count[data-product="${productName}"]`);
-
-  if (countEl) {
-    docRef.onSnapshot(doc => {
-      if (doc.exists) {
-        const count = doc.data().count || 0;
-        countEl.textContent = count;
-      } else {
-        countEl.textContent = 0;
-      }
-    });
+  // ===== Increment and track download counts =====
+  function incrementDownload(productName) {
+    const docRef = db.collection("downloads").doc(productName);
+    docRef.set({ count: firebase.firestore.FieldValue.increment(1) }, { merge: true })
+      .catch(err => console.error("Failed to increment download:", err));
   }
-}
 
-// ===== Initialize for all products =====
-document.querySelectorAll('a.btn[data-product]').forEach(btn => {
-  const productName = btn.dataset.product;
+  // ===== Real-time listener for download counts =====
+  function listenDownloadCount(productName) {
+    const docRef = db.collection("downloads").doc(productName);
+    const countEl = document.querySelector(`.download-count[data-product="${productName}"]`);
 
-  // Increment count on click
-  btn.addEventListener('click', () => {
-    incrementDownload(productName);
+    if (countEl) {
+      docRef.onSnapshot(doc => {
+        if (doc.exists) {
+          countEl.textContent = doc.data().count || 0;
+        } else {
+          countEl.textContent = 0;
+        }
+      });
+    }
+  }
+
+  // ===== Initialize for all products =====
+  document.querySelectorAll('a.btn[data-product]').forEach(btn => {
+    const productName = btn.dataset.product;
+    btn.addEventListener('click', () => incrementDownload(productName));
+    listenDownloadCount(productName);
   });
-
-  // Listen for real-time updates
-  listenDownloadCount(productName);
-});
-
+}
 
 
 
