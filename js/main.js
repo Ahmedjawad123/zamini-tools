@@ -1,19 +1,44 @@
 document.addEventListener('DOMContentLoaded', () => {
-  const productName = "myProduct";
-  const countEl = document.querySelector(`.download-count[data-product="${productName}"]`);
-  const btn = document.querySelector(`a.btn[data-product="${productName}"]`);
 
-  // Initialize count from localStorage
-  let count = parseInt(localStorage.getItem(productName)) || 0;
-  countEl.textContent = count;
+  // ===== Footer Year =====
+  const yearEl = document.getElementById("year");
+  if (yearEl) yearEl.textContent = new Date().getFullYear();
 
-  // Increment on click
-  btn.addEventListener('click', () => {
-    count++;
-    countEl.textContent = count;
-    localStorage.setItem(productName, count);
+  // ===== Download buttons with Firebase =====
+  const db = firebase.firestore();
+
+  function incrementDownload(productName) {
+    const docRef = db.collection("downloads").doc(productName);
+    docRef.get().then(docSnap => {
+      if (!docSnap.exists) {
+        docRef.set({ count: 1 });
+      } else {
+        docRef.update({ count: firebase.firestore.FieldValue.increment(1) });
+      }
+    }).catch(err => console.error("Download count error:", err));
+  }
+
+  function listenDownloadCount(productName) {
+    const countEl = document.querySelector(`.download-count[data-product="${productName}"]`);
+    if (!countEl) return;
+    db.collection("downloads").doc(productName)
+      .onSnapshot(docSnap => {
+        countEl.textContent = docSnap.exists ? (docSnap.data().count || 0) : 0;
+      });
+  }
+
+  document.querySelectorAll('a.btn[data-product]').forEach(btn => {
+    const productName = btn.dataset.product;
+    btn.addEventListener('click', () => incrementDownload(productName));
+    listenDownloadCount(productName);
+
+    // GA4 tracking (optional)
+    btn.addEventListener('click', () => {
+      if (typeof gtag === "function") {
+        gtag('event', 'download_click', { event_category: 'Button', event_label: productName });
+      }
+    });
   });
-});
 
 
 
