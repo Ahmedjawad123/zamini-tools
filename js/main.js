@@ -12,7 +12,7 @@ if (typeof firebase === "undefined") {
     measurementId: "G-YVCFZ783GR"
   };
 
-  // Only initialize once
+  // Initialize Firebase once
   if (!firebase.apps.length) {
     firebase.initializeApp(firebaseConfig);
 
@@ -24,14 +24,26 @@ if (typeof firebase === "undefined") {
     }
   }
 
-  // ✅ Initialize db once, outside the if block
+  // Initialize Firestore
   const db = firebase.firestore();
 
-  // ===== Increment and track download counts =====
+  // ===== Increment and track download counts safely =====
   function incrementDownload(productName) {
     const docRef = db.collection("downloads").doc(productName);
-    docRef.set({ count: firebase.firestore.FieldValue.increment(1) }, { merge: true })
-      .catch(err => console.error("Failed to increment download:", err));
+
+    docRef.get()
+      .then(doc => {
+        if (!doc.exists) {
+          // If doc doesn't exist, create with count = 1
+          docRef.set({ count: 1 })
+            .catch(err => console.error("Failed to create new download doc:", err));
+        } else {
+          // If doc exists, increment count
+          docRef.update({ count: firebase.firestore.FieldValue.increment(1) })
+            .catch(err => console.error("Failed to increment download:", err));
+        }
+      })
+      .catch(err => console.error("Error fetching download doc:", err));
   }
 
   // ===== Real-time listener for download counts =====
@@ -46,14 +58,28 @@ if (typeof firebase === "undefined") {
         } else {
           countEl.textContent = 0;
         }
-      });
+      }, err => console.error("Snapshot listener error:", err));
     }
   }
 
-  // ===== Initialize for all products =====
+  // ===== Initialize for all product buttons =====
   document.querySelectorAll('a.btn[data-product]').forEach(btn => {
     const productName = btn.dataset.product;
-    btn.addEventListener('click', () => incrementDownload(productName));
+
+    btn.addEventListener('click', () => {
+      // Increment Firestore download count
+      incrementDownload(productName);
+
+      // Track with GA4 if gtag exists
+      if (typeof gtag === "function") {
+        gtag('event', 'download_click', {
+          event_category: 'Button',
+          event_label: productName
+        });
+      }
+    });
+
+    // Listen for real-time updates
     listenDownloadCount(productName);
   });
 }
