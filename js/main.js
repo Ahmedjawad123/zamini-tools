@@ -16,7 +16,15 @@ if (typeof firebase === "undefined") {
   if (!firebase.apps.length) {
     const app = firebase.initializeApp(firebaseConfig);
     const db = firebase.firestore();
-    const analytics = firebase.analytics();
+    
+    let analytics;
+    if (firebase.analytics) {
+      analytics = firebase.analytics();
+      console.log("Firebase Analytics initialized.");
+    } else {
+      console.warn("Firebase Analytics not loaded — heartbeats disabled.");
+    }
+
   }
 }
 
