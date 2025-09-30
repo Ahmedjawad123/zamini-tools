@@ -1,69 +1,66 @@
-// ===== Firebase Initialization =====
-if (typeof firebase === "undefined") {
-  console.error("Firebase SDK not loaded!");
-} else {
-  const firebaseConfig = {
-    apiKey: "AIzaSyDUUMyJDZXdGa1LyxcESOcth3e3ZPovt-0",
-    authDomain: "zaminimusafir.firebaseapp.com",
-    projectId: "zaminimusafir",
-    storageBucket: "zaminimusafir.firebasestorage.app",
-    messagingSenderId: "1066132693199",
-    appId: "1:1066132693199:web:8b87e2c3270434891d17ba",
-    measurementId: "G-YVCFZ783GR"
-  };
-
-  if (!firebase.apps.length) {
-    firebase.initializeApp(firebaseConfig);
-    if (firebase.analytics) {
-      firebase.analytics();
-      console.log("Firebase Analytics initialized.");
-    }
-  }
-
-  const db = firebase.firestore();
-
-  // ===== Download Count with default document creation =====
-  document.querySelectorAll('a.btn[data-product]').forEach(btn => {
-    const productName = btn.dataset.product;
-    const countEl = document.querySelector(`.download-count[data-product="${productName}"]`);
-
-    if (!countEl) return;
-
-    const docRef = db.collection("downloads").doc(productName);
-
-    // Ensure document exists
-    docRef.get().then(doc => {
-      if (!doc.exists) {
-        docRef.set({ count: 0 }).then(() => {
-          console.log("Created default download doc for:", productName);
-        });
+  // ===== Firebase Initialization =====
+  if (typeof firebase === "undefined") {
+    console.error("Firebase SDK not loaded!");
+  } else {
+    const firebaseConfig = {
+      apiKey: "AIzaSyDUUMyJDZXdGa1LyxcESOcth3e3ZPovt-0",
+      authDomain: "zaminimusafir.firebaseapp.com",
+      projectId: "zaminimusafir",
+      storageBucket: "zaminimusafir.firebasestorage.app",
+      messagingSenderId: "1066132693199",
+      appId: "1:1066132693199:web:8b87e2c3270434891d17ba",
+      measurementId: "G-YVCFZ783GR"
+    };
+  
+    if (!firebase.apps.length) {
+      firebase.initializeApp(firebaseConfig);
+      if (firebase.analytics) {
+        firebase.analytics();
+        console.log("Firebase Analytics initialized.");
       }
+    }
+  
+    const db = firebase.firestore();
+  
+    // ===== Download Count =====
+    document.querySelectorAll('a.btn[data-product]').forEach(btn => {
+      const productName = btn.dataset.product;
+      const countEl = document.querySelector(`.download-count[data-product="${productName}"]`);
+      if (!countEl) return;
+  
+      const docRef = db.collection("downloads").doc(productName);
+  
+      // Ensure document exists with default count
+      docRef.get().then(doc => {
+        if (!doc.exists) {
+          docRef.set({ count: 0 })
+            .then(() => console.log("Created default download doc for:", productName))
+            .catch(err => console.error(err));
+        }
+      });
+  
+      // Real-time listener
+      docRef.onSnapshot(doc => {
+        const count = doc.exists ? doc.data().count || 0 : 0;
+        countEl.textContent = count;
+      });
+  
+      // Increment on click
+      btn.addEventListener('click', () => {
+        docRef.update({ count: firebase.firestore.FieldValue.increment(1) })
+          .then(() => console.log("Incremented count for:", productName))
+          .catch(err => {
+            console.warn("Document missing, creating it with count = 1...");
+            docRef.set({ count: 1 }).catch(e => console.error(e));
+          });
+      });
     });
-
-    // Real-time listener
-    docRef.onSnapshot(doc => {
-      const count = doc.exists ? doc.data().count || 0 : 0;
-      countEl.textContent = count;
-    });
-
-    // Increment on click
-    btn.addEventListener('click', () => {
-      docRef.set({ count: firebase.firestore.FieldValue.increment(1) }, { merge: true })
-        .then(() => console.log("Incremented count for:", productName))
-        .catch(err => console.error("Failed to increment count:", err));
-    });
-  });
-}
-
-
-
-
-
-
-
-  // ===== 1. Footer Year =====
+  }
+  
+  // ===== Footer Year =====
   const yearEl = document.getElementById("year");
   if (yearEl) yearEl.textContent = new Date().getFullYear();
+
 
   // ===== 2. Support Button & PayPal =====
   const supportBtn = document.getElementById('supportBtn');
