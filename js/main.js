@@ -1,4 +1,4 @@
-// ===== Firebase Initialization =====
+// ===== 0. Firebase Initialization =====
 if (typeof firebase === "undefined") {
   console.error("Firebase SDK not loaded!");
 } else {
@@ -12,49 +12,49 @@ if (typeof firebase === "undefined") {
     measurementId: "G-YVCFZ783GR"
   };
 
+  // Only initialize once
   if (!firebase.apps.length) {
     firebase.initializeApp(firebaseConfig);
-    if (firebase.analytics) firebase.analytics();
+
+    if (firebase.analytics) {
+      firebase.analytics();
+      console.log("Firebase Analytics initialized.");
+    } else {
+      console.warn("Firebase Analytics not loaded — heartbeats disabled.");
+    }
   }
 
+  // ✅ Initialize db once, outside the if block
   const db = firebase.firestore();
 
-  async function ensureDoc(productName) {
+  // ===== Increment and track download counts =====
+  function incrementDownload(productName) {
     const docRef = db.collection("downloads").doc(productName);
-    const doc = await docRef.get();
-    if (!doc.exists) await docRef.set({ count: 0 });
-    return docRef;
+    docRef.set({ count: firebase.firestore.FieldValue.increment(1) }, { merge: true })
+      .catch(err => console.error("Failed to increment download:", err));
   }
 
-  async function incrementDownload(productName) {
+  // ===== Real-time listener for download counts =====
+  function listenDownloadCount(productName) {
     const docRef = db.collection("downloads").doc(productName);
-    await docRef.set({ count: firebase.firestore.FieldValue.increment(1) }, { merge: true });
-  }
+    const countEl = document.querySelector(`.download-count[data-product="${productName}"]`);
 
-  document.addEventListener('DOMContentLoaded', () => {
-    document.querySelectorAll('a.btn[data-product]').forEach(async btn => {
-      const productName = btn.dataset.product;
-      const countEl = document.querySelector(`.download-count[data-product="${productName}"]`);
-
-      // Ensure document exists
-      const docRef = await ensureDoc(productName);
-
-      // Show current count
-      const doc = await docRef.get();
-      if (countEl && doc.data()) countEl.textContent = doc.data().count;
-
-      // Increment on click
-      btn.addEventListener('click', async () => {
-        await incrementDownload(productName);
-      });
-
-      // Real-time updates
+    if (countEl) {
       docRef.onSnapshot(doc => {
-        if (countEl && doc.exists && doc.data()) {
-          countEl.textContent = doc.data().count;
+        if (doc.exists) {
+          countEl.textContent = doc.data().count || 0;
+        } else {
+          countEl.textContent = 0;
         }
       });
-    });
+    }
+  }
+
+  // ===== Initialize for all products =====
+  document.querySelectorAll('a.btn[data-product]').forEach(btn => {
+    const productName = btn.dataset.product;
+    btn.addEventListener('click', () => incrementDownload(productName));
+    listenDownloadCount(productName);
   });
 }
 
