@@ -4,12 +4,12 @@ what should i change /* ===== Reset ===== */
 body {
   font-family: 'Poppins', Arial, sans-serif;
   line-height: 1.6;
-  background-color: #FAF9F6; /* earthy brown */
-  color: #333333; /* light parchment text */
+  background-color: #493C2B; /* earthy brown */
+  color: #F5DEB3; /* light parchment text */
   padding: 24px;
 }
 
-h1,h2,h3,h4 { font-weight: bold; color: #2B2B2B; }
+h1,h2,h3,h4 { font-weight: bold; color: #FFF8DC; }
 
 /* ===== Header & Navigation ===== */
 header { 
