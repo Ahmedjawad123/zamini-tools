@@ -425,3 +425,89 @@ paypal.Buttons({
   color: #F5DEB3;          /* matches your palette */
   margin: 30px 0 15px 0;   /* spacing above/below */
 }
+
+
+
+
+/* ===== Chat Widget ===== */
+#chatWidget {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 300px;
+  max-height: 400px;
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  display: none;
+  flex-direction: column;
+  font-family: 'Poppins', sans-serif;
+  z-index: 1000;
+}
+
+#chatHeader {
+  background: #F5DEB3;
+  padding: 10px;
+  font-weight: 600;
+  cursor: pointer;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#chatClose {
+  font-weight: bold;
+  cursor: pointer;
+}
+
+#chatBody {
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+#chatMessages {
+  flex: 1;
+  max-height: 250px;
+  overflow-y: auto;
+  border: 1px solid #eee;
+  padding: 6px;
+  background: #fafafa;
+  border-radius: 5px;
+}
+
+#chatInput {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  flex: 1;
+}
+
+#chatSend {
+  padding: 8px 12px;
+  border: none;
+  background: #F5DEB3;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+/* Floating button */
+#chatOpenBtn {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: #F5DEB3;
+  border: none;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  font-size: 24px;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  z-index: 999;
+}
+
