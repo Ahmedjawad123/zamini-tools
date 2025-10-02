@@ -550,7 +550,29 @@
       <div id="updates-status" style="margin-top:6px; color:green;"></div>
     </form>
   </section>
+  <!-- ===== Popup Chat Widget ===== -->
+  <div id="chatWidget">
+    <div id="chatHeader">💬 Chat with Ahmed
+      <span id="chatClose">×</span>
+    </div>
+    <div id="chatBody">
+      <div id="chatMessages"></div>
+      <div style="display:flex; gap:4px; margin-top:6px;">
+        <input type="text" id="chatInput" placeholder="Type your message..." />
+        <button id="chatSend">Send</button>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Floating Chat Button -->
+  <button id="chatOpenBtn">💬</button>
+  
+  <!-- Include CSS & JS -->
+  <link rel="stylesheet" href="css/chat.css">
+  <script src="js/chat.js" defer></script>
 
+
+  
   <!-- Main JS -->
   <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
   <script src="https://www.paypal.com/sdk/js?client-id=AbDsUYA-obC2sHFZvv9R4Ce9gYfAqnpuoCNiLDQYeF0cUJdYFSEeuiwRk82Lr3S2NPrMUg97BhCbbVNv&currency=USD"></script>
