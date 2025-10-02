@@ -4,15 +4,14 @@
 body {
   font-family: 'Poppins', Arial, sans-serif;
   line-height: 1.6;
-  background-color: #FAF9F6; /* very light cream background */
-  color: #333333; /* soft dark text, easy to read */
+  background-color: #FFF9F0; /* light cream */
+  color: #5B4636; /* soft warm brown text */
   padding: 24px;
 }
 
 h1, h2, h3, h4 {
   font-weight: bold;
-  color: #2B2B2B; /* slightly darker for headings */
-}
+  color: #3F2F20; /* darker brown for headings */
 
 /* ===== Header & Navigation ===== */
 header { 
