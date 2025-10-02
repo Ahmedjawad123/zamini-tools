@@ -554,5 +554,149 @@
   <!-- Main JS -->
   <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
   <script src="https://www.paypal.com/sdk/js?client-id=AbDsUYA-obC2sHFZvv9R4Ce9gYfAqnpuoCNiLDQYeF0cUJdYFSEeuiwRk82Lr3S2NPrMUg97BhCbbVNv&currency=USD"></script>
+  <!-- ===== Popup Chat Widget ===== -->
+<div id="chatWidget">
+  <div id="chatHeader">💬 Chat with Ahmed
+    <span id="chatClose">×</span>
+  </div>
+  <div id="chatBody">
+    <div id="chatMessages"></div>
+    <input type="text" id="chatInput" placeholder="Type your message..." />
+    <button id="chatSend">Send</button>
+  </div>
+</div>
+
+<style>
+  /* Floating Chat Button */
+  #chatWidget {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 300px;
+    max-height: 400px;
+    background: #fff;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    display: none;
+    flex-direction: column;
+    font-family: 'Poppins', sans-serif;
+    z-index: 1000;
+  }
+
+  #chatHeader {
+    background: #F5DEB3; /* Ancient brown/yellow */
+    padding: 10px;
+    font-weight: 600;
+    cursor: pointer;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  #chatClose {
+    font-weight: bold;
+    cursor: pointer;
+  }
+
+  #chatBody {
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  #chatMessages {
+    flex: 1;
+    max-height: 250px;
+    overflow-y: auto;
+    border: 1px solid #eee;
+    padding: 6px;
+    background: #fafafa;
+    border-radius: 5px;
+  }
+
+  #chatInput {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: calc(100% - 60px);
+  }
+
+  #chatSend {
+    padding: 8px 12px;
+    border: none;
+    background: #F5DEB3;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-left: 4px;
+  }
+
+  /* Floating button to open chat */
+  #chatOpenBtn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: #F5DEB3;
+    border: none;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    font-size: 24px;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    z-index: 999;
+  }
+</style>
+
+<button id="chatOpenBtn">💬</button>
+
+<script>
+  const chatWidget = document.getElementById('chatWidget');
+  const chatOpenBtn = document.getElementById('chatOpenBtn');
+  const chatClose = document.getElementById('chatClose');
+  const chatSend = document.getElementById('chatSend');
+  const chatInput = document.getElementById('chatInput');
+  const chatMessages = document.getElementById('chatMessages');
+
+  // Open/close chat
+  chatOpenBtn.addEventListener('click', () => {
+    chatWidget.style.display = 'flex';
+    chatOpenBtn.style.display = 'none';
+  });
+
+  chatClose.addEventListener('click', () => {
+    chatWidget.style.display = 'none';
+    chatOpenBtn.style.display = 'block';
+  });
+
+  // Send message
+  chatSend.addEventListener('click', () => {
+    const msg = chatInput.value.trim();
+    if (!msg) return;
+    const msgEl = document.createElement('div');
+    msgEl.textContent = "You: " + msg;
+    chatMessages.appendChild(msgEl);
+    chatInput.value = '';
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+
+    // Auto-reply (example)
+    setTimeout(() => {
+      const replyEl = document.createElement('div');
+      replyEl.textContent = "Ahmed: Thanks for your message! I'll reply soon.";
+      replyEl.style.fontWeight = '600';
+      chatMessages.appendChild(replyEl);
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+    }, 800);
+  });
+
+  // Press Enter to send
+  chatInput.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') chatSend.click();
+  });
+</script>
+
 </body>
 </html>
