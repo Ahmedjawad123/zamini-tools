@@ -115,6 +115,70 @@ if (typeof firebase === "undefined") {
 
 
 
+const chatWidget = document.getElementById('chatWidget');
+const chatOpenBtn = document.getElementById('chatOpenBtn');
+const chatClose = document.getElementById('chatClose');
+const chatSend = document.getElementById('chatSend');
+const chatInput = document.getElementById('chatInput');
+const chatMessages = document.getElementById('chatMessages');
+
+const db = firebase.firestore();
+const chatCollection = db.collection("chatMessages");
+
+// Open/close chat
+chatOpenBtn.addEventListener('click', () => {
+  chatWidget.style.display = 'flex';
+  chatOpenBtn.style.display = 'none';
+});
+
+chatClose.addEventListener('click', () => {
+  chatWidget.style.display = 'none';
+  chatOpenBtn.style.display = 'block';
+});
+
+// Function to add message to chat window
+function addMessageToWindow(message, sender="user") {
+  const msgEl = document.createElement('div');
+  msgEl.textContent = (sender === "user" ? "You: " : "Ahmed: ") + message;
+  if(sender !== "user") msgEl.style.fontWeight = '600';
+  chatMessages.appendChild(msgEl);
+  chatMessages.scrollTop = chatMessages.scrollHeight;
+}
+
+// Send message
+chatSend.addEventListener('click', () => {
+  const msg = chatInput.value.trim();
+  if(!msg) return;
+
+  addMessageToWindow(msg, "user");
+
+  // Save to Firestore
+  chatCollection.add({
+    message: msg,
+    sender: "user",
+    timestamp: firebase.firestore.FieldValue.serverTimestamp()
+  }).catch(err => console.error("Firestore error:", err));
+
+  chatInput.value = '';
+});
+
+// Press Enter to send
+chatInput.addEventListener('keydown', (e) => {
+  if(e.key === 'Enter') chatSend.click();
+});
+
+// Load messages in real-time
+chatCollection.orderBy("timestamp")
+  .onSnapshot(snapshot => {
+    chatMessages.innerHTML = "";
+    snapshot.forEach(doc => {
+      const data = doc.data();
+      addMessageToWindow(data.message, data.sender);
+    });
+});
+
+
+
 
 
 
