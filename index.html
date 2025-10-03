@@ -3,722 +3,398 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Zamini Musafir — Ahmed Mini Softwares</title>
-
-  <!-- Favicon -->
-  <link rel="icon" href="images/Zamini_Musafir_logo.ico" type="image/x-icon">
-  <link rel="shortcut icon" href="images/Zamini_Musafir_logo.ico" type="image/x-icon">
-
-  <!-- SEO Meta Tags -->
-  <meta name="description" content="Zamini Musafir — Ahmed’s branch Zamini Tools: small ERP modules and desktop apps for store owners, teachers, and students. Download PDF converters, text tools, and more.">
-  <meta name="keywords" content="Zamini Musafir, Zamini Tools, Ahmed Jawad, PDF Converter, ERP, Utilities, Mini Software, Desktop Apps">
-  <meta name="author" content="Ahmed Jawad">
-
-  <!-- Open Graph / Facebook -->
-  <meta property="og:type" content="website">
-  <meta property="og:title" content="Zamini Musafir — Zamini Tools">
-  <meta property="og:description" content="Small ERP modules and desktop apps for store owners, teachers, and students. Download PDF converters, text tools, and more.">
-  <meta property="og:image" content="https://ahmedjawad123.github.io/zamini-tools/images/Zamini_Musafir_logo.png">
-  <meta property="og:url" content="https://ahmedjawad123.github.io/zamini-tools/">
-
-  <!-- Twitter -->
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Zamini Musafir — Zamini Tools">
-  <meta name="twitter:description" content="Small ERP modules and desktop apps for store owners, teachers, and students. Download PDF converters, text tools, and more.">
-  <meta name="twitter:image" content="https://ahmedjawad123.github.io/zamini-tools/images/Zamini_Musafir_logo.png">
-
-  <!-- Google Analytics -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-BH3Q2E9N2S"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-BH3Q2E9N2S');
-  </script>
-
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
-
-  <!-- Main CSS -->
-  <link rel="stylesheet" href="css/main.css">
-
-  <!-- Structured Data for Zamini Tools (JSON-LD) -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "Organization",
-    "name": "Zamini Musafir",
-    "url": "https://ahmedjawad123.github.io/zamini-tools/",
-    "logo": "https://ahmedjawad123.github.io/zamini-tools/images/Zamini_Musafir_logo.png",
-    "sameAs": [
-      "https://www.linkedin.com/in/ahmed-jawad/",
-      "https://github.com/Ahmedjawad123"
-    ]
-  }
-  </script>
-
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "SoftwareApplication",
-    "name": "Zamini All-in-One PDF",
-    "operatingSystem": "Windows",
-    "applicationCategory": "DesktopApplication",
-    "offers": {
-      "@type": "Offer",
-      "price": "0",
-      "priceCurrency": "USD"
-    },
-    "url": "https://ahmedjawad123.github.io/zamini-tools/",
-    "image": "https://ahmedjawad123.github.io/zamini-tools/products/Zamini_PDF_Converter_v1.1.0/media/Zamini_Converter_page1.jpg",
-    "description": "Convert Word, Excel, Images → PDF quickly and offline."
-  }
-  </script>
-  <!-- Firebase App (core) -->
-  <script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-app-compat.js"></script>
-  <!-- Firestore -->
-  <script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore-compat.js"></script>
-  <!-- Firebase Analytics -->
-  <script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-analytics-compat.js"></script>
-
-  
-  <script>
-    // Initialize Firebase (compat already included in your head)
-    const db = firebase.firestore();
-  
-    // Increment download count reliably
-    function incrementDownload(productName) {
-      const docRef = db.collection("downloads").doc(productName);
-      docRef.get().then(docSnap => {
-        if (!docSnap.exists) {
-          // If the document does not exist, create it with count = 1
-          docRef.set({ count: 1 });
-        } else {
-          // Increment the count
-          docRef.update({ count: firebase.firestore.FieldValue.increment(1) });
-        }
-      }).catch(err => console.error("Failed to increment download:", err));
-    }
-  
-    // Listen to real-time download counts
-    function listenDownloadCount(productName) {
-      const docRef = db.collection("downloads").doc(productName);
-      const countEl = document.querySelector(`.download-count[data-product="${productName}"]`);
-      if (countEl) {
-        docRef.onSnapshot(docSnap => {
-          if (docSnap.exists) {
-            countEl.textContent = docSnap.data().count || 0;
-          } else {
-            countEl.textContent = 0;
-          }
-        });
-      }
-    }
-  
-    // Initialize buttons
-    document.querySelectorAll('a.btn[data-product]').forEach(btn => {
-      const productName = btn.dataset.product;
-      btn.addEventListener('click', () => incrementDownload(productName));
-      listenDownloadCount(productName);
-    });
-  </script>
-
-
-
-  
-
-  <!-- Main JS -->
-  <script src="js/main.js" defer></script>
+  <title>Zamini Tools</title>
+  <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
-<!-- HEADER -->
-<header>
-    <div class="brand">
+  <!-- ===== Header ===== -->
+  <header>
+    <div class="header-container">
+      <!-- Logo -->
       <div class="logo">
         <img src="images/Zamini_Musafir_logo.ico" alt="Zamini Musafir Logo">
       </div>
-      <div>
-        <h1>Zamini Tools</h1> <!-- Easy-to-remember main brand for users -->
-        <div style="color:#F5DEB3; font-size:13px;">
-          A branch of <strong>Zamini Musafir</strong> — Small ERP • Utilities • Desktop Apps
+
+      <!-- Brand + Info -->
+      <div class="brand-info">
+        <h1>Zamini Tools — Your Productivity Companion</h1>
+        <div class="sub-info">
+          A branch of <strong>Zamini Musafir</strong>
         </div>
+      </div>
+
+      <!-- Site Version & Views -->
+      <div class="site-meta">
+        <span class="version">Website v2.0.2</span>
+        <span class="views">🌐 Views: <span id="totalViews">0</span></span>
       </div>
     </div>
 
+    <!-- Header Button -->
+    <div class="header-btn">
+      <a href="#tabs" class="btn">Explore Tools</a>
+    </div>
+  </header>
 
-  </div>
-
-  <nav>
-    <a href="#home">Home</a>
-    <a href="#projects">Projects</a>
-    <a href="#about">About</a>
-    <a href="#contact">Contact</a>
-    <a href="#updates" class="btn ghost" id="updatesBtn">
-      Updates <span id="updatesBadge" style="background:red; color:white; border-radius:50%; padding:2px 6px; font-size:12px; margin-left:4px;">0</span>
-    </a>
+  <!-- ===== Tabs Navigation ===== -->
+  <nav class="tabs" id="tabs">
+    <div class="tab active" data-tab="productsTab">Products</div>
+    <div class="tab dimmed" data-tab="featuresTab">Features</div>
+    <div class="tab" data-tab="aboutTab">About</div>
+    <div class="tab dimmed" data-tab="updatesTab">Updates</div>
+    <div class="tab dimmed" data-tab="joinTab">Join / Support</div>
+    <div class="tab dimmed" data-tab="contactTab">Contact</div>
+    <div class="tab dimmed" data-tab="aiTab">AI Assistant</div>
   </nav>
-  
-  <!-- Support Me Button -->
-  <div class="support-container">
-    <button id="supportBtn" class="tooltip-btn">
-      Support Me
-      <span class="tooltip-text">Please select your country correctly before payment</span>
-    </button>
-  
-    <!-- PayPal Popup -->
-    <div id="paypalPopup" class="paypal-popup">
-      <div class="donation-options">
-        <button id="donate-5" class="donation-amount active">$5</button>
-        <input id="donate-custom" type="number" placeholder="Other amount" min="1" />
-      </div>
-      <div id="paypal-button-small"></div>
-    </div>
-  </div>
 
+  <!-- ===== Tab Contents ===== -->
+  <section class="tab-content active" id="productsTab">
 
-  </div>
-</header>
-
-  <!-- HERO -->
-  <section id="home" class="hero">
-    <div class="hero-left">
-      <span class="badge">Website v1.0.2</span>
-      <span class="views-count" style="margin-left:10px;">
-      🌐 Views: <span id="totalViews">0</span>
-      </span>
-      <h2>Small, reliable desktop apps for stores and shops</h2>
-      <p>Build. Ship. Improve. I'm Ahmed — I build simple ERP modules and tools to help store owners manage purchases, stock, and small tasks.</p>
-    </div>
-    <aside class="hero-right">
-      <strong>Featured</strong>
-      <div class="muted" style="font-size:13px;margin-top:6px;">Mini ERP - Purchase Module</div>
-    </aside>
-  </section>
-
-<!-- ===== Projects Section ===== -->
-<section id="projects">
-  <!-- Section Title -->
-  <h2 style="text-align:center; font-size:28px; margin-bottom:24px;">Projects</h2>
-
-  <!-- Available Now -->
-  <h3 style="text-align:center; font-size:22px; margin:16px 0;">Available Now</h3>
-  <div class="projects">
-
-
-
-
-    
-    <!-- Project 1: Zamini All-in-One PDF -->
-    <article class="card">
-      <h3>Zamini_All-in-One_PDF_v1.1.0 (Latest)</h3>
-      <p class="muted">Convert Word, Excel, Images → PDF quickly and offline.</p>
-      <p class="release-date">Release date: <strong>15 August 2025</strong></p>
-      <p class="size">Size: 36.70 MB</p>
-    
-      <div class="flip-card">
-        <div class="flip-card-inner">
-          <div class="flip-card-front">
-            <img src="products/Zamini_PDF_Converter_v1.1.0/media/Zamini_Converter_page1.jpg" alt="Page 1">
+    <!-- Available Now -->
+    <h3 style="text-align:center; margin:5px 0;">Available Now</h3>
+    <div class="products">
+      <!-- Project 1 -->
+      <div class="card">
+        <div class="card-content">
+          <h3>Zamini_All-in-One_PDF_v1.1.0 (Latest)</h3>
+          <p class="muted">Convert Word, Excel, Images → PDF quickly and offline.</p>
+          <div class="flip-card">
+            <div class="flip-card-inner">
+              <div class="flip-card-front">
+                <img src="products/Zamini_PDF_Converter_v1.1.0/media/Zamini_Converter_page1.jpg" alt="Page 1">
+              </div>
+              <div class="flip-card-back">
+                <img src="products/Zamini_PDF_Converter_v1.1.0/media/Zamini_Converter_page2.jpg" alt="Page 2">
+              </div>
+            </div>
+            <div class="badge-top">
+              Available
+              <span class="release">Release: 15-08-2025</span>
+            </div>
           </div>
-          <div class="flip-card-back">
-            <img src="products/Zamini_PDF_Converter_v1.1.0/media/Zamini_Converter_page2.jpg" alt="Page 2">
+          <div class="actions">
+            <a class="btn-download" href="https://github.com/Ahmedjawad123/Zamini_PDF_Converter_v1.1.0/releases/download/Zamini_PDF_Converter_v1.1.0/Zamini_PDF_Converter_v1.1.1.rar" download>
+              Download v1.1.1 (36.70 MB)
+            </a>
+            <a class="btn ghost" href="products/Zamini_PDF_Converter_v1.1.0/index.html">Learn More</a>
           </div>
-        </div>
-      </div>
-    
-      <p class="old-version">
-        Previous version: 
-        <a href="https://github.com/Ahmedjawad123/Zamini_Converter_v1.0.0/releases/download/v1.0.0/Executable_file_.Zamini_Converter_v1.0.0.rar">v1.0.0</a> 
-        (Updated on: <strong>15 August 2025</strong>)
-      </p>
-    
-      <!-- Buttons & Download Count -->
-      <div class="actions">
-        <div class="download-wrap">
-          <a class="btn" 
-             href="https://github.com/Ahmedjawad123/Zamini_PDF_Converter_v1.1.0/releases/download/Zamini_PDF_Converter_v1.1.0/Zamini_PDF_Converter_v1.1.1.rar" 
-             download 
-             data-product="Zamini_All-in-One_PDF_v1.1.0">
-            Download v1.1.1
-          </a>
-          <span class="downloads">(<span class="download-count" data-product="Zamini_All-in-One_PDF_v1.1.0">0</span> downloads)</span>
-        </div>
-    
-        <a class="btn ghost" href="products/Zamini_PDF_Converter_v1.1.0/index.html">
-          Learn More
-        </a>
-      </div>
-    
-      <!-- Notes -->
-      <p class="note" style="color: #4CAF50; font-size: 0.9em; margin-top: 8px;">
-        💡 If Windows shows “Unknown Publisher”, click <strong>More Info → Run Anyway</strong> to continue.
-      </p>
-    
-      <!-- Hidden security info -->
-      <p class="hidden-checksum" style="display:none;">
-        SHA256 checksum: <code>A3391F45C14104BADC4A803C2D124E3BE22624239D8B6D858C77AB69FEE0D46D</code>
-      </p>
-      <p class="hidden-checksum" style="display:none;">
-        VirusTotal scan: 
-        <a href="https://www.virustotal.com/gui/file/A3391F45C14104BADC4A803C2D124E3BE22624239D8B6D858C77AB69FEE0D46D">
-          3/62 security vendors flagged this file
-        </a> (likely false positives)
-      </p>
-    </article>
-
-
-
-
-
-        <!-- Project 2: Zamini Path2Text -->
-    <article class="card">
-      <h3>Zamini_Path2Text_v1.0.0</h3>
-      <p class="muted">Generate a complete text listing of all folders & files in a selected directory.</p>
-      <p class="release-date">Release date: <strong>22 September 2025</strong></p>
-      <p class="size">Size: 8.94 MB</p>
-    
-      <div class="flip-card">
-        <div class="flip-card-inner">
-          <div class="flip-card-front">
-            <img src="products/Zamini_path2text_1.0.0/media/Zamini_Path2Text_page1.jpg" alt="Page 1">
-          </div>
-          <div class="flip-card-back">
-            <img src="products/Zamini_path2text_1.0.0/media/Zamini_Path2Text_page2.jpg" alt="Page 2">
-          </div>
-        </div>
-      </div>
-    
-      <!-- Buttons & Download Count -->
-      <div class="actions">
-        <div class="download-wrap">
-          <a class="btn" 
-             href="https://github.com/Ahmedjawad123/Zamini_path2text_1.0.0/releases/download/Zamini_Path2Text_v1.0.0/Zamini_path2text_1.0.0.rar" 
-             download 
-             data-product="Zamini_Path2Text_v1.0.0">
-            Download
-          </a>
-          <span class="downloads">(<span class="download-count" data-product="Zamini_Path2Text_v1.0.0">0</span> downloads)</span>
-        </div>
-    
-        <a class="btn ghost" href="products/Zamini_path2text_1.0.0/index.html">
-          Learn More
-        </a>
-      </div>
-    
-      <p class="note" style="color: #4CAF50; font-size: 0.9em; margin-top: 8px;">
-        💡 If Windows shows “Unknown Publisher”, click <strong>More Info → Run Anyway</strong> to continue.
-      </p>
-    </article>
-    
-    
-    
-    <!-- Project 3: Zamini Diary v1.0.1 (updated links & hidden SHA) -->
-    <article class="card">
-      <h3>Zamini_Diary_v1.0.1</h3>
-      <p class="muted">Organize your daily tasks, notes, and schedules with ease — a simple offline diary for Windows.</p>
-      <p class="release-date">Release date: <strong>29 September 2025</strong></p>
-    
-      <div class="flip-card">
-        <div class="flip-card-inner">
-          <div class="flip-card-front">
-            <img src="products/Zamini_Diary_v1.0.0/media/Zamini_Diary_page1.png" alt="Page 1">
-          </div>
-          <div class="flip-card-back">
-            <img src="products/Zamini_Diary_v1.0.0/media/Zamini_Diary_page2.png" alt="Page 2">
-          </div>
-        </div>
-      </div>
-    
-      <div class="actions">
-        <div class="download-wrap">
-          <!-- Folder (Fast) -->
-          <a class="btn" 
-             href="https://github.com/Ahmedjawad123/Zamini_Diary_v1.0.0/releases/download/Zamini_Diary/Zamini_Diary_v1.0.1_folder.zip" 
-             download 
-             data-product="Zamini_Diary_v1.0.1_folder">
-            📁 Folder (Fast)
-          </a>
-    
-          <!-- Single (Slow) -->
-          <a class="btn ghost" 
-             href="https://github.com/Ahmedjawad123/Zamini_Diary_v1.0.0/releases/download/Zamini_Diary/Zamini_Diary_v1.0.1_one.zip" 
-             download 
-             data-product="Zamini_Diary_v1.0.1_one">
-            📄 Single (Slow)
-          </a>
-    
-          <span class="downloads">
-            (<span class="download-count" data-product="Zamini_Diary_v1.0.1_folder">0</span> folder, 
-             <span class="download-count" data-product="Zamini_Diary_v1.0.1_one">0</span> single)
-          </span>
-        </div>
-      </div>
-    
-      <p class="note" style="color: #4CAF50; font-size: 0.9em; margin-top: 8px;">
-        💡 If Windows shows “Unknown Publisher”, click <strong>More Info → Run Anyway</strong> to continue.
-      </p>
-    
-      <!-- Hidden checksums (kept out of view for users) -->
-      <div style="display:none;" class="hidden-checksums" aria-hidden="true">
-        <!-- SHA256 for folder ZIP -->
-        <code id="sha-folder">SHA256: 7F7E08F0FFCB7C7915CD6A0C21EF6BEB8B5708BC8CB3A999F5BDDE6DC613B0AE</code>
-        <!-- SHA256 for single ZIP -->
-        <code id="sha-one">SHA256: C5DA049416578AF00047E45342A8A57740C253453185EB3D33478C5C84EE7AE3</code>
-      </div>
-    </article>
-
-
-  </div>
-
-  <!-- Coming Soon -->
-  <h3 style="text-align:center; font-size:22px; margin:32px 0 16px 0;">Coming Soon</h3>
-  <div class="projects">
-    <!-- Project 3: Zamini_TextAllPDFs -->
-    <article class="card disabled">
-      <h3>Zamini_TextAllPDFs_v1.0.0</h3>
-      <p class="muted">Put or extract text from all PDFs in one click.</p>
-
-      <div class="flip-card">
-        <div class="flip-card-inner">
-          <div class="flip-card-front">
-            <img src="products/Zamini_TextAllPDFs_v1.0.0/media/Zamini_TextAllPDFs_Page1.jpg" alt="Page 1">
-          </div>
-          <div class="flip-card-back">
-            <img src="products/Zamini_TextAllPDFs_v1.0.0/media/Zamini_TextAllPDFs_Page2.jpg" alt="Page 2">
-          </div>
+          <p class="old-version">
+            Previous version 10-08-2025: 
+            <a href="https://github.com/Ahmedjawad123/Zamini_Converter_v1.0.0/releases/download/v1.0.0/Executable_file_.Zamini_Converter_v1.0.0.rar">v1.0.0</a>
+          </p>
+          <p class="note" style="color: #4CAF50; font-size: 0.9em;">
+            💡 If Windows shows “Unknown Publisher”, click <strong>More Info → Run Anyway</strong> to continue.
+          </p>
         </div>
       </div>
 
-      <span class="coming-soon">Coming Soon (Oct 10, 2025)</span>
-    </article>
-
-    <!-- Project 4: Zamini_QuickDownload -->
-    <article class="card disabled">
-      <h3>Zamini_QuickDownload_v1.0.0</h3>
-      <p class="muted">Download any file in one click quickly and easily.</p>
-
-      <div class="flip-card">
-        <div class="flip-card-inner">
-          <div class="flip-card-front">
-            <img src="products/Zamini_QuickDownload_v1.0.0/media/Zamini_QuickDownload_page1.jpg" alt="Page 1">
+      <!-- Project 2 -->
+      <div class="card">
+        <div class="card-content">
+          <h3>Zamini_Path2Text_v1.0.0</h3>
+          <p class="muted">Generate a complete text listing of all folders & files in a selected directory.</p>
+          <div class="flip-card">
+            <div class="flip-card-inner">
+              <div class="flip-card-front">
+                <img src="products/Zamini_path2text_1.0.0/media/Zamini_Path2Text_page1.jpg" alt="Page 1">
+              </div>
+              <div class="flip-card-back">
+                <img src="products/Zamini_path2text_1.0.0/media/Zamini_Path2Text_page2.jpg" alt="Page 2">
+              </div>
+            </div>
+            <div class="badge-top">
+              Available
+              <span class="release">Release: 22-09-2025</span>
+            </div>
           </div>
-          <div class="flip-card-back">
-            <img src="products/Zamini_QuickDownload_v1.0.0/media/Zamini_QuickDownload_page2.jpg" alt="Page 2">
+          <div class="actions">
+            <a class="btn-download" href="https://github.com/Ahmedjawad123/Zamini_path2text_1.0.0/releases/download/Zamini_Path2Text_v1.0.0/Zamini_path2text_1.0.0.rar" download>
+              Download v1.0.0 (8.94 MB)
+            </a>
+            <a class="btn ghost" href="products/Zamini_path2text_1.0.0/index.html">Learn More</a>
           </div>
+          <p class="note" style="color: #4CAF50; font-size: 0.9em;">
+            💡 If Windows shows “Unknown Publisher”, click <strong>More Info → Run Anyway</strong> to continue.
+          </p>
         </div>
       </div>
 
-      <span class="coming-soon">Coming Soon (Oct 15, 2025)</span>
-    </article>
-
-    <!-- Project 5: Zamini_Reduce_PDF_v1.0.0 -->
-    <article class="card disabled">
-      <h3>Zamini_Reduce_PDF_v1.0.0</h3>
-      <p class="muted">Reduce large PDF files in seconds with minimal loss of content or clarity.</p>
-
-      <div class="flip-card">
-        <div class="flip-card-inner">
-          <div class="flip-card-front">
-            <img src="products/Zamini_Reduce_PDF_v1.0.0/media/Zamini_Reduce_PDF_page1.jpg" alt="Page 1">
+      <!-- Project 3 -->
+      <div class="card">
+        <div class="card-content">
+          <h3>Zamini_Diary_v1.0.1</h3>
+          <p class="muted">Organize your daily tasks, notes, and schedules with ease — a simple offline diary for Windows.</p>
+          <div class="flip-card">
+            <div class="flip-card-inner">
+              <div class="flip-card-front">
+                <img src="products/Zamini_Diary_v1.0.0/media/Zamini_Diary_page1.png" alt="Page 1">
+              </div>
+              <div class="flip-card-back">
+                <img src="products/Zamini_Diary_v1.0.0/media/Zamini_Diary_page2.png" alt="Page 2">
+              </div>
+            </div>
+            <div class="badge-top">
+              Available
+              <span class="release">Release: 29-09-2025</span>
+            </div>
           </div>
-          <div class="flip-card-back">
-            <img src="products/Zamini_Reduce_PDF_v1.0.0/media/Zamini_Reduce_PDF_page2.jpg" alt="Page 2">
+          <div class="actions">
+            <a class="btn-download" href="https://github.com/Ahmedjawad123/Zamini_Diary_v1.0.0/releases/download/Zamini_Diary/Zamini_Diary_v1.0.1_folder.zip" download>📁 Folder (Fast)</a>
+            <a class="btn-download" href="https://github.com/Ahmedjawad123/Zamini_Diary_v1.0.0/releases/download/Zamini_Diary/Zamini_Diary_v1.0.1_one.zip" download>📄 Single (Slow)</a>
+            <a class="btn ghost" href="#">Learn More</a>
           </div>
+          <p class="note" style="color: #4CAF50; font-size: 0.9em;">
+            💡 If Windows shows “Unknown Publisher”, click <strong>More Info → Run Anyway</strong> to continue.
+          </p>
         </div>
       </div>
-
-      <span class="coming-soon">Coming Soon (Oct 15, 2025)</span>
-    </article>
-
-    
-    <!-- Project 6: Zamini_MultiPic -->
-    <article class="card disabled">
-      <h3>Zamini_MultiPic_v1.0.0</h3>
-      <p class="muted">Arrange multiple images in rows/columns and page size in one click.</p>
-
-      <div class="flip-card">
-        <div class="flip-card-inner">
-          <div class="flip-card-front">
-            <img src="products/Zamini_MultiPic_v1.0.0/media/Zamini_MultiPic_page1.jpg" alt="Page 1">
-          </div>
-          <div class="flip-card-back">
-            <img src="products/Zamini_MultiPic_v1.0.0/media/Zamini_MultiPic_page2.jpg" alt="Page 2">
-          </div>
-        </div>
-      </div>
-
-      <span class="coming-soon">Coming Soon (Oct 20, 2025)</span>
-    </article>
-
-    <!-- Project 6: Zamini_ExamCraft -->
-    <article class="card disabled">
-      <h3>Zamini_ExamCraft_v1.0.0</h3>
-      <p class="muted">Convert Word files to formatted exam PDFs with automatic page numbers and layout.</p>
-
-      <div class="flip-card">
-        <div class="flip-card-inner">
-          <div class="flip-card-front">
-            <img src="products/Zamini_ExamCraft_v1.0.0/media/Zamini_ExamCraft_page1.jpg" alt="Page 1">
-          </div>
-          <div class="flip-card-back">
-            <img src="products/Zamini_ExamCraft_v1.0.0/media/Zamini_ExamCraft_page2.jpg" alt="Page 2">
-          </div>
-        </div>
-      </div>
-
-      <span class="coming-soon">Coming Soon (Oct 25, 2025)</span>
-    </article>
-  </div>
-</section>
-
-  <!-- About Section -->
-  <section id="about" class="about">
-    <div class="panel">
-      <h4>Why these tools?</h4>
-      <p class="muted">
-        I build small, focused apps that solve one problem well. 
-        Easy to run on Windows, and quick to customize.
-      </p>
-    </div>
-    <div class="panel">
-      <h4>Roadmap</h4>
-      <ul>
-        <li>Zamini_SchoolSuite_v1.0.0 – Full school ERP, coming module by module</li>
-        <li>Zamini_TextAllPDFs_v1.0.0 – Put or extract text from all PDFs in one click</li>
-        <li>Zamini_QuickDownload_v1.0.0 – Download any file in one click quickly and easily</li>
-        <li>Zamini_MultiPic_v1.0.0 – Arrange multiple images in rows/columns with page sizing</li>
-        <li>Zamini_ExamCraft_v1.0.0 – Convert Word files to formatted exam PDFs automatically</li>
-      </ul>
     </div>
 
+    <h3 style="text-align:center; margin:16px 0;">Coming Soon</h3>
+    <div class="products">
 
-  <!-- Contact Section -->
-  <section id="contact" class="contact">
-    <h3>Contact & Support</h3>
-    <p class="muted">Have a question, need a custom feature, or want the source code? Send me a message.</p>
-
-    <div class="contact-columns">
-      <!-- Left: About Me -->
-      <div class="panel about-column">
-        <h4>About Me</h4>
-        <p>Hello, I’m Ahmed Jawad — developer of these softwares. 
-        I create tools to make everyday tasks easier and more efficient.</p>
-        <p>Based in Dubai, I focus on practical solutions for students, teachers, and businesses.</p>
-        <img src="images/ahmed.png" alt="Ahmed Jawad" class="about-photo">
-
+      <!-- Project 1: Zamini_TextAllPDFs -->
+      <div class="card disabled">
+        <h3>Zamini_TextAllPDFs_v1.0.0</h3>
+        <p class="muted">Put or extract text from all PDFs in one click.</p>
+        <div class="flip-card">
+          <div class="flip-card-inner">
+            <div class="flip-card-front">
+              <img src="products/Zamini_TextAllPDFs_v1.0.0/media/Zamini_TextAllPDFs_Page1.jpg" alt="Page 1">
+            </div>
+            <div class="flip-card-back">
+              <img src="products/Zamini_TextAllPDFs_v1.0.0/media/Zamini_TextAllPDFs_Page2.jpg" alt="Page 2">
+            </div>
+          </div>
+        </div>
+        <span class="coming-soon">Coming Soon (Oct 10, 2025)</span>
       </div>
 
-      <!-- Right: Contact & Form -->
-      <aside class="panel contact-column">
-        <h4>Contact</h4>
-        <p><strong>Email:</strong> zamini.musafir123@gmail.com</p>
+      <!-- Project 2: Zamini_QuickDownload -->
+      <div class="card disabled">
+        <h3>Zamini_QuickDownload_v1.0.0</h3>
+        <p class="muted">Download any file in one click quickly and easily.</p>
+        <div class="flip-card">
+          <div class="flip-card-inner">
+            <div class="flip-card-front">
+              <img src="products/Zamini_QuickDownload_v1.0.0/media/Zamini_QuickDownload_page1.jpg" alt="Page 1">
+            </div>
+            <div class="flip-card-back">
+              <img src="products/Zamini_QuickDownload_v1.0.0/media/Zamini_QuickDownload_page2.jpg" alt="Page 2">
+            </div>
+          </div>
+        </div>
+        <span class="coming-soon">Coming Soon (Oct 15, 2025)</span>
+      </div>
 
-        <form id="contactForm">
-          <label for="software">Select Software:</label>
-          <select name="software" id="software" required>
-            <option value="">--Choose--</option>
-            <option value="Zamini Converter">Zamini Converter</option>
-            <option value="Mini ERP Purchase Module">Mini ERP Purchase Module</option>
-            <option value="Utilities Pack">Utilities Pack</option>
-          </select>
+      <!-- Project 3: Zamini_Reduce_PDF -->
+      <div class="card disabled">
+        <h3>Zamini_Reduce_PDF_v1.0.0</h3>
+        <p class="muted">Reduce large PDF files in seconds with minimal loss of content or clarity.</p>
+        <div class="flip-card">
+          <div class="flip-card-inner">
+            <div class="flip-card-front">
+              <img src="products/Zamini_Reduce_PDF_v1.0.0/media/Zamini_Reduce_PDF_page1.jpg" alt="Page 1">
+            </div>
+            <div class="flip-card-back">
+              <img src="products/Zamini_Reduce_PDF_v1.0.0/media/Zamini_Reduce_PDF_page2.jpg" alt="Page 2">
+            </div>
+          </div>
+        </div>
+        <span class="coming-soon">Coming Soon (Oct 15, 2025)</span>
+      </div>
 
-          <input type="text" name="name" placeholder="Your Name (optional)">
-          <input type="email" name="email" placeholder="Your Email (optional)">
-          <textarea name="message" rows="5" placeholder="Your Feedback" required></textarea>
+      <!-- Project 4: Zamini_MultiPic -->
+      <div class="card disabled">
+        <h3>Zamini_MultiPic_v1.0.0</h3>
+        <p class="muted">Arrange multiple images in rows/columns and page size in one click.</p>
+        <div class="flip-card">
+          <div class="flip-card-inner">
+            <div class="flip-card-front">
+              <img src="products/Zamini_MultiPic_v1.0.0/media/Zamini_MultiPic_page1.jpg" alt="Page 1">
+            </div>
+            <div class="flip-card-back">
+              <img src="products/Zamini_MultiPic_v1.0.0/media/Zamini_MultiPic_page2.jpg" alt="Page 2">
+            </div>
+          </div>
+        </div>
+        <span class="coming-soon">Coming Soon (Oct 20, 2025)</span>
+      </div>
 
-          <button class="btn" type="submit">Send Feedback</button>
-        </form>
-      </aside>
+      <!-- Project 5: Zamini_ExamCraft -->
+      <div class="card disabled">
+        <h3>Zamini_ExamCraft_v1.0.0</h3>
+        <p class="muted">Convert Word files to formatted exam PDFs with automatic page numbers and layout.</p>
+        <div class="flip-card">
+          <div class="flip-card-inner">
+            <div class="flip-card-front">
+              <img src="products/Zamini_ExamCraft_v1.0.0/media/Zamini_ExamCraft_page1.jpg" alt="Page 1">
+            </div>
+            <div class="flip-card-back">
+              <img src="products/Zamini_ExamCraft_v1.0.0/media/Zamini_ExamCraft_page2.jpg" alt="Page 2">
+            </div>
+          </div>
+        </div>
+        <span class="coming-soon">Coming Soon (Oct 25, 2025)</span>
+      </div>
+
     </div>
   </section>
 
+  <!-- ===== Features Tab ===== -->
+  <section class="tab-content" id="featuresTab">
+    <h2>Why Choose Zamini Tools?</h2>
+    <div class="features">
+      <div class="feature"><h4>Offline Functionality</h4><p>Works without internet.</p></div>
+      <div class="feature"><h4>Lightweight & Fast</h4><p>Minimal system resources used.</p></div>
+      <div class="feature"><h4>User-Friendly</h4><p>Simple for everyone.</p></div>
+      <div class="feature"><h4>All-in-One Tools</h4><p>Multiple features in one software.</p></div>
+      <div class="feature"><h4>Regular Updates</h4><p>New features & improvements often.</p></div>
+      <div class="feature"><h4>Secure & Safe</h4><p>No hidden ads or malware.</p></div>
+    </div>
+  </section>
+  <section class="tab-content" id="aboutTab">
+    <h2 class="about-title">About Zamini Tools & Ahmed Jawad</h2>
 
+    <div class="about-container">
+
+      <!-- Picture -->
+      <div class="about-image">
+        <img src="images/Ahmed_Jawad.png" alt="Ahmed Jawad">
+      </div>
+
+      <!-- Text on right side -->
+      <div class="about-text">
+
+        <!-- Name & Title together -->
+        <h3 class="name-title">Ahmed Jawad – <span>CEO & Founder of Zamini Tools</span></h3>
+
+        <p><strong>Zamini Tools</strong> is a branch of <strong>Zamini Musafir</strong>, dedicated to building lightweight, offline productivity software that saves time, simplifies work, and delivers results efficiently.</p>
+
+        <h4>How I Work</h4>
+        <ul class="about-list">
+          <li>Every second counts: action over excuses</li>
+          <li>Continuous improvement and learning</li>
+          <li>User-first mindset: simple, reliable, effective</li>
+        </ul>
+
+        <h4>Join & Contribute</h4>
+        <div class="join-contribute">
+          <p>Be part of Zamini Tools’ journey! Here’s how you can get involved:</p>
+          <ul class="about-list">
+            <li><strong>Share Ideas:</strong> Suggest features or improvements for current or future tools.</li>
+            <li><strong>Collaborate on Projects:</strong> Help test, design, or develop new tools.</li>
+            <li><strong>Support & Early Access:</strong> Enjoy exclusive benefits: early access to paid tools, gifts, and free future versions.</li>
+          </ul>
+          <div class="join-btn">
+            <a href="#joinTab" class="btn">Join / Support</a>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
   </section>
 
-  <!-- Footer -->
-  <footer>
-    © <span id="year"></span> Ahmed Mini Softwares — Built with Python & ❤️
-  </footer>
-  <!-- Updates Section -->
-  <section id="updates" class="updates">
-    <h3>Get the Latest Updates</h3>
-    <p>Subscribe to receive notifications when new versions are released.</p>
-    <form id="updatesForm">
-      <input type="email" name="email" placeholder="Your Email" required>
+  <!-- ===== AI Assistant Tab ===== -->
+  <section class="tab-content" id="aiTab">
+    <h2>Zamini AI Assistant</h2>
+    <p>Ask questions, get support, or explore software guidance instantly.</p>
+    <button class="btn" id="aiBtn">Start Chatting</button>
+  </section>
+
+  <!-- ===== Updates Tab ===== -->
+  <section class="tab-content" id="updatesTab">
+    <h2>Latest Updates</h2>
+    <p>No updates yet. Check back soon!</p>
+  </section>
+
+  <!-- ===== Join / Support Tab ===== -->
+  <section class="tab-content" id="joinTab">
+    <h2>Join & Support Us</h2>
+    <button class="btn" id="supportBtn">Support Me</button>
+    <form id="subscribeForm">
+      <input type="email" placeholder="Your Email" required>
       <button type="submit" class="btn">Subscribe</button>
-      <div id="updates-status" style="margin-top:6px; color:green;"></div>
     </form>
   </section>
-  <!-- ===== Popup Chat Widget ===== -->
-  <div id="chatWidget">
-    <div id="chatHeader">💬 Chat with Ahmed
-      <span id="chatClose">×</span>
-    </div>
-    <div id="chatBody">
-      <div id="chatMessages"></div>
-      <div style="display:flex; gap:4px; margin-top:6px;">
-        <input type="text" id="chatInput" placeholder="Type your message..." />
-        <button id="chatSend">Send</button>
+
+  <!-- ===== Contact Tab ===== -->
+  <section class="tab-content" id="contactTab">
+    <h2>Get in Touch</h2>
+    <form id="contactForm">
+      <input type="text" placeholder="Name" required>
+      <input type="email" placeholder="Email" required>
+      <textarea placeholder="Message" required></textarea>
+      <button type="submit" class="btn">Send</button>
+    </form>
+  </section>
+
+  <!-- ===== Footer ===== -->
+  <footer>
+    <div class="footer-container">
+      <!-- Left -->
+      <div class="footer-section">
+        <h3>Zamini Tools</h3>
+        <p>Making productivity simple.</p>
+      </div>
+      <!-- Center -->
+      <div class="footer-section">
+        <h4>Quick Links</h4>
+        <p>
+          <a href="#">Privacy Policy</a> | 
+          <a href="#">Terms of Service</a> | 
+          <a href="#">Contact Us</a> | 
+          <a href="#">FAQ</a> | 
+          <a href="#">About Us</a>
+        </p>
+      </div>
+      <!-- Right -->
+      <div class="footer-section">
+        <h4>Stay Connected</h4>
+        <div class="newsletter">
+          <input type="email" placeholder="Enter your email">
+          <button>Subscribe</button>
+          <small class="safe-note">Safe & secure</small>
+        </div>
+        <div class="footer-social">
+          <span class="follow-note">Follow us:</span>
+          <a href="#" class="social-btn facebook">Facebook</a>
+          <a href="#" class="social-btn twitter">Twitter</a>
+          <a href="#" class="social-btn instagram">Instagram</a>
+          <a href="#" class="social-btn linkedin">LinkedIn</a>
+        </div>
       </div>
     </div>
+    <div class="footer-bottom">
+      <p>Email: zamini.musafir123@gmail.com | Phone: +971 52 56 05323</p>
+      <p>&copy; 2025 Zamini Musafir. All Rights Reserved.</p>
+    </div>
+  </footer>
+
+  <!-- Social Buttons -->
+  <div class="social">
+    <a href="#" target="_blank">FB</a>
+    <a href="#" target="_blank">IG</a>
+    <a href="#" target="_blank">YT</a>
+    <a href="#" target="_blank">LI</a>
+    <a href="#" target="_blank">TW</a>
   </div>
-  
-  <!-- Floating Chat Button -->
-  <button id="chatOpenBtn">💬</button>
-  
-  <!-- Include CSS & JS -->
-  <link rel="stylesheet" href="css/chat.css">
-  <script src="js/chat.js" defer></script>
 
-
-  
-  <!-- Main JS -->
-  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
-  <script src="https://www.paypal.com/sdk/js?client-id=AbDsUYA-obC2sHFZvv9R4Ce9gYfAqnpuoCNiLDQYeF0cUJdYFSEeuiwRk82Lr3S2NPrMUg97BhCbbVNv&currency=USD"></script>
-  <!-- ===== Popup Chat Widget ===== -->
-<div id="chatWidget">
-  <div id="chatHeader">💬 Chat with Ahmed
-    <span id="chatClose">×</span>
+  <!-- Chat -->
+  <div id="chatBtn">Chat Us</div>
+  <div id="chatBox">
+    <form id="chatForm">
+      <input type="text" placeholder="Your Name" required>
+      <input type="email" placeholder="Your Email" required>
+      <textarea placeholder="Your Message" required></textarea>
+      <button type="submit">Send</button>
+    </form>
   </div>
-  <div id="chatBody">
-    <div id="chatMessages"></div>
-    <input type="text" id="chatInput" placeholder="Type your message..." />
-    <button id="chatSend">Send</button>
-  </div>
-</div>
 
-<style>
-  /* Floating Chat Button */
-  #chatWidget {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    width: 300px;
-    max-height: 400px;
-    background: #fff;
-    border: 1px solid #ccc;
-    border-radius: 10px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-    display: none;
-    flex-direction: column;
-    font-family: 'Poppins', sans-serif;
-    z-index: 1000;
-  }
-
-  #chatHeader {
-    background: #F5DEB3; /* Ancient brown/yellow */
-    padding: 10px;
-    font-weight: 600;
-    cursor: pointer;
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-
-  #chatClose {
-    font-weight: bold;
-    cursor: pointer;
-  }
-
-  #chatBody {
-    padding: 10px;
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-  }
-
-  #chatMessages {
-    flex: 1;
-    max-height: 250px;
-    overflow-y: auto;
-    border: 1px solid #eee;
-    padding: 6px;
-    background: #fafafa;
-    border-radius: 5px;
-  }
-
-  #chatInput {
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    width: calc(100% - 60px);
-  }
-
-  #chatSend {
-    padding: 8px 12px;
-    border: none;
-    background: #F5DEB3;
-    cursor: pointer;
-    border-radius: 5px;
-    margin-left: 4px;
-  }
-
-  /* Floating button to open chat */
-  #chatOpenBtn {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    background: #F5DEB3;
-    border: none;
-    border-radius: 50%;
-    width: 50px;
-    height: 50px;
-    font-size: 24px;
-    cursor: pointer;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-    z-index: 999;
-  }
-</style>
-
-<button id="chatOpenBtn">💬</button>
-
-<script>
-  const chatWidget = document.getElementById('chatWidget');
-  const chatOpenBtn = document.getElementById('chatOpenBtn');
-  const chatClose = document.getElementById('chatClose');
-  const chatSend = document.getElementById('chatSend');
-  const chatInput = document.getElementById('chatInput');
-  const chatMessages = document.getElementById('chatMessages');
-
-  // Open/close chat
-  chatOpenBtn.addEventListener('click', () => {
-    chatWidget.style.display = 'flex';
-    chatOpenBtn.style.display = 'none';
-  });
-
-  chatClose.addEventListener('click', () => {
-    chatWidget.style.display = 'none';
-    chatOpenBtn.style.display = 'block';
-  });
-
-  // Send message
-  chatSend.addEventListener('click', () => {
-    const msg = chatInput.value.trim();
-    if (!msg) return;
-    const msgEl = document.createElement('div');
-    msgEl.textContent = "You: " + msg;
-    chatMessages.appendChild(msgEl);
-    chatInput.value = '';
-    chatMessages.scrollTop = chatMessages.scrollHeight;
-
-    // Auto-reply (example)
-    setTimeout(() => {
-      const replyEl = document.createElement('div');
-      replyEl.textContent = "Ahmed: Thanks for your message! I'll reply soon.";
-      replyEl.style.fontWeight = '600';
-      chatMessages.appendChild(replyEl);
-      chatMessages.scrollTop = chatMessages.scrollHeight;
-    }, 800);
-  });
-
-  // Press Enter to send
-  chatInput.addEventListener('keydown', (e) => {
-    if (e.key === 'Enter') chatSend.click();
-  });
-</script>
+  <!-- JS -->
+  <script src="js/main.js" defer></script>
 
 </body>
 </html>
