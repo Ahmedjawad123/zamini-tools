@@ -1,259 +1,226 @@
-what should i change /* ===== Reset ===== */
-* { box-sizing: border-box; margin: 0; padding: 0; }
-
+/* ===================== Reset & Body ===================== */
 body {
-  font-family: 'Poppins', Arial, sans-serif;
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background: #fff8e7; /* soft light beige */
+  color: #333;
   line-height: 1.6;
-  background-color: #493C2B; /* earthy brown */
-  color: #F5DEB3; /* light parchment text */
-  padding: 24px;
 }
+/* no phone code needed: body is flexible by default */
 
-h1,h2,h3,h4 { font-weight: bold; color: #FFF8DC; }
-
-/* ===== Header & Navigation ===== */
-header { 
-  display: flex; 
-  align-items: center; 
-  justify-content: space-between; 
-  gap: 12px; 
-  flex-wrap: wrap; 
-  margin-bottom: 24px; 
+a { 
+  text-decoration: none; 
+  color: #333; 
 }
+/* no phone code needed: links adjust naturally */
 
-.brand { display: flex; align-items: center; gap: 12px; }
+.container { 
+  width: 90%; 
+  max-width: 1200px; 
+  margin: auto; 
+  padding: 20px; 
+}
+/* no phone code needed: container uses max-width and % width */
 
+/* ===================== Header ===================== */
+header {
+  background: #c48f3c; 
+  color: #fff;
+  padding: 20px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+/* no phone code needed: padding ok, flex-wrap handles small screens */
+
+.header-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+/* no phone code needed: flex-wrap already allows stacking */
+
+
+
+/* ===================== Logo ===================== */
 .logo {
-  width: 56px;
-  height: 56px;
-  border-radius: 12px;
+  width: 130px;
+  height: 130px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 4px solid #ffd966;
   display: flex;
   align-items: center;
   justify-content: center;
-  overflow: hidden;
-  background: linear-gradient(135deg,#D4AF37,#F5DEB3); /* optional */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.25);
+  transition: transform 0.3s, box-shadow 0.3s, filter 0.3s;
+  position: relative;
 }
+/* no phone code needed: logo size is fixed, looks fine on small screens */
+
+.logo::after {
+  content: '';
+  position: absolute;
+  top: -5px;
+  left: -5px;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  box-shadow: 0 0 15px 5px rgba(255, 217, 102, 0.5);
+  pointer-events: none;
+}
+/* no phone code needed: glow adjusts with logo size */
 
 .logo img {
   width: 100%;
   height: 100%;
-  object-fit: contain;
-  display: block;
-}
-
-
-
-nav { display: flex; gap: 12px; align-items: center; }
-nav a { 
-  padding: 8px 12px; 
-  border-radius: 6px; 
-  text-decoration: none; 
-  font-weight: 600; 
-  color: #F5DEB3; 
-}
-nav a:hover { 
-  background-color: #D4AF37; 
-  color: #493C2B; 
-}
-
-/* ===== Support Me Button ===== */
-.tooltip-btn {
-  background-color: #D4AF37;
-  color: #493C2B;
-  padding: 8px 14px;
-  border-radius: 6px;
-  font-weight: 700;
-  cursor: pointer;
-  border: none;
-  position: relative;
-}
-
-.tooltip-text {
-  visibility: hidden;
-  width: 220px;
-  background-color: #FFF8DC;
-  color: #493C2B;
-  text-align: center;
-  border-radius: 6px;
-  padding: 6px;
-  position: absolute;
-  z-index: 10000;
-  top: -35px;
-  right: 0;
-  font-size: 12px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-}
-
-.tooltip-btn:hover .tooltip-text {
-  visibility: visible;
-}
-
-/* ===== PayPal Popup ===== */
-.paypal-popup {
-  display: none;
-  position: absolute;
-  top: 45px;
-  right: 0;
-  width: 300px;
-  max-height: 400px;
-  overflow-y: auto;
-  background-color: #FFF8DC;
-  border: 1px solid #D4AF37;
-  border-radius: 8px;
-  padding: 10px;
-  z-index: 9999;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-}
-
-/* ===== Donation Options ===== */
-.donation-options {
-  display: flex;
-  gap: 8px;
-  margin-bottom: 10px;
-  justify-content: center;
-  align-items: center;
-}
-
-.donation-options button.donation-amount {
-  background-color: #D4AF37;
-  color: #493C2B;
-  border: none;
-  padding: 6px 12px;
-  border-radius: 6px;
-  font-weight: 700;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.donation-options button.donation-amount.active,
-.donation-options button.donation-amount:hover {
-  background-color: #F5DEB3;
-  color: #493C2B;
-}
-
-.donation-options input#don
-
-/* ===== Hero Section ===== */
-.hero-left h2 { color: #FFF8DC; margin-bottom: 10px; }
-.hero-left p { color: #FFF8DC; }
-.badge { 
-  background-color: #D4AF37; 
-  color: #493C2B; 
-  padding: 4px 8px; 
-  border-radius: 6px; 
-  font-weight: 600; 
-}
-
-/* ===== Projects ===== */
-.projects {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr); /* exactly 3 columns */
-  gap: 18px;
-  margin-top: 12px;
-}
-
-@media (max-width: 1080px) {
-  .projects {
-    grid-template-columns: repeat(2, 1fr); /* 2 columns for medium screens */
-  }
-}
-
-@media (max-width: 720px) {
-  .projects {
-    grid-template-columns: 1fr; /* 1 column for mobile */
-  }
-}
-.card { 
-  background-color: rgba(245, 222, 179, 0.1); 
-  border-radius: 12px; 
-  padding: 16px; 
-  box-shadow: 0 6px 20px rgba(0,0,0,0.2); 
-  transition: transform 0.2s ease, box-shadow 0.2s ease; 
-}
-.card:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(0,0,0,0.3); }
-.card h3 { margin-bottom: 6px; color: #FFF8DC; }
-.card p { color: #F5DEB3; font-size: 14px; }
-.btn { 
-  display: inline-block; 
-  background-color: #D4AF37; 
-  color: #493C2B; 
-  padding: 6px 12px; 
-  margin-top: 10px; 
-  border-radius: 6px; 
-  font-weight: 600; 
-  text-decoration: none; 
-}
-.btn.ghost { background-color: transparent; border: 1px solid #F5DEB3; color: #F5DEB3; }
-
-/* ===== About Panels ===== */
-.panel { 
-  background-color: rgba(245, 222, 179, 0.05); 
-  padding: 16px; 
-  border-radius: 12px; 
-  margin-bottom: 12px; 
-}
-.panel h4 { color: #FFF8DC; margin-bottom: 8px; }
-.panel p, .panel li { color: #F5DEB3; }
-
-.about-wrapper { text-align: center; }
-.about-photo {
-  width: 150px;
-  height: 150px;
-  border-radius: 50%;
   object-fit: cover;
-  margin: 0 auto 12px;
-  border: 2px solid #D4AF37;
+}
+/* no phone code needed: img scales inside logo */
+
+.logo:hover {
+  transform: scale(1.15);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
+  filter: brightness(1.05);
+}
+/* no phone code needed: hover effect just scales */
+
+/* ===================== Brand Info ===================== */
+.brand-info h1 {
+  font-size: 2.3rem;
+  margin-bottom: 5px;
+}
+/* no phone code needed: wraps naturally */
+
+.sub-info {
+  font-size: 1rem;
+  color: #f5deba;
+}
+/* no phone code needed: small text fits */
+
+.site-meta {
+  text-align: right;
+  font-size: 0.85rem;
+}
+/* no phone code needed: text alignment still works */
+
+.site-meta .version {
   display: block;
+  margin-bottom: 3px;
+}
+/* no phone code needed */
+
+/* ===================== Header Button ===================== */
+.header-btn {
+  text-align: center;
+  margin-top: 15px;
+}
+/* no phone code needed: button centered */
+
+.header-btn .btn {
+  background: linear-gradient(135deg, #ffd966, #e6b800);
+  color: #333;
+  padding: 12px 25px;
+  border-radius: 50px;
+  font-weight: bold;
+  text-decoration: none;
+  transition: 0.3s;
+}
+/* no phone code needed: button scales fine */
+
+.header-btn .btn:hover {
+  box-shadow: 0 4px 15px rgba(230, 184, 0, 0.5);
+  transform: translateY(-2px);
+}
+/* no phone code needed */
+
+/* ===================== Tabs ===================== */
+.tabs {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  background: #f9e6c1;
+  border-bottom: 2px solid #c48f3c;
+}
+/* no phone code needed: flex-wrap handles stacking */
+
+.tab {
+  padding: 15px 25px;
+  cursor: pointer;
+  font-weight: bold;
+  color: #b0752c;
+  transition: 0.3s;
+  border-right: 1px solid #c48f3c;
+}
+/* no phone code needed */
+
+.tab:last-child {
+  border-right: none;
+}
+/* no phone code needed */
+
+.tab.active {
+  background: #c48f3c; 
+  color: #fff;
+}
+/* no phone code needed */
+
+/* ===================== Tab Content ===================== */
+.tab-content { 
+  display: none; 
+  padding: 40px 20px; 
+  text-align: center; 
+}
+.tab-content.active { 
+  display: block; 
 }
 
-/* ===== Contact Columns ===== */
-.contact-columns {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 20px;
-  margin-top: 20px;
-}
-.about-column, .contact-column { padding: 16px; }
+/* no phone code needed: padding is fine */
 
-/* ===== Contact Form ===== */
-form input, form textarea, form button {
-  background-color: rgba(245, 222, 179, 0.1);
-  border: 1px solid #F5DEB3;
-  color: #FFF8DC;
-  padding: 10px;
-  border-radius: 8px;
-  width: 100%;
-  margin-bottom: 10px;
-}
-form input::placeholder, form textarea::placeholder { color: #F5DEB3; }
-.thumb {
-  width: 200px;
-  height: auto;
-  border-radius: 5px;
-  border: 2px solid #d2b48c;
-  object-fit: contain;
+/* ===================== Card Container Wrapper ===================== */
+.products, .features { 
+  display: flex; 
+  flex-wrap: wrap; 
+  gap: 12px; 
+  justify-content: center; 
 }
 
-/* ===== Footer ===== */
-footer { margin-top: 24px; text-align: center; color: #F5DEB3; font-size: 13px; }
+/* ===================== Card Styling ===================== */
+.card, .feature { 
+  background: #fffbe6; 
+  border: 1px solid #c48f3c; 
+  border-radius: 10px; 
+  padding: 10px;                  
+  flex: 1 1 calc(33.333% - 32px);   /* 👈 3 per row */
+  max-width: calc(33.333% - 32px); /* 👈 limit width */
+  text-align: center;             
+  transition: 0.3s; 
+  position: relative; 
+  display: flex; 
+  flex-direction: column;         
+  gap: 6px;                       
+  overflow: hidden;             
+  font-size: 0.8rem;              
+  box-sizing: border-box;         
+}
+/* Card Hover */
+.card:hover, .feature:hover { 
+  box-shadow: 0 4px 15px rgba(0,0,0,0.2); 
+  transform: translateY(-2px);
+}
 
-/* Flip Card Container fills its parent */
-/* Flip card fills its parent .card */
+/* ===================== Flip Card ===================== */
 .flip-card {
-  width: 100%;            /* fill parent card width */
-  height: 0;
-  padding-top: 57.14%;    /* 192 / 336 = aspect ratio */
+  width: 100%;
+  aspect-ratio: 16 / 9;
   perspective: 1000px;
   position: relative;
-  margin: 10px 0;
+  margin-bottom: 4px;
 }
 
 .flip-card-inner {
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  width: 100%; height: 100%;
   transition: transform 0.6s;
   transform-style: preserve-3d;
 }
@@ -262,252 +229,503 @@ footer { margin-top: 24px; text-align: center; color: #F5DEB3; font-size: 13px; 
   transform: rotateY(180deg);
 }
 
-.flip-card-front,
-.flip-card-back {
+.flip-card-front, .flip-card-back {
   position: absolute;
-  width: 100%;
-  height: 100%;
+  width: 100%; height: 100%;
   backface-visibility: hidden;
-  border: 1px solid #d2b48c;
   border-radius: 5px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.flip-card-front img,
-.flip-card-back img {
+.flip-card-front img, .flip-card-back img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain; /* prevents cropping images */
 }
 
 .flip-card-back {
   transform: rotateY(180deg);
 }
 
-/* ===== Support Me Tooltip & PayPal ===== */
-.tooltip-btn {
-  background-color: #D4AF37;
-  color: #493C2B;
-  padding: 8px 14px;
-  border-radius: 6px;
-  font-weight: 700;
-  cursor: pointer;
-  border: none;
-  position: relative;
-}
-
-.tooltip-text {
-  visibility: hidden;
-  width: 220px;
-  background-color: #FFF8DC;
-  color: #493C2B;
-  text-align: center;
-  border-radius: 6px;
-  padding: 6px;
-  position: absolute;
-  z-index: 10000;
-  top: -35px;
-  right: 0;
-  font-size: 12px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-}
-
-.tooltip-btn:hover .tooltip-text { visibility: visible; }
-
-.paypal-popup {
-  display: none;
-  position: absolute;
-  top: 45px;
-  right: 0;
-  width: 300px;
-  max-height: 400px;
-  overflow-y: auto;
-  background-color: #FFF8DC;
-  border: 1px solid #D4AF37;
-  border-radius: 8px;
-  padding: 10px;
-  z-index: 9999;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-}
-
-/* ===== Responsive ===== */
-@media (max-width: 720px) {
-  nav { display: none; width: 100%; margin-top: 12px; flex-direction: column; }
-  header {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 8px;
-  }
-  .brand { width: 100%; gap: 8px; }
-  .logo img { width: 50px; height: 50px; border-radius: 8px; }
-  #supportBtn, .tooltip-btn { width: 100%; text-align: center; }
-  .paypal-popup { position: fixed; bottom: 20px; right: 20px; top: auto; width: 90%; max-width: 320px; }
-  .contact-columns { grid-template-columns: 1fr; }
-  nav { display: flex; flex-wrap: wrap; gap: 6px; }
-}
-
-
-
-
-paypal.Buttons({
-  style: {
-    layout: 'vertical',
-    color: 'gold',
-    shape: 'rect',
-    label: 'paypal',
-    height: 40
-  },
-  commit: true, // removes the “By continuing…” message
-  createOrder: (data, actions) => {
-    const amountInput = document.getElementById('donate-custom');
-    let value = document.getElementById('donate-5').classList.contains('active') ? '5' : amountInput.value || '5';
-    return actions.order.create({
-      purchase_units: [{ amount: { value: value }, description: 'Support Payment' }]
-    });
-  },
-  onApprove: (data, actions) => actions.order.capture().then(details => {
-    alert('Thank you for your support, ' + details.payer.name.given_name);
-    document.getElementById('paypalPopup').style.display = 'none';
-  }),
-  onError: (err) => {
-    console.error(err);
-    alert('Payment could not be processed. Try again.');
-  }
-}).render('#paypal-button-small');
-
-
-
-
-.card .coming-soon {
-  position: absolute;
-  top: 12px;
-  right: 12px;
-  background-color: rgba(212, 175, 55, 0.95); /* solid golden, more visible */
-  color: #FFF8DC; /* light text for contrast */
-  padding: 4px 8px;
-  border-radius: 6px;
-  font-size: 12px;
-  font-weight: 700;
-  pointer-events: none;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.3); /* subtle shadow for text readability */
-}
-
-
-/* Dim Coming Soon Cards slightly, but keep flip working */
-.card.disabled {
-  position: relative;         
-  pointer-events: auto;       /* allow hover for flip */
-  filter: brightness(0.9);    /* slight dim effect */
-}
-
-.card.disabled::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0,0,0,0.15); /* lighter overlay */
-  border-radius: 12px;         
-  z-index: 1;                  /* below flip content */
-  pointer-events: none;        /* don’t block hover */
-}
-
-.card.disabled img,
-.card.disabled .btn {
-  opacity: 0.85;               /* subtle dim */
-}
-
-
-.section-title {
-  text-align: center;
-  font-size: 1.5em;       /* slightly bigger */
-  font-weight: 700;
-  color: #F5DEB3;          /* matches your palette */
-  margin: 30px 0 15px 0;   /* spacing above/below */
-}
-
-
-
-
-/* ===== Chat Widget ===== */
-#chatWidget {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  width: 300px;
-  max-height: 400px;
-  background: #fff;
-  border: 1px solid #ccc;
-  border-radius: 10px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-  display: none;
-  flex-direction: column;
-  font-family: 'Poppins', sans-serif;
-  z-index: 1000;
-}
-
-#chatHeader {
-  background: #F5DEB3;
-  padding: 10px;
-  font-weight: 600;
-  cursor: pointer;
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
+/* ===================== Card Content ===================== */
+.card-content {
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
+  gap: 2px;                       
+  text-align: center;              
+  justify-content: center;         
+}
+
+.card h3, .feature h4 { 
+  color: #b0752c; 
+  margin: 0;                       
+  font-size: 1.2rem;           
+  line-height: 1.1;               
+  text-align: center;             
+}
+.card p, .feature p { 
+  font-size: 0.7rem; 
+  margin: 0;                       
+  line-height: 1.1;               
+}
+
+/* ===================== Buttons ===================== */
+.btn-download, .card .btn, .feature .btn { 
+  display: inline-block; 
+  padding: 4px 10px; 
+  background: #c48f3c; 
+  color: #fff; 
+  border-radius: 5px; 
+  font-weight: bold; 
+  font-size: 0.7rem; 
+  text-decoration: none;
+  margin-top: 4px;                 
+  text-align: center;
+}
+
+.btn.ghost, .card .btn.ghost, .feature .btn.ghost { 
+  background: transparent; 
+  border: 1px solid #b0752c; 
+  color: #b0752c; 
+}
+
+/* ===================== Top-left Badge ===================== */
+.badge-top {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  background-color: rgba(0,180,0,0.9);
+  color: #fffbe6;
+  padding: 3px 6px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  border-radius: 6px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
   align-items: center;
 }
 
-#chatClose {
+.badge-top .release {
+  font-size: 0.6rem;
+  font-weight: 400;
+  margin-top: 2px;
+}
+
+/* ===================== Coming Soon Badge ===================== */
+.card .coming-soon {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: rgba(212, 175, 55, 0.95);  
+  color: #fffbe6;                         
+  padding: 3px 6px;                        
+  border-radius: 6px;
+  font-size: 0.65rem;                      
+  font-weight: 700;
+  text-transform: uppercase;               
+  letter-spacing: 0.5px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+  pointer-events: none;                     
+  z-index: 10;                              
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card:hover .coming-soon {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 6px rgba(0,0,0,0.35);
+}
+
+/* ===================== Disabled Cards ===================== */
+.card.disabled {
+  filter: brightness(0.9);
+}
+.card.disabled::after {
+  border-radius: 10px;
+}
+.card.disabled img,
+.card.disabled .btn {
+  opacity: 0.85;
+}
+
+/* ===================== Available Badge ===================== */
+.card .available {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  background-color: rgba(0, 180, 0, 0.9);
+  color: #fffbe6;                        
+  padding: 4px 8px;
+  font-size: 10px;
+  font-weight: 700;
+  border-radius: 6px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+  pointer-events: none;
+  z-index: 5;
+}
+
+/* ===================== Responsive ===================== */
+@media (max-width: 1080px) {
+  .card, .feature { width: 400px; }
+  .flip-card { padding-top: 45%; }
+}
+
+@media (max-width: 720px) {
+  .card, .feature {
+    width: 100%;
+  }
+  .flip-card {
+    padding-top: 60%;  
+  }
+  .card-content {
+    text-align: center;
+  }
+  .badge-top {
+    font-size: 0.65rem;
+    padding: 2px 4px;
+  }
+  .badge-top .release {
+    font-size: 0.55rem;
+  }
+  .btn-download {
+    font-size: 0.65rem;
+  }
+  .card .available {
+    font-size: 9px;
+    padding: 3px 6px;
+  }
+}
+
+
+
+/* ===================== Footer ===================== */
+footer { 
+  background: #c48f3c; 
+  color: #fff; 
+  text-align: center; 
+  padding: 40px 20px 20px;
+  font-family: Arial, sans-serif;
+}
+/* phone adjustments needed below */
+
+.footer-container {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  max-width: 1200px;
+  margin: auto;
+}
+/* phone adjustments: stacked in phone */
+
+.footer-section {
+  flex: 1;
+  min-width: 250px;
+  margin: 10px;
+}
+/* phone adjustments: center text */
+
+.footer-section h3, .footer-section h4 {
+  margin-bottom: 10px;
+}
+/* no phone code needed */
+
+.footer-section p {
+  font-size: 0.9rem;
+  line-height: 1.4;
+}
+/* no phone code needed */
+
+.footer-section a {
+  color: #fff;
+  text-decoration: none;
+  margin: 0 5px;
+  font-weight: bold;
+  transition: 0.3s;
+}
+/* no phone code needed */
+
+.footer-section a:hover {
+  color: #ffd966;
+}
+/* no phone code needed */
+
+/* ===================== Newsletter ===================== */
+.newsletter {
+  margin-top: 10px;
+}
+/* phone adjustments: input/button width change */
+
+.newsletter input {
+  padding: 8px 10px;
+  border-radius: 5px 0 0 5px;
+  border: none;
+  width: 150px;
+}
+
+.newsletter button {
+  padding: 8px 12px;
+  border-radius: 0 5px 5px 0;
+  border: none;
+  background: linear-gradient(135deg, #ffd966, #e6b800);
+  color: #333;
   font-weight: bold;
   cursor: pointer;
+  transition: 0.3s;
 }
 
-#chatBody {
-  padding: 10px;
+.newsletter button:hover {
+  box-shadow: 0 4px 12px rgba(230,184,0,0.5);
+  transform: translateY(-2px);
+}
+
+.newsletter p {
+  font-size: 0.8rem;
+  color: #fff;
+  margin-top: 5px;
+}
+
+/* ===================== Social Buttons ===================== */
+.footer-social {
+  margin-top: 10px;
+}
+/* phone adjustments: buttons become block */
+
+.footer-social .social-btn {
+  display: inline-block;
+  margin: 5px 3px;
+  padding: 8px 12px;
+  border-radius: 5px;
+  background: linear-gradient(135deg, #ffd966, #e6b800);
+  color: #333;
+  font-weight: bold;
+  text-decoration: none;
+  transition: 0.3s;
+}
+
+.footer-social .social-btn:hover {
+  box-shadow: 0 4px 12px rgba(230,184,0,0.5);
+  transform: translateY(-2px);
+}
+
+/* ===================== Footer Bottom ===================== */
+.footer-bottom {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 0.85rem;
+}
+/* no phone code needed */
+
+/* ===================== Phone ===================== */
+@media (max-width: 900px) {
+  .footer-container {
+    flex-direction: column;
+    align-items: center;
+  }
+  .footer-section {
+    text-align: center;
+  }
+  .newsletter input {
+    width: 80%;
+    margin-bottom: 5px;
+    border-radius: 5px;
+  }
+  .newsletter button {
+    width: 80%;
+    border-radius: 5px;
+  }
+  .footer-social .social-btn {
+    display: block;
+    width: 60%;
+    margin: 5px auto;
+  }
+}
+
+/* ===================== Social Flip Buttons ===================== */
+.social {
+  position: fixed;
+  top: 40%;
+  left: 0;
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  z-index: 1000;
 }
 
-#chatMessages {
-  flex: 1;
-  max-height: 250px;
-  overflow-y: auto;
-  border: 1px solid #eee;
-  padding: 6px;
-  background: #fafafa;
-  border-radius: 5px;
+.social a {
+  background: linear-gradient(135deg, #ffd966, #e6b800); /* shiny gold */
+  padding: 12px;
+  margin: 2px 0;
+  display: block;
+  text-align: center;
+  border-radius: 0 5px 5px 0;
+  font-weight: bold;
+  transition: 0.3s;
+  color: #333;
 }
 
-#chatInput {
-  padding: 8px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  flex: 1;
+.social a:hover { 
+  transform: translateX(5px);
+  box-shadow: 0 4px 10px rgba(230,184,0,0.5);
 }
 
-#chatSend {
-  padding: 8px 12px;
-  border: none;
-  background: #F5DEB3;
-  cursor: pointer;
-  border-radius: 5px;
+/* --- Responsive Social --- */
+@media (max-width: 900px) {
+  .social {
+    top: 35%;
+  }
+  .social a {
+    padding: 10px;
+    font-size: 0.85rem;
+  }
 }
 
-/* Floating button */
-#chatOpenBtn {
+/* ===================== Chat Button ===================== */
+#chatBtn {
   position: fixed;
   bottom: 20px;
   right: 20px;
-  background: #F5DEB3;
-  border: none;
-  border-radius: 50%;
-  width: 50px;
-  height: 50px;
-  font-size: 24px;
+  background: linear-gradient(135deg, #ffd966, #e6b800); /* shiny gold */
+  padding: 12px 15px;
+  border-radius: 50px;
+  font-weight: bold;
   cursor: pointer;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-  z-index: 999;
+  box-shadow: 0 4px 12px rgba(230,184,0,0.5);
+  z-index: 1000;
+  color: #333;
 }
 
+#chatBtn:hover { 
+  transform: scale(1.05); 
+}
+
+/* ===================== Chat Box ===================== */
+#chatBox {
+  display: none;
+  position: fixed;
+  bottom: 70px;
+  right: 20px;
+  width: 300px;
+  max-width: 90%;
+  background: #fffbe6;
+  padding: 15px;
+  border-radius: 8px;
+  border: 1px solid #c48f3c;
+  box-shadow: 0 4px 12px rgba(230,184,0,0.4);
+  z-index: 1000;
+}
+
+#chatBox input, #chatBox textarea { 
+  width: 100%; 
+  padding: 10px; 
+  margin: 5px 0; 
+  border-radius: 5px; 
+  border:1px solid #ccc; 
+  background:#fff8e7; 
+  color:#333; 
+}
+
+#chatBox button { 
+  width: 100%; 
+  padding: 10px; 
+  background: linear-gradient(135deg, #ffd966, #e6b800); 
+  color: #333; 
+  border:none; 
+  border-radius:5px; 
+  font-weight:bold; 
+  cursor:pointer; 
+}
+
+#chatBox button:hover { 
+  box-shadow: 0 4px 10px rgba(230,184,0,0.5); 
+}
+
+/* --- Responsive Chat --- */
+@media (max-width: 900px) {
+  #chatBtn {
+    padding: 10px 12px;
+    bottom: 15px;
+    right: 15px;
+    font-size: 0.9rem;
+  }
+  #chatBox {
+    width: 90%;
+    bottom: 60px;
+    right: 5%;
+    padding: 12px;
+  }
+  #chatBox input, #chatBox textarea {
+    padding: 8px;
+  }
+  #chatBox button {
+    padding: 8px;
+  }
+}
+
+
+/* About Section */
+.about-title {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.about-container {
+  max-width: 900px;
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  background: #fff8e7;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  gap: 20px;
+}
+
+.about-image {
+  flex: 0 0 200px;
+}
+
+.about-image img {
+  width: 100%;
+  border-radius: 10px;
+  border: 2px solid #d6a451;
+}
+
+.about-text {
+  flex: 1;
+  min-width: 250px;
+  text-align: left;
+}
+
+.name-title span {
+  font-weight: normal;
+}
+
+.about-list {
+  padding-left: 20px;
+  margin-left: 0;
+}
+
+.join-contribute {
+  padding: 15px;
+  border-radius: 10px;
+  background: #fdf2d6;
+  transition: 0.3s;
+}
+
+.join-contribute:hover {
+  background: #fce7b1; /* hover color */
+}
+
+.join-btn {
+  margin-top: 10px;
+}
+.tab.dimmed {
+  opacity: 0.4;       /* make it dim */
+  pointer-events: none; /* prevent clicks */
+  cursor: not-allowed;  /* show “not-allowed” cursor */
+  color: #999;          /* optional: gray text */
+}
