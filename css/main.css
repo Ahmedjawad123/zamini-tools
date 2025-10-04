@@ -729,3 +729,69 @@ footer {
   cursor: not-allowed;  /* show “not-allowed” cursor */
   color: #999;          /* optional: gray text */
 }
+
+
+
+
+/* --- Mobile Fixes --- */
+@media (max-width: 900px) {
+  /* 1️⃣ Cards stack earlier */
+  .card, .feature {
+    flex: 1 1 100%;
+    max-width: 100%;
+  }
+
+  /* 2️⃣ Flip-card height bug fix */
+  .flip-card {
+    aspect-ratio: 16 / 9;
+    padding-top: 0;
+  }
+
+  /* 3️⃣ Logo + heading scale */
+  .brand-info h1 {
+    font-size: 1.6rem;
+    text-align: center;
+  }
+  .logo {
+    width: 100px;
+    height: 100px;
+    margin: 0 auto;
+  }
+
+  /* 4️⃣ Tabs: scrollable on mobile */
+  .tabs {
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+  .tab {
+    display: inline-block;
+    padding: 12px 18px;
+    font-size: 0.9rem;
+  }
+
+  /* 5️⃣ Footer: make sure it stacks nicely */
+  footer {
+    padding: 25px 15px;
+  }
+  .footer-section {
+    text-align: center;
+    width: 100%;
+  }
+
+  /* 6️⃣ Social buttons smaller */
+  .social {
+    top: auto;
+    bottom: 120px;
+    flex-direction: row;
+    left: 10%;
+    right: 10%;
+    justify-content: center;
+  }
+  .social a {
+    margin: 0 5px;
+    border-radius: 5px;
+    padding: 10px;
+    font-size: 0.85rem;
+  }
+}
+
