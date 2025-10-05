@@ -191,8 +191,9 @@ header {
   border: 1px solid #c48f3c; 
   border-radius: 10px; 
   padding: 10px;                  
-  flex: 1 1 calc(33.333% - 32px);   /* 👈 3 per row */
-  max-width: calc(33.333% - 32px); /* 👈 limit width */
+  flex: 1 1 calc(33.333% - 20px);
+  max-width: calc(33.333% - 20px);
+
   text-align: center;             
   transition: 0.3s; 
   position: relative; 
@@ -242,7 +243,7 @@ header {
 
 .flip-card-front img, .flip-card-back img {
   width: 100%;
-  height: 100%;
+  height: auto;       /* maintains aspect ratio */
   object-fit: contain; /* prevents cropping images */
 }
 
