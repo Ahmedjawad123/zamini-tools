@@ -446,6 +446,7 @@ header {
   z-index: 5;
 }
 
+/* ===================== Mobile Fixes for Cards & Flip-Cards ===================== */
 @media (max-width: 720px) {
   /* Make cards and features full width */
   .card, .feature {
@@ -453,35 +454,53 @@ header {
     max-width: 100%;
   }
 
-  /* Fix flip-card stacking */
+  /* Keep flip-cards back-to-back without stacking vertically */
   .flip-card {
-    position: relative;   /* allow natural stacking */
     width: 100%;
-    height: auto;         /* expand with content */
-    aspect-ratio: auto;   /* remove fixed ratio */
-    margin-bottom: 20px;  /* spacing between cards */
+    aspect-ratio: 4 / 3;       /* maintain good card shape */
+    margin-bottom: 20px;       /* spacing between cards */
+    perspective: 1000px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;         /* allow z-index stacking */
   }
 
   .flip-card-inner {
-    position: relative;   /* remove absolute to prevent overlap */
     width: 100%;
     height: 100%;
+    transition: transform 0.6s ease;
     transform-style: preserve-3d;
+    position: relative;
   }
 
   .flip-card-front,
   .flip-card-back {
-    position: relative;   /* stack naturally */
+    position: absolute;        /* keep front/back overlapping */
+    top: 0;
+    left: 0;
     width: 100%;
-    height: auto;
+    height: 100%;
     backface-visibility: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+    overflow: hidden;
+    background: #fffbe6;
+  }
+
+  .flip-card-back {
+    transform: rotateY(180deg);
   }
 
   .flip-card-front img,
   .flip-card-back img {
     width: 100%;
-    height: auto;
-    object-fit: contain;
+    height: 100%;
+    object-fit: contain;        /* show full image, no cropping */
+    box-sizing: border-box;
+    padding: 5px;
   }
 }
 
