@@ -992,97 +992,6 @@ footer {
 
 
 /* ===================== Join & Support Container ===================== */
-/* ===== Container ===== */
-.join-support-container {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  gap: 30px;
-  flex-wrap: wrap;
-  margin-top: 20px;
-  width: 100%;
-}
-
-/* ===== Support Side (PayPal) ===== */
-.support-side {
-  flex: 1 1 48%;
-  background-color: #fffbe6;
-  border: 1px solid #D4AF37;
-  border-radius: 10px;
-  padding: 20px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-}
-
-/* ===== Subscribe Side (Email) ===== */
-.subscribe-side {
-  flex: 1 1 48%;
-  background-color: #fffbe6;
-  border: 1px solid #D4AF37;
-  border-radius: 10px;
-  padding: 20px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-}
-
-/* ===== Headings ===== */
-.support-side h3,
-.subscribe-side h3 {
-  color: #493C2B;
-  margin-bottom: 15px;
-  font-size: 1.2rem;
-  border-bottom: 2px solid #D4AF37;
-  display: inline-block;
-  padding-bottom: 4px;
-}
-
-/* ===== Buttons ===== */
-.btn, .quick-donate {
-  background-color: #D4AF37;
-  color: #493C2B;
-  font-weight: 600;
-  border: none;
-  border-radius: 6px;
-  padding: 8px 16px;
-  cursor: pointer;
-  transition: 0.2s;
-}
-
-.btn:hover, .quick-donate:hover {
-  background-color: #f5deab;
-}
-
-/* ===== Tooltip Button ===== */
-.tooltip-btn {
-  position: relative;
-  padding: 8px 16px;
-  border-radius: 8px;
-  font-weight: bold;
-  cursor: pointer;
-  background: linear-gradient(135deg, #ffd966, #e6b800);
-}
-
-.tooltip-text {
-  visibility: hidden;
-  opacity: 0;
-  width: 220px;
-  background-color: #493C2B;
-  color: #FFF8DC;
-  text-align: center;
-  border-radius: 6px;
-  padding: 6px;
-  position: absolute;
-  bottom: 125%;
-  left: 50%;
-  transform: translateX(-50%);
-  transition: 0.2s;
-  z-index: 10;
-}
-
-.tooltip-btn:hover .tooltip-text {
-  visibility: visible;
-  opacity: 1;
-}
-
-/* ===== Layout ===== */
 .join-support-container {
   display: flex;
   justify-content: center;
@@ -1092,27 +1001,48 @@ footer {
   padding: 40px 20px;
 }
 
-.support-side, .subscribe-side {
+/* ===== Support Side (PayPal) ===== */
+.support-side {
   flex: 1 1 300px;
+  background-color: #fffbe6;
+  border: 1px solid #D4AF37;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
   text-align: center;
   position: relative;
 }
 
-/* ===== Headings ===== */
-.support-side h3, .subscribe-side h3 {
-  margin-bottom: 20px;
-  font-family: Arial, sans-serif;
+/* ===== Subscribe Side (Email) ===== */
+.subscribe-side {
+  flex: 1 1 300px;
+  background: linear-gradient(135deg, #ffd966, #e6b800);
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+  text-align: center;
 }
 
+/* ===== Headings ===== */
 .support-side h3 {
   color: #00DDFF; /* Alien support */
+  margin-bottom: 20px;
+  font-family: Arial, sans-serif;
+  border-bottom: 2px solid #D4AF37;
+  display: inline-block;
+  padding-bottom: 4px;
 }
 
 .subscribe-side h3 {
   color: #493C2B;
+  margin-bottom: 20px;
+  font-family: Arial, sans-serif;
+  border-bottom: 2px solid #D4AF37;
+  display: inline-block;
+  padding-bottom: 4px;
 }
 
-/* ===== Tooltip Button ===== */
+/* ===== Tooltip / Support Button ===== */
 .tooltip-btn {
   position: relative;
   padding: 10px 20px;
@@ -1121,10 +1051,10 @@ footer {
   cursor: pointer;
   background: linear-gradient(135deg, #00FFA5, #00DDFF);
   border: none;
-  color:#fff;
+  color: #fff;
   box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-  font-size:16px;
-  transition:0.2s;
+  font-size: 16px;
+  transition: 0.2s;
 }
 
 .tooltip-btn:hover {
@@ -1162,7 +1092,8 @@ footer {
   padding: 12px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.2);
   width: 300px;
-  margin: 0 auto;
+  margin: 8px auto 0 auto; /* margin-top under button */
+  position: absolute; /* will be positioned by JS under button */
   z-index: 100;
 }
 
@@ -1183,45 +1114,38 @@ footer {
 #popup-donate-custom {
   width: 90px;
   padding: 6px 8px;
-  border:1px solid #ccc;
-  border-radius:6px;
-  font-size:14px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
 }
 
-/* ===== Subscribe / Join ===== */
-.subscribe-side {
-  background: linear-gradient(135deg, #ffd966, #e6b800);
-  border-radius:12px;
-  padding:20px;
-  box-shadow:0 4px 12px rgba(0,0,0,0.12);
-}
-
+/* ===== Subscribe Form ===== */
 .subscribe-form {
-  display:flex;
-  gap:10px;
-  justify-content:center;
-  flex-wrap:wrap;
-  align-items:center;
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  flex-wrap: wrap;
+  align-items: center;
 }
 
 .subscribe-form input[type="email"] {
-  width:180px;
-  padding:6px 10px;
-  border-radius:6px;
-  border:1px solid #d4af37;
-  font-size:14px;
+  width: 180px;
+  padding: 6px 10px;
+  border-radius: 6px;
+  border: 1px solid #d4af37;
+  font-size: 14px;
 }
 
 .shiny-btn {
   background: linear-gradient(135deg, #ffd966, #e6b800);
-  border:none;
-  color:#493C2B;
-  box-shadow:0 3px 8px rgba(0,0,0,0.2);
-  transition:0.2s;
-  padding:6px 16px;
-  border-radius:6px;
-  font-weight:600;
-  cursor:pointer;
+  border: none;
+  color: #493C2B;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.2);
+  transition: 0.2s;
+  padding: 6px 16px;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
 }
 
 .shiny-btn:hover {
