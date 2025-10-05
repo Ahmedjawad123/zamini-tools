@@ -369,37 +369,45 @@ header {
   z-index: 5;
 }
 
-/* ===================== Responsive ===================== */
-@media (max-width: 1080px) {
-  .card, .feature { width: 400px; }
-  .flip-card { padding-top: 45%; }
+@media (max-width: 720px) {
+  /* Make cards and features full width */
+  .card, .feature {
+    flex: 1 1 100%;
+    max-width: 100%;
+  }
+
+  /* Fix flip-card stacking */
+  .flip-card {
+    position: relative;   /* allow natural stacking */
+    width: 100%;
+    height: auto;         /* expand with content */
+    aspect-ratio: auto;   /* remove fixed ratio */
+    margin-bottom: 20px;  /* spacing between cards */
+  }
+
+  .flip-card-inner {
+    position: relative;   /* remove absolute to prevent overlap */
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+  }
+
+  .flip-card-front,
+  .flip-card-back {
+    position: relative;   /* stack naturally */
+    width: 100%;
+    height: auto;
+    backface-visibility: hidden;
+  }
+
+  .flip-card-front img,
+  .flip-card-back img {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+  }
 }
 
-@media (max-width: 720px) {
-  .card, .feature {
-    width: 100%;
-  }
-  .flip-card {
-    padding-top: 60%;  
-  }
-  .card-content {
-    text-align: center;
-  }
-  .badge-top {
-    font-size: 0.65rem;
-    padding: 2px 4px;
-  }
-  .badge-top .release {
-    font-size: 0.55rem;
-  }
-  .btn-download {
-    font-size: 0.65rem;
-  }
-  .card .available {
-    font-size: 9px;
-    padding: 3px 6px;
-  }
-}
 
 
 
@@ -788,147 +796,3 @@ footer {
     right: 10%;
     justify-content: center;
   }
-
-
-  /* ===================== Responsive / Mobile Optimized ===================== */
-@media (max-width: 1080px) {
-  /* Cards: stack 2 per row */
-  .card, .feature {
-    flex: 1 1 calc(50% - 20px);
-    max-width: calc(50% - 20px);
-  }
-}
-
-@media (max-width: 900px) {
-  /* Cards: full width */
-  .card, .feature {
-    flex: 1 1 100%;
-    max-width: 100%;
-  }
-
-  /* Flip cards: fix height and aspect ratio */
-  .flip-card {
-    aspect-ratio: 16 / 9;
-    padding-top: 0;
-  }
-
-  /* Header: logo and brand text scale and center */
-  .brand-info h1 {
-    font-size: 1.6rem;
-    text-align: center;
-  }
-  .logo {
-    width: 100px;
-    height: 100px;
-    margin: 0 auto;
-  }
-
-  /* Tabs: scrollable horizontally */
-  .tabs {
-    overflow-x: auto;
-    white-space: nowrap;
-  }
-  .tab {
-    display: inline-block;
-    padding: 12px 18px;
-    font-size: 0.9rem;
-  }
-
-  /* Badge / overlay adjustments */
-  .badge-top {
-    font-size: 0.65rem;
-    padding: 3px 6px;
-  }
-  .badge-top .release {
-    font-size: 0.55rem;
-  }
-  .card .available {
-    font-size: 9px;
-    padding: 3px 6px;
-  }
-
-  /* Footer: stack sections and center text */
-  footer {
-    padding: 25px 15px;
-  }
-  .footer-container {
-    flex-direction: column;
-    align-items: center;
-  }
-  .footer-section {
-    text-align: center;
-    width: 100%;
-    margin: 10px 0;
-  }
-  .newsletter input,
-  .newsletter button {
-    width: 80%;
-    border-radius: 5px;
-    margin-bottom: 5px;
-  }
-  .footer-social .social-btn {
-    display: block;
-    width: 60%;
-    margin: 5px auto;
-  }
-
-  /* Social floating buttons */
-  .social {
-    top: auto;
-    bottom: 120px;
-    left: 50%;
-    transform: translateX(-50%);
-    flex-direction: row;
-    justify-content: center;
-  }
-  .social a {
-    margin: 0 5px;
-    border-radius: 5px;
-    padding: 10px;
-    font-size: 0.85rem;
-  }
-
-  /* Chat button and box */
-  #chatBtn {
-    bottom: 15px;
-    right: 15px;
-    padding: 10px 12px;
-    font-size: 0.9rem;
-  }
-  #chatBox {
-    width: 90%;
-    bottom: 60px;
-    right: 5%;
-    padding: 12px;
-  }
-  #chatBox input, #chatBox textarea {
-    padding: 8px;
-  }
-  #chatBox button {
-    padding: 8px;
-  }
-
-  /* Disabled card adjustments */
-  .card.disabled {
-    filter: none; /* remove brightness filter on mobile */
-  }
-}
-
-/* --- Color adjustments for consistent mobile appearance --- */
-@media (max-width: 900px) {
-  /* Replace all RGBA with solid HEX for badges and overlays */
-  .badge-top { background-color: #00b400; }           /* solid green */
-  .card .available { background-color: #00b400; }
-  .card .coming-soon { background-color: #d4af37; }  /* solid gold */
-  .social a { background: linear-gradient(135deg, #ffd966 0%, #e6b800 100%); }
-  #chatBtn { background: linear-gradient(135deg, #ffd966 0%, #e6b800 100%); }
-  #chatBox button { background: linear-gradient(135deg, #ffd966 0%, #e6b800 100%); }
-}
-
-  .social a {
-    margin: 0 5px;
-    border-radius: 5px;
-    padding: 10px;
-    font-size: 0.85rem;
-  }
-
