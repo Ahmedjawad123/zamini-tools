@@ -319,7 +319,7 @@ header {
 
   .flip-card-back {
     transform: rotateY(180deg);
-  }
+  }h3
 }
 
 @media (max-width: 480px) {
@@ -351,6 +351,37 @@ header {
   margin: 0;                       
   line-height: 1.1;               
 }
+
+
+
+
+
+
+/* ===================== Card & Feature Headings ===================== */
+.card h3, .feature h4 { 
+  color: #8B4513;         /* dark brown for visibility */
+  font-weight: 700;       /* bold to stand out */
+  font-size: 1rem;        /* readable size */
+  line-height: 1.2;       /* tight but readable */
+  text-align: center;     
+  margin: 4px 0;          /* small top/bottom margin */
+  text-transform: capitalize; /* optional: make first letters uppercase */
+  text-shadow: 0 1px 2px rgba(0,0,0,0.2); /* subtle shadow for pop */
+}
+
+/* Optional: Card subheading or description */
+.card p, .feature p { 
+  color: #5C4033;         /* slightly lighter brown for contrast */
+  font-size: 0.7rem;      
+  line-height: 1.2;       
+  margin: 2px 0;          
+  text-align: center;     
+}
+
+
+
+
+
 
 /* ===================== Buttons ===================== */
 .btn-download, .card .btn, .feature .btn { 
