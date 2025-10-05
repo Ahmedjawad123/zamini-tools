@@ -26,14 +26,13 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // ===== 4. Views Counter (Safe, Client-side only) =====
+  // ===== 4. Views Counter (Persistent in localStorage) =====
   const totalViewsEl = document.getElementById('totalViews');
-  if (totalViewsEl && !window.viewsIncremented) {
+  if (totalViewsEl) {
     let views = parseInt(localStorage.getItem('totalViews')) || 0;
     views += 1;
     localStorage.setItem('totalViews', views);
     totalViewsEl.textContent = views;
-    window.viewsIncremented = true; // prevents double increment
   }
 
   // ===== 5. Chat Toggle =====
@@ -44,7 +43,6 @@ document.addEventListener('DOMContentLoaded', () => {
       e.stopPropagation();
       chatBox.style.display = chatBox.style.display === 'block' ? 'none' : 'block';
     });
-
     window.addEventListener('click', (e) => {
       if (!e.target.closest('#chatBtn') && !e.target.closest('#chatBox')) {
         chatBox.style.display = 'none';
@@ -57,7 +55,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const paypalPopup = document.getElementById('paypalPopup');
   let isPayPalRendered = false;
   let selectedAmount = "5"; // default
-
   const quickBtn = document.getElementById('donate-5');
   const customInput = document.getElementById('donate-custom');
 
@@ -84,13 +81,6 @@ document.addEventListener('DOMContentLoaded', () => {
       e.stopPropagation();
       paypalPopup.style.display = paypalPopup.style.display === 'block' ? 'none' : 'block';
 
-      if (typeof gtag === "function") {
-        gtag('event', 'support_click', {
-          'event_category': 'Button',
-          'event_label': 'Support Me'
-        });
-      }
-
       if (!isPayPalRendered && typeof paypal !== "undefined") {
         paypal.Buttons({
           style: { layout: 'vertical', color: 'gold', shape: 'rect', label: 'paypal', height: 40 },
@@ -106,7 +96,6 @@ document.addEventListener('DOMContentLoaded', () => {
             alert('Payment could not be processed. Try again.');
           }
         }).render('#paypal-button-small');
-
         isPayPalRendered = true;
       }
 
@@ -133,38 +122,36 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // ===== 7. Download Buttons Tracking =====
-  const downloadBtns = document.querySelectorAll('a.btn-download');
-  downloadBtns.forEach(btn => {
+  // ===== 7. Download Buttons Tracking & Persistent Counters =====
+  document.querySelectorAll('a.btn-download').forEach((btn, index) => {
+    // Assign unique key for each download
+    const storageKey = `download_count_${index}`;
+
+    // Create count display
+    let countEl = btn.nextElementSibling;
+    if (!countEl || !countEl.classList.contains('count')) {
+      countEl = document.createElement('span');
+      countEl.className = 'count';
+      countEl.style.marginLeft = "10px";
+      btn.insertAdjacentElement('afterend', countEl);
+    }
+
+    // Load stored count
+    let count = parseInt(localStorage.getItem(storageKey)) || 0;
+    countEl.textContent = count;
+
+    // Increment on click
     btn.addEventListener('click', () => {
-      if (typeof gtag === "function") {
-        gtag('event', 'download_click', {
-          'event_category': 'Button',
-          'event_label': btn.textContent.trim()
-        });
-      }
+      count++;
+      localStorage.setItem(storageKey, count);
+      countEl.textContent = count;
     });
   });
 
-  // ===== 8. File Size Fetch =====
-  const fileSizeSpan = document.getElementById('file-size');
-  const fileUrl = "https://github.com/Ahmedjawad123/Zamini_Converter/releases/download/v1.0.0/Executable_file_.Zamini_Converter_v1.0.0.rar";
-  if (fileSizeSpan) {
-    fetch(fileUrl, { method: 'HEAD' })
-      .then(resp => {
-        const size = resp.headers.get('content-length');
-        fileSizeSpan.textContent = size ? (size / (1024 * 1024)).toFixed(2) + " MB" : "N/A";
-      })
-      .catch(err => {
-        console.error('File size fetch error:', err);
-        fileSizeSpan.textContent = "N/A";
-      });
-  }
-
-  // ===== 9. Initialize EmailJS =====
+  // ===== 8. Initialize EmailJS =====
   if (typeof emailjs !== "undefined") emailjs.init('DhW4bXmuP0VP2d8bF');
 
-  // ===== 10. Feedback Form =====
+  // ===== 9. Feedback Form =====
   const feedbackForm = document.getElementById('contactForm');
   if (feedbackForm) {
     let statusEl = document.getElementById('feedback-status');
@@ -199,11 +186,10 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // ===== 11. Updates Subscription Form =====
+  // ===== 10. Updates Subscription Form =====
   const updatesForm = document.getElementById('updatesForm');
   if (updatesForm) {
     const updatesStatus = document.getElementById('updates-status');
-
     updatesForm.addEventListener('submit', (e) => {
       e.preventDefault();
       updatesStatus.textContent = "Subscribing...";
@@ -225,34 +211,9 @@ document.addEventListener('DOMContentLoaded', () => {
             updatesStatus.textContent = "Oops! Something went wrong. Try again.";
           });
       } else {
-        console.error("EmailJS not loaded!");
         updatesStatus.textContent = "Email service not available.";
       }
     });
   }
-
-  // ===== 12. Download Counter =====
-  const downloadWrappers = document.querySelectorAll('.download-wrapper');
-  downloadWrappers.forEach((wrapper, index) => {
-    const btn = wrapper.querySelector('.btn-download');
-    const countEl = wrapper.querySelector('.count');
-    const storageKey = `download_count_${index}`;
-
-    let count = parseInt(localStorage.getItem(storageKey)) || 0;
-    if (countEl) countEl.textContent = count;
-
-    btn?.addEventListener('click', () => {
-      count += 1;
-      localStorage.setItem(storageKey, count);
-      if (countEl) countEl.textContent = count;
-
-      if (typeof gtag === "function") {
-        gtag('event', 'download_click', {
-          'event_category': 'Button',
-          'event_label': btn.textContent.trim()
-        });
-      }
-    });
-  });
 
 });
