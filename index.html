@@ -329,59 +329,63 @@
     <p>No updates yet. Check back soon!</p>
   </section>
 
-  <!-- ===== Join / Support Tab ===== -->
+  <!-- ===== Join / Support Section ===== -->
   <section class="tab-content" id="joinTab">
     <h2>Join & Support Us</h2>
   
-    <!-- Quick Support Buttons -->
-    <div class="donate-options" style="margin-bottom:10px;">
-      <button class="btn quick-donate" id="donate-5">$5 Support</button>
-      <input
-        type="number"
-        id="donate-custom"
-        placeholder="Custom Amount ($)"
-        min="1"
-        style="width:120px; margin-left:10px; padding:5px; border:1px solid #ccc; border-radius:4px;"
-      />
-    </div>
+    <div class="join-support-container">
+      <!-- ===== Left: Support / PayPal ===== -->
+      <div class="support-side">
+        <h3>Support My Work</h3>
   
-    <!-- Support Button -->
-    <div class="support-container" style="position: relative;">
-      <button id="supportBtn" class="tooltip-btn">
-        Support Me
-        <span class="tooltip-text">Please select your country correctly before payment</span>
-      </button>
-  
-      <!-- PayPal Popup -->
-      <div id="paypalPopup" class="paypal-popup">
-        <div class="donation-options">
-          <button id="popup-donate-5" class="donation-amount active">$5</button>
+        <div class="donate-options" style="margin-bottom:10px;">
+          <button class="btn quick-donate" id="donate-5">$5 Support</button>
           <input
-            id="popup-donate-custom"
             type="number"
-            placeholder="Other amount"
+            id="donate-custom"
+            placeholder="Custom Amount ($)"
             min="1"
+            style="width:120px; margin-left:10px; padding:5px; border:1px solid #ccc; border-radius:4px;"
           />
         </div>
-        <div id="paypal-button-small"></div>
+  
+        <div class="support-container" style="position: relative;">
+          <button id="supportBtn" class="tooltip-btn">
+            Support Me
+            <span class="tooltip-text">Please select your country correctly before payment</span>
+          </button>
+  
+          <!-- PayPal Popup -->
+          <div id="paypalPopup" class="paypal-popup">
+            <div class="donation-options">
+              <button id="popup-donate-5" class="donation-amount active">$5</button>
+              <input
+                id="popup-donate-custom"
+                type="number"
+                placeholder="Other amount"
+                min="1"
+              />
+            </div>
+            <div id="paypal-button-small"></div>
+          </div>
+        </div>
+      </div>
+  
+      <!-- ===== Right: Subscribe / Join ===== -->
+      <div class="subscribe-side">
+        <h3>Join Our Updates</h3>
+        <form id="updatesForm" class="subscribe-form">
+          <input
+            type="email"
+            name="email"
+            placeholder="Your Email"
+            required
+          />
+          <button type="submit" class="btn">Subscribe</button>
+        </form>
+        <div id="updates-status" class="update-status"></div>
       </div>
     </div>
-  
-    <hr style="margin:15px 0; border-color:#ccc;" />
-  
-    <!-- Subscribe Form -->
-    <h3>Get Updates</h3>
-    <form id="updatesForm" style="margin-bottom:5px;">
-      <input
-        type="email"
-        name="email"
-        placeholder="Your Email"
-        required
-        style="width:200px; padding:5px; border:1px solid #ccc; border-radius:4px; margin-right:10px;"
-      />
-      <button type="submit" class="btn">Subscribe</button>
-    </form>
-    <div id="updates-status" style="margin-top:8px; color:green;"></div>
   </section>
 
   <!-- ===== Contact Tab ===== -->
