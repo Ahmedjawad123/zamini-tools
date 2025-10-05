@@ -63,6 +63,7 @@ let selectedAmount = "5"; // default
 const quickBtn = document.getElementById('donate-5');
 const customInput = document.getElementById('donate-custom');
 
+
 // Quick $5 button
 if (quickBtn) {
   quickBtn.addEventListener('click', () => {
