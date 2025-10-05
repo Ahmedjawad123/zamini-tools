@@ -319,20 +319,30 @@
   <!-- ===== Join / Support Tab ===== -->
   <section class="tab-content" id="joinTab">
     <h2>Join & Support Us</h2>
-    
-    <!-- Support Button -->
-    <button class="btn" id="supportBtn">Support Me</button>
   
-    <!-- PayPal Popup (hidden by default) -->
-    <div id="paypalPopup" style="display: none;">
+    <!-- Quick Support Buttons -->
+    <div class="donate-options">
+      <button class="btn quick-donate" id="donate-5">$5 Support</button>
+      <input type="number" id="donate-custom" placeholder="Custom Amount ($)" min="1" style="width:120px; margin-left:10px;">
+    </div>
+  
+    <!-- Support Button -->
+    <button class="btn" id="supportBtn" style="margin-top:10px;">Support Me</button>
+  
+    <!-- PayPal Popup -->
+    <div id="paypalPopup" style="display:none; padding:15px; background:#fffbe6; border:1px solid #ccc; border-radius:8px; box-shadow:0 4px 12px rgba(0,0,0,0.1); position:absolute; top:45px; right:0; width:300px; z-index:1000;">
       <div id="paypal-button-small"></div>
     </div>
   
+    <hr style="margin:15px 0;">
+  
     <!-- Subscribe Form -->
-    <form id="subscribeForm">
-      <input type="email" placeholder="Your Email" required>
+    <h3>Get Updates</h3>
+    <form id="updatesForm">
+      <input type="email" name="email" placeholder="Your Email" required style="width:200px; margin-right:10px;">
       <button type="submit" class="btn">Subscribe</button>
     </form>
+    <div id="updates-status" style="margin-top:8px; color:green;"></div>
   </section>
 
 
