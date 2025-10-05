@@ -329,45 +329,25 @@
     <p>No updates yet. Check back soon!</p>
   </section>
 
-  <!-- ===== Join / Support Section ===== -->
+    <!-- ===== Join / Support Section ===== -->
   <section class="tab-content" id="joinTab">
-    <h2>Join & Support Us</h2>
-  
     <div class="join-support-container">
+  
       <!-- ===== Left: Support / PayPal ===== -->
       <div class="support-side">
         <h3>Support My Work</h3>
+        <button id="supportBtn" class="tooltip-btn">
+          Support Me
+          <span class="tooltip-text">Please select your country correctly before payment</span>
+        </button>
   
-        <div class="donate-options" style="margin-bottom:10px;">
-          <button class="btn quick-donate" id="donate-5">$5 Support</button>
-          <input
-            type="number"
-            id="donate-custom"
-            placeholder="Custom Amount ($)"
-            min="1"
-            style="width:120px; margin-left:10px; padding:5px; border:1px solid #ccc; border-radius:4px;"
-          />
-        </div>
-  
-        <div class="support-container" style="position: relative;">
-          <button id="supportBtn" class="tooltip-btn">
-            Support Me
-            <span class="tooltip-text">Please select your country correctly before payment</span>
-          </button>
-  
-          <!-- PayPal Popup -->
-          <div id="paypalPopup" class="paypal-popup">
-            <div class="donation-options">
-              <button id="popup-donate-5" class="donation-amount active">$5</button>
-              <input
-                id="popup-donate-custom"
-                type="number"
-                placeholder="Other amount"
-                min="1"
-              />
-            </div>
-            <div id="paypal-button-small"></div>
+        <!-- PayPal container -->
+        <div id="paypalPopup" class="paypal-popup">
+          <div class="donation-options">
+            <button id="popup-donate-5" class="donation-amount active">$5</button>
+            <input id="popup-donate-custom" type="number" placeholder="Other" min="1">
           </div>
+          <div id="paypal-button-small"></div>
         </div>
       </div>
   
@@ -375,29 +355,19 @@
       <div class="subscribe-side">
         <h3>Join Our Updates</h3>
         <form id="updatesForm" class="subscribe-form">
-          <input
-            type="email"
-            name="email"
-            placeholder="Your Email"
-            required
-          />
-          <button type="submit" class="btn">Subscribe</button>
+          <input type="email" name="email" placeholder="Enter your email" required>
+          <button type="submit" class="btn shiny-btn">Subscribe</button>
         </form>
         <div id="updates-status" class="update-status"></div>
       </div>
+  
     </div>
   </section>
-
-  <!-- ===== Contact Tab ===== -->
-  <section class="tab-content" id="contactTab">
-    <h2>Get in Touch</h2>
-    <form id="contactForm">
-      <input type="text" placeholder="Name" required>
-      <input type="email" placeholder="Email" required>
-      <textarea placeholder="Message" required></textarea>
-      <button type="submit" class="btn">Send</button>
-    </form>
-  </section>
+  
+  <!-- PayPal SDK -->
+  <script src="https://www.paypal.com/sdk/js?client-id=AbDsUYA-obC2sHFZvv9R4Ce9gAqnpuoCNiLDQYeF0cUJdYFSEeuiwRk82Lr3S2NPrMUg97BhCbbVNv&currency=USD"></script>
+  <script src="script.js"></script>
+  <link rel="stylesheet" href="style.css">
 
   <!-- ===== Footer ===== -->
   <footer>
