@@ -181,8 +181,9 @@ header {
 .products, .features { 
   display: flex; 
   flex-wrap: wrap; 
-  gap: 12px; 
+  gap: 20px;                /* more space between cards */
   justify-content: center; 
+  padding: 10px;            /* padding around container */
 }
 
 /* ===================== Card Styling ===================== */
@@ -190,10 +191,9 @@ header {
   background: #fffbe6; 
   border: 1px solid #c48f3c; 
   border-radius: 10px; 
-  padding: 10px;                   /* smaller padding */
-  flex: 1 1 calc(25% - 12px);     /* smaller default width (4 per row) */
-  max-width: calc(33.333% - 20px);
-
+  padding: 10px;                  
+  flex: 1 1 calc(20% - 20px);    /* smaller default width (5 per row on large screens) */
+  max-width: calc(25% - 20px);   
   text-align: center;             
   transition: 0.3s; 
   position: relative; 
@@ -201,9 +201,11 @@ header {
   flex-direction: column;         
   gap: 6px;                       
   overflow: hidden;             
-  font-size: 0.8rem;              
+  font-size: 0.75rem;             
   box-sizing: border-box;         
+  min-height: 220px;              /* smaller height */
 }
+
 /* Card Hover */
 .card:hover, .feature:hover { 
   box-shadow: 0 4px 15px rgba(0,0,0,0.2); 
@@ -213,14 +215,14 @@ header {
 /* ===================== Flip Card ===================== */
 .flip-card {
   width: 100%;
-  aspect-ratio: 4 / 3;   /* less tall than 16/9 */
+  aspect-ratio: 4 / 3;      
   perspective: 1000px;
   margin-bottom: 8px;
   position: relative;
 }
 
 .flip-card-inner {
-  position: relative;       /* changed from absolute */
+  position: relative;       
   width: 100%;
   height: 100%;
   transition: transform 0.6s;
@@ -233,7 +235,7 @@ header {
 
 .flip-card-front,
 .flip-card-back {
-  position: absolute;       /* front/back stays absolute for flipping */
+  position: absolute;       
   top: 0; left: 0;
   width: 100%;
   height: 100%;
@@ -249,7 +251,7 @@ header {
 .flip-card-back img {
   width: 100%;
   height: 100%;
-  object-fit: contain;      /* scale image without cropping */
+  object-fit: cover;      /* scale image nicely */
 }
 
 /* back side flipped */
@@ -257,18 +259,27 @@ header {
   transform: rotateY(180deg);
 }
 
-/* Optional: make flip-card more mobile-friendly */
-@media (max-width: 768px) {
-  .flip-card {
-    aspect-ratio: auto;   /* let height adjust on small screens */
-    height: auto;
-  }
-  .flip-card-front img,
-  .flip-card-back img {
-    height: auto;
+/* Optional: mobile-friendly */
+@media (max-width: 1200px) {
+  .card, .feature {
+    flex: 1 1 calc(33.333% - 20px);  /* 3 per row */
+    max-width: calc(33.333% - 20px);
   }
 }
 
+@media (max-width: 900px) {
+  .card, .feature {
+    flex: 1 1 calc(50% - 20px);      /* 2 per row */
+    max-width: calc(50% - 20px);
+  }
+}
+
+@media (max-width: 480px) {
+  .card, .feature {
+    flex: 1 1 100%;                  /* 1 per row */
+    max-width: 100%;
+  }
+}
 
 /* ===================== Card Content ===================== */
 .card-content {
@@ -282,12 +293,13 @@ header {
 .card h3, .feature h4 { 
   color: #b0752c; 
   margin: 0;                       
-  font-size: 1.2rem;           
+  font-size: 1rem;           
   line-height: 1.1;               
   text-align: center;             
 }
+
 .card p, .feature p { 
-  font-size: 0.7rem; 
+  font-size: 0.65rem; 
   margin: 0;                       
   line-height: 1.1;               
 }
@@ -300,7 +312,7 @@ header {
   color: #fff; 
   border-radius: 5px; 
   font-weight: bold; 
-  font-size: 0.7rem; 
+  font-size: 0.65rem; 
   text-decoration: none;
   margin-top: 4px;                 
   text-align: center;
@@ -320,7 +332,7 @@ header {
   background-color: rgba(0,180,0,0.9);
   color: #fffbe6;
   padding: 3px 6px;
-  font-size: 0.7rem;
+  font-size: 0.65rem;
   font-weight: 700;
   border-radius: 6px;
   box-shadow: 0 2px 4px rgba(0,0,0,0.3);
@@ -331,7 +343,7 @@ header {
 }
 
 .badge-top .release {
-  font-size: 0.6rem;
+  font-size: 0.55rem;
   font-weight: 400;
   margin-top: 2px;
 }
