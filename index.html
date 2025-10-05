@@ -336,38 +336,53 @@
     <!-- Quick Support Buttons -->
     <div class="donate-options" style="margin-bottom:10px;">
       <button class="btn quick-donate" id="donate-5">$5 Support</button>
-      <input type="number" id="donate-custom" placeholder="Custom Amount ($)" min="1" style="width:120px; margin-left:10px; padding:5px; border:1px solid #ccc; border-radius:4px;">
+      <input
+        type="number"
+        id="donate-custom"
+        placeholder="Custom Amount ($)"
+        min="1"
+        style="width:120px; margin-left:10px; padding:5px; border:1px solid #ccc; border-radius:4px;"
+      />
     </div>
   
     <!-- Support Button -->
-    <!-- Support Me Button -->
-    <div class="support-container">
+    <div class="support-container" style="position: relative;">
       <button id="supportBtn" class="tooltip-btn">
         Support Me
         <span class="tooltip-text">Please select your country correctly before payment</span>
       </button>
-    
+  
       <!-- PayPal Popup -->
       <div id="paypalPopup" class="paypal-popup">
         <div class="donation-options">
-          <button id="donate-5" class="donation-amount active">$5</button>
-          <input id="donate-custom" type="number" placeholder="Other amount" min="1" />
+          <button id="popup-donate-5" class="donation-amount active">$5</button>
+          <input
+            id="popup-donate-custom"
+            type="number"
+            placeholder="Other amount"
+            min="1"
+          />
         </div>
         <div id="paypal-button-small"></div>
       </div>
     </div>
   
-    <hr style="margin:15px 0; border-color:#ccc;">
+    <hr style="margin:15px 0; border-color:#ccc;" />
   
     <!-- Subscribe Form -->
     <h3>Get Updates</h3>
     <form id="updatesForm" style="margin-bottom:5px;">
-      <input type="email" name="email" placeholder="Your Email" required style="width:200px; padding:5px; border:1px solid #ccc; border-radius:4px; margin-right:10px;">
+      <input
+        type="email"
+        name="email"
+        placeholder="Your Email"
+        required
+        style="width:200px; padding:5px; border:1px solid #ccc; border-radius:4px; margin-right:10px;"
+      />
       <button type="submit" class="btn">Subscribe</button>
     </form>
     <div id="updates-status" style="margin-top:8px; color:green;"></div>
   </section>
-
 
   <!-- ===== Contact Tab ===== -->
   <section class="tab-content" id="contactTab">
