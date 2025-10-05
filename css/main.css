@@ -353,15 +353,17 @@ header {
 /* ===================== Buttons ===================== */
 .btn-download, .card .btn, .feature .btn { 
   display: inline-block; 
-  padding: 4px 10px; 
-  background: #c48f3c; 
-  color: #fff; 
-  border-radius: 5px; 
+  padding: 6px 12px;          /* slightly bigger for better proportion */
+  background: linear-gradient(135deg, #ffd966, #e6b800); /* shiny gold gradient */
+  color: #333; 
+  border-radius: 8px;         /* rounded pill shape */
   font-weight: bold; 
-  font-size: 0.65rem; 
+  font-size: 0.75rem;         /* slightly larger */
   text-decoration: none;
-  margin-top: 4px;                 
+  margin-top: 6px;                 
   text-align: center;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.25); /* subtle shadow */
+  transition: transform 0.2s, box-shadow 0.2s;
 }
 
 .btn.ghost, .card .btn.ghost, .feature .btn.ghost { 
@@ -374,27 +376,34 @@ header {
 .download-wrapper {
   display: inline-flex;
   align-items: center;
-  gap: 6px;          /* space between button and count */
+  gap: 8px;                   /* more space between button and badge */
   justify-content: center;
   margin-top: 4px;
+  position: relative;
 }
 
 /* ===================== Download Count Badge ===================== */
 .download-wrapper .count {
-  background: #e6b800;      /* bright gold */
-  color: #333;              /* text color */
-  font-size: 0.65rem;
-  font-weight: bold;
-  padding: 2px 6px;
-  border-radius: 50%;       /* circular badge */
-  min-width: 18px;
+  background: linear-gradient(135deg, #00c853, #00e676); /* vibrant green */
+  color: #fff;              
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 14px;        /* pill shape for numbers */
+  min-width: 28px;
   text-align: center;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.25);
-  display: inline-block;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.35),
+              0 0 8px rgba(0, 255, 100, 0.6); /* glowing effect */
   line-height: 1;
+  transition: transform 0.2s, box-shadow 0.2s;
 }
 
-
+/* Hover effect to make it pop */
+.download-wrapper .count:hover {
+  transform: scale(1.15);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.4),
+              0 0 14px rgba(0, 255, 100, 0.9);
+}
 
 /* ===================== Top-left Badge ===================== */
 .badge-top {
