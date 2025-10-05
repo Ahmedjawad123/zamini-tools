@@ -226,4 +226,35 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+
+
+  // ===== Download Counter =====
+const downloadWrappers = document.querySelectorAll('.download-wrapper');
+
+downloadWrappers.forEach((wrapper, index) => {
+  const btn = wrapper.querySelector('.btn-download');
+  const countEl = wrapper.querySelector('.count');
+  const storageKey = `download_count_${index}`;
+
+  // Load initial count from localStorage
+  let count = parseInt(localStorage.getItem(storageKey)) || 0;
+  countEl.textContent = count;
+
+  // Increment on click
+  btn.addEventListener('click', () => {
+    count += 1;
+    localStorage.setItem(storageKey, count);
+    countEl.textContent = count;
+
+    // Optional: Google Analytics tracking
+    if (typeof gtag === "function") {
+      gtag('event', 'download_click', {
+        'event_category': 'Button',
+        'event_label': btn.textContent.trim()
+      });
+    }
+  });
+});
+
+
 });
