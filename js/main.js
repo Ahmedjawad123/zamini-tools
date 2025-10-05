@@ -50,78 +50,111 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // ===== 6. Support Button & PayPal Popup =====
+// ===== 6. Support Button & PayPal Popup =====
+document.addEventListener('DOMContentLoaded', () => {
   const supportBtn = document.getElementById('supportBtn');
   const paypalPopup = document.getElementById('paypalPopup');
-  let isPayPalRendered = false;
-  let selectedAmount = "5"; // default
   const quickBtn = document.getElementById('donate-5');
   const customInput = document.getElementById('donate-custom');
+  let isPayPalRendered = false;
 
-  if (quickBtn) {
-    quickBtn.addEventListener('click', () => {
-      selectedAmount = "5";
-      quickBtn.classList.add('active');
-      if (customInput) customInput.value = "";
-    });
-  }
+  // ===== Quick button click =====
+  quickBtn.addEventListener('click', () => {
+    quickBtn.classList.add('active');
+    if (customInput) customInput.value = "";
+  });
 
-  if (customInput) {
-    customInput.addEventListener('input', () => {
-      const val = customInput.value.trim();
-      if (val && !isNaN(val) && Number(val) > 0) {
-        selectedAmount = val;
-        quickBtn.classList.remove('active');
-      }
-    });
-  }
+  // ===== Custom input =====
+  customInput.addEventListener('input', () => {
+    quickBtn.classList.remove('active');
+  });
 
-  if (supportBtn && paypalPopup) {
-    supportBtn.addEventListener('click', (e) => {
-      e.stopPropagation();
-      paypalPopup.style.display = paypalPopup.style.display === 'block' ? 'none' : 'block';
+  // ===== Show / hide popup =====
+  supportBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    paypalPopup.style.display =
+      paypalPopup.style.display === 'block' ? 'none' : 'block';
 
-      if (!isPayPalRendered && typeof paypal !== "undefined") {
-        paypal.Buttons({
-          style: { layout: 'vertical', color: 'gold', shape: 'rect', label: 'paypal', height: 40 },
-          createOrder: (data, actions) => actions.order.create({
-            purchase_units: [{ amount: { value: selectedAmount }, description: 'Support Payment' }]
-          }),
-          onApprove: (data, actions) => actions.order.capture().then(details => {
-            alert('Thank you for your support, ' + details.payer.name.given_name);
+    // Render PayPal button only once
+    if (!isPayPalRendered && typeof paypal !== "undefined") {
+      paypal.Buttons({
+        style: {
+          layout: 'vertical',
+          color: 'gold',
+          shape: 'rect',
+          label: 'paypal',
+          height: 40
+        },
+        createOrder: (data, actions) => {
+          // Always read latest amount
+          const amount = customInput && customInput.value && !isNaN(customInput.value) && Number(customInput.value) > 0
+            ? customInput.value
+            : "5";
+          return actions.order.create({
+            purchase_units: [{ amount: { value: amount }, description: 'Support Payment' }]
+          });
+        },
+        onApprove: (data, actions) => {
+          return actions.order.capture().then(details => {
+            alert('Thank you for your support, ' + details.payer.name.given_name + '!');
             paypalPopup.style.display = 'none';
-          }),
-          onError: (err) => {
-            console.error(err);
-            alert('Payment could not be processed. Try again.');
-          }
-        }).render('#paypal-button-small');
-        isPayPalRendered = true;
-      }
+          });
+        },
+        onError: (err) => {
+          console.error(err);
+          alert('Payment could not be processed. Try again.');
+        }
+      }).render('#paypal-button-small');
 
-      // Mobile positioning
+      isPayPalRendered = true;
+    }
+
+    // ===== Position popup under button =====
+    const btnRect = supportBtn.getBoundingClientRect();
+    if (window.innerWidth <= 720) {
+      // Mobile
+      paypalPopup.style.position = 'fixed';
+      paypalPopup.style.top = 'auto';
+      paypalPopup.style.left = '5%';
+      paypalPopup.style.bottom = '20px';
+      paypalPopup.style.width = '90%';
+      paypalPopup.style.maxWidth = '320px';
+    } else {
+      // Desktop: under button
+      paypalPopup.style.position = 'absolute';
+      paypalPopup.style.top = `${supportBtn.offsetTop + supportBtn.offsetHeight + 8}px`;
+      paypalPopup.style.left = `${supportBtn.offsetLeft}px`;
+      paypalPopup.style.width = '300px';
+    }
+  });
+
+  // ===== Close popup when clicking outside =====
+  window.addEventListener('click', (e) => {
+    if (!e.target.closest('#supportBtn') && !e.target.closest('#paypalPopup')) {
+      paypalPopup.style.display = 'none';
+    }
+  });
+
+  // ===== Adjust popup on resize =====
+  window.addEventListener('resize', () => {
+    if (paypalPopup.style.display === 'block') {
+      const btnRect = supportBtn.getBoundingClientRect();
       if (window.innerWidth <= 720) {
         paypalPopup.style.position = 'fixed';
-        paypalPopup.style.bottom = '20px';
-        paypalPopup.style.right = '20px';
         paypalPopup.style.top = 'auto';
+        paypalPopup.style.left = '5%';
+        paypalPopup.style.bottom = '20px';
         paypalPopup.style.width = '90%';
         paypalPopup.style.maxWidth = '320px';
       } else {
         paypalPopup.style.position = 'absolute';
-        paypalPopup.style.top = '45px';
-        paypalPopup.style.right = '0';
+        paypalPopup.style.top = `${supportBtn.offsetTop + supportBtn.offsetHeight + 8}px`;
+        paypalPopup.style.left = `${supportBtn.offsetLeft}px`;
         paypalPopup.style.width = '300px';
       }
-    });
-
-    window.addEventListener('click', (e) => {
-      if (!e.target.closest('#supportBtn') && !e.target.closest('#paypalPopup')) {
-        paypalPopup.style.display = 'none';
-      }
-    });
-  }
-
+    }
+  });
+});
   // ===== 7. Download Buttons Tracking & Persistent Counters =====
   document.querySelectorAll('a.btn-download').forEach((btn, index) => {
     // Assign unique key for each download
