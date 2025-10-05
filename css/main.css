@@ -251,8 +251,11 @@ header {
 .flip-card-back img {
   width: 100%;
   height: 100%;
-  object-fit: cover;      /* scale image nicely */
+  object-fit: contain;    /* show entire image without cropping */
+  padding: 5px;           /* optional: small space around image */
+  box-sizing: border-box; /* include padding in sizing */
 }
+
 
 /* back side flipped */
 .flip-card-back {
