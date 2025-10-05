@@ -319,12 +319,22 @@
   <!-- ===== Join / Support Tab ===== -->
   <section class="tab-content" id="joinTab">
     <h2>Join & Support Us</h2>
+    
+    <!-- Support Button -->
     <button class="btn" id="supportBtn">Support Me</button>
+  
+    <!-- PayPal Popup (hidden by default) -->
+    <div id="paypalPopup" style="display: none;">
+      <div id="paypal-button-small"></div>
+    </div>
+  
+    <!-- Subscribe Form -->
     <form id="subscribeForm">
       <input type="email" placeholder="Your Email" required>
       <button type="submit" class="btn">Subscribe</button>
     </form>
   </section>
+
 
   <!-- ===== Contact Tab ===== -->
   <section class="tab-content" id="contactTab">
@@ -389,15 +399,16 @@
   </div>
 
   <!-- Chat -->
-  <div id="chatBtn">Chat Us</div>
-  <div id="chatBox">
+  <div id="chatBtn" class="btn">Chat Us</div>
+  <div id="chatBox" style="display: none;">
     <form id="chatForm">
-      <input type="text" placeholder="Your Name" required>
-      <input type="email" placeholder="Your Email" required>
-      <textarea placeholder="Your Message" required></textarea>
+      <input type="text" name="name" placeholder="Your Name" required>
+      <input type="email" name="email" placeholder="Your Email" required>
+      <textarea name="message" placeholder="Your Message" required></textarea>
       <button type="submit">Send</button>
     </form>
   </div>
+
 
   <!-- JS -->
   <script src="js/main.js" defer></script>
