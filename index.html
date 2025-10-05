@@ -327,11 +327,21 @@
     </div>
   
     <!-- Support Button -->
-    <button class="btn" id="supportBtn" style="margin-bottom:15px;">Support Me</button>
-  
-    <!-- PayPal Popup -->
-    <div id="paypalPopup" style="display:none; padding:15px; background:#fffbe6; border:1px solid #ccc; border-radius:8px; box-shadow:0 4px 12px rgba(0,0,0,0.1); position:absolute; top:45px; right:0; width:300px; z-index:1000;">
-      <div id="paypal-button-small"></div>
+    <!-- Support Me Button -->
+    <div class="support-container">
+      <button id="supportBtn" class="tooltip-btn">
+        Support Me
+        <span class="tooltip-text">Please select your country correctly before payment</span>
+      </button>
+    
+      <!-- PayPal Popup -->
+      <div id="paypalPopup" class="paypal-popup">
+        <div class="donation-options">
+          <button id="donate-5" class="donation-amount active">$5</button>
+          <input id="donate-custom" type="number" placeholder="Other amount" min="1" />
+        </div>
+        <div id="paypal-button-small"></div>
+      </div>
     </div>
   
     <hr style="margin:15px 0; border-color:#ccc;">
@@ -422,7 +432,7 @@
 
   <!-- JS -->
   <!-- PayPal SDK -->
-  <script src="https://www.paypal.com/sdk/js?client-id=Ab5IwpZr7q6R8xT1x2Yw45n123456789&currency=USD"></script>
+  <script src="https://www.paypal.com/sdk/js?client-id=AbDsUYA-obC2sHFZvv9R4Ce9gYfAqnpuoCNiLDQYeF0cUJdYFSEeuiwRk82Lr3S2NPrMUg97BhCbbVNv&currency=USD"></script>
   
   <!-- EmailJS SDK -->
   <script type="text/javascript" src="https://cdn.emailjs.com/dist/email.min.js"></script>
