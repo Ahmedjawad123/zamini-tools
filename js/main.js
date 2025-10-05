@@ -58,18 +58,18 @@ document.addEventListener('DOMContentLoaded', () => {
   const customInput = document.getElementById('donate-custom');
   let isPayPalRendered = false;
 
-  // ===== Quick button click =====
+  // Quick button click
   quickBtn.addEventListener('click', () => {
     quickBtn.classList.add('active');
     if (customInput) customInput.value = "";
   });
 
-  // ===== Custom input =====
+  // Custom input
   customInput.addEventListener('input', () => {
     quickBtn.classList.remove('active');
   });
 
-  // ===== Show / hide popup =====
+  // Show / hide popup
   supportBtn.addEventListener('click', (e) => {
     e.stopPropagation();
     paypalPopup.style.display =
@@ -86,7 +86,6 @@ document.addEventListener('DOMContentLoaded', () => {
           height: 40
         },
         createOrder: (data, actions) => {
-          // Always read latest amount
           const amount = customInput && customInput.value && !isNaN(customInput.value) && Number(customInput.value) > 0
             ? customInput.value
             : "5";
@@ -105,9 +104,45 @@ document.addEventListener('DOMContentLoaded', () => {
           alert('Payment could not be processed. Try again.');
         }
       }).render('#paypal-button-small');
-
       isPayPalRendered = true;
     }
+
+    // ===== Position popup directly under button =====
+    const btnRect = supportBtn.getBoundingClientRect();
+    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+
+    paypalPopup.style.position = 'absolute';
+    paypalPopup.style.top = `${supportBtn.offsetTop + supportBtn.offsetHeight + 8}px`;
+    paypalPopup.style.left = `${supportBtn.offsetLeft}px`;
+    paypalPopup.style.width = '90%';
+    paypalPopup.style.maxWidth = '320px';
+  });
+
+  // Close popup when clicking outside
+  window.addEventListener('click', (e) => {
+    if (!e.target.closest('#supportBtn') && !e.target.closest('#paypalPopup')) {
+      paypalPopup.style.display = 'none';
+    }
+  });
+
+  // Adjust popup on resize
+  window.addEventListener('resize', () => {
+    if (paypalPopup.style.display === 'block') {
+      paypalPopup.style.top = `${supportBtn.offsetTop + supportBtn.offsetHeight + 8}px`;
+      paypalPopup.style.left = `${supportBtn.offsetLeft}px`;
+      paypalPopup.style.width = '90%';
+      paypalPopup.style.maxWidth = '320px';
+    }
+  });
+
+  // Adjust popup on scroll (for mobile)
+  window.addEventListener('scroll', () => {
+    if (paypalPopup.style.display === 'block') {
+      paypalPopup.style.top = `${supportBtn.offsetTop + supportBtn.offsetHeight + 8}px`;
+      paypalPopup.style.left = `${supportBtn.offsetLeft}px`;
+    }
+  });
+});
 
     // ===== Position popup under button =====
     const btnRect = supportBtn.getBoundingClientRect();
