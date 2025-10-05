@@ -188,28 +188,30 @@ header {
 
 /* ===================== Card Styling ===================== */
 .card, .feature { 
-  background: #fffbe6; 
-  border: 1px solid #c48f3c; 
-  border-radius: 10px; 
-  padding: 10px;                  
-  flex: 1 1 calc(20% - 20px);    /* smaller default width (5 per row on large screens) */
-  max-width: calc(25% - 20px);   
-  text-align: center;             
-  transition: 0.3s; 
+  background: #fff3d6;              /* warmer, richer beige */
+  border: 2px solid #d4af37;        /* gold-ish border for premium feel */
+  border-radius: 12px; 
+  padding: 12px;                    
+  flex: 1 1 calc(20% - 20px);       
+  max-width: calc(25% - 20px);      
+  text-align: center;               
+  transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s; 
   position: relative; 
   display: flex; 
-  flex-direction: column;         
-  gap: 6px;                       
-  overflow: hidden;             
-  font-size: 0.75rem;             
-  box-sizing: border-box;         
-  min-height: 220px;              /* smaller height */
+  flex-direction: column;           
+  gap: 8px;                        
+  overflow: hidden;                
+  font-size: 0.75rem;              
+  box-sizing: border-box;          
+  min-height: 230px;               /* slightly taller for content */
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1); /* subtle depth */
 }
 
-/* Card Hover */
-.card:hover, .feature:hover { 
-  box-shadow: 0 4px 15px rgba(0,0,0,0.2); 
-  transform: translateY(-2px);
+/* Hover effect for cards */
+.card:hover, .feature:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.2);
+  border-color: #ffd966;           /* golden highlight on hover */
 }
 
 /* ===================== Flip Card ===================== */
