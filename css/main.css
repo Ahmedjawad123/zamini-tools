@@ -190,8 +190,8 @@ header {
   background: #fffbe6; 
   border: 1px solid #c48f3c; 
   border-radius: 10px; 
-  padding: 10px;                  
-  flex: 1 1 calc(28% - 16px);   /* smaller width for desktop */
+  padding: 10px;                   /* smaller padding */
+  flex: 1 1 calc(25% - 12px);     /* smaller default width (4 per row) */
   max-width: calc(33.333% - 20px);
 
   text-align: center;             
