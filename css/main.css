@@ -991,34 +991,40 @@ footer {
   }
 
 
-/* ===== Join & Support Section ===== */
+/* ===================== Join & Support Container ===================== */
 .join-support-container {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
   gap: 30px;
+  flex-wrap: wrap;
   margin-top: 20px;
-  flex-wrap: wrap; /* for smaller screens */
+  width: 100%;
+  box-sizing: border-box;
 }
 
 /* ===== Support Side (PayPal) ===== */
 .support-side {
   flex: 1 1 48%;
+  min-width: 280px; /* prevents collapsing on desktop */
   background-color: #fffbe6;
   border: 1px solid #D4AF37;
   border-radius: 10px;
   padding: 20px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  box-sizing: border-box;
 }
 
 /* ===== Subscribe Side (Email) ===== */
 .subscribe-side {
-  flex: 1 1 48%;
+  flex: 1 1 45%;
+  min-width: 280px;
   background-color: #fffbe6;
   border: 1px solid #D4AF37;
   border-radius: 10px;
   padding: 20px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  box-sizing: border-box;
 }
 
 /* ===== Headings ===== */
@@ -1095,6 +1101,7 @@ footer {
   padding: 10px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.2);
   z-index: 999;
+  box-sizing: border-box;
 }
 
 /* ===== Donation Options inside Popup ===== */
@@ -1144,6 +1151,7 @@ footer {
   padding: 8px 12px;
   border-radius: 6px;
   border: 1px solid #D4AF37;
+  box-sizing: border-box;
 }
 
 .update-status {
@@ -1155,9 +1163,20 @@ footer {
 @media (max-width: 768px) {
   .join-support-container {
     flex-direction: column;
+    gap: 20px;
   }
 
-  .support-side, .subscribe-side {
+  .support-side,
+  .subscribe-side {
     flex: 1 1 100%;
+  }
+
+  .paypal-popup {
+    position: fixed !important;
+    bottom: 20px !important;
+    right: 20px !important;
+    top: auto !important;
+    width: 90% !important;
+    max-width: 320px;
   }
 }
