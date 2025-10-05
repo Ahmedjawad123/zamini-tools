@@ -991,62 +991,71 @@ footer {
   }
 
 
-/* ===== Join & Support Layout ===== */
+/* ===== Join & Support Section ===== */
 .join-support-container {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
   gap: 30px;
-  flex-wrap: wrap;
   margin-top: 20px;
+  flex-wrap: wrap; /* for smaller screens */
 }
 
-.support-side, .subscribe-side {
-  flex: 1 1 45%;
+/* ===== Support Side (PayPal) ===== */
+.support-side {
+  flex: 1 1 48%;
   background-color: #fffbe6;
-  border: 1px solid #d4af37;
+  border: 1px solid #D4AF37;
   border-radius: 10px;
-  padding: 15px 20px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+  padding: 20px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
 }
 
+/* ===== Subscribe Side (Email) ===== */
+.subscribe-side {
+  flex: 1 1 48%;
+  background-color: #fffbe6;
+  border: 1px solid #D4AF37;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+/* ===== Headings ===== */
 .support-side h3,
 .subscribe-side h3 {
   color: #493C2B;
-  margin-bottom: 12px;
-  font-size: 1.1rem;
+  margin-bottom: 15px;
+  font-size: 1.2rem;
   border-bottom: 2px solid #D4AF37;
   display: inline-block;
   padding-bottom: 4px;
 }
 
-/* ===== Buttons & Inputs ===== */
+/* ===== Buttons ===== */
 .btn, .quick-donate {
   background-color: #D4AF37;
   color: #493C2B;
   font-weight: 600;
   border: none;
   border-radius: 6px;
-  padding: 6px 14px;
+  padding: 8px 16px;
   cursor: pointer;
-  transition: background-color 0.2s ease;
+  transition: 0.2s;
 }
 
 .btn:hover, .quick-donate:hover {
-  background-color: #f0d77a;
+  background-color: #f5deab;
 }
 
 /* ===== Tooltip Button ===== */
 .tooltip-btn {
   position: relative;
-  background: linear-gradient(135deg, #ffd966, #e6b800);
-  border: none;
-  color: #493C2B;
-  font-weight: bold;
   padding: 8px 16px;
   border-radius: 8px;
+  font-weight: bold;
   cursor: pointer;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+  background: linear-gradient(135deg, #ffd966, #e6b800);
 }
 
 .tooltip-text {
@@ -1062,7 +1071,7 @@ footer {
   bottom: 125%;
   left: 50%;
   transform: translateX(-50%);
-  transition: opacity 0.2s ease;
+  transition: 0.2s;
   z-index: 10;
 }
 
@@ -1075,7 +1084,7 @@ footer {
 .paypal-popup {
   display: none;
   position: absolute;
-  top: 45px;
+  top: 50px;
   right: 0;
   width: 300px;
   max-height: 400px;
@@ -1084,20 +1093,19 @@ footer {
   border: 1px solid #D4AF37;
   border-radius: 8px;
   padding: 10px;
-  z-index: 9999;
   box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  z-index: 999;
 }
 
-/* ===== Donation Options ===== */
+/* ===== Donation Options inside Popup ===== */
 .donation-options {
   display: flex;
   gap: 8px;
-  margin-bottom: 10px;
   justify-content: center;
-  align-items: center;
+  margin-bottom: 10px;
 }
 
-.donation-options button.donation-amount {
+.donation-amount {
   background-color: #D4AF37;
   color: #493C2B;
   border: none;
@@ -1105,20 +1113,20 @@ footer {
   border-radius: 6px;
   font-weight: 700;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: 0.2s;
 }
 
-.donation-options button.donation-amount.active,
-.donation-options button.donation-amount:hover {
+.donation-amount.active,
+.donation-amount:hover {
   background-color: #F5DEB3;
   color: #493C2B;
 }
 
-.donation-options input#popup-donate-custom {
-  padding: 6px 12px;
+#popup-donate-custom {
+  width: 80px;
+  padding: 6px 10px;
   border-radius: 6px;
   border: 1px solid #D4AF37;
-  width: 80px;
   text-align: center;
 }
 
@@ -1131,11 +1139,11 @@ footer {
 }
 
 .subscribe-form input[type="email"] {
-  padding: 6px 10px;
-  border-radius: 6px;
-  border: 1px solid #d4af37;
   flex: 1;
   min-width: 180px;
+  padding: 8px 12px;
+  border-radius: 6px;
+  border: 1px solid #D4AF37;
 }
 
 .update-status {
@@ -1144,7 +1152,7 @@ footer {
 }
 
 /* ===== Responsive ===== */
-@media (max-width: 700px) {
+@media (max-width: 768px) {
   .join-support-container {
     flex-direction: column;
   }
