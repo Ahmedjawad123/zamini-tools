@@ -58,21 +58,44 @@ document.addEventListener('DOMContentLoaded', () => {
   const supportBtn = document.getElementById('supportBtn');
   const paypalPopup = document.getElementById('paypalPopup');
   let isPayPalRendered = false;
+  let selectedAmount = "5"; // default
+
+  const quickBtn = document.getElementById('donate-5');
+  const customInput = document.getElementById('donate-custom');
+
+  // Quick $5 button
+  if (quickBtn) {
+    quickBtn.addEventListener('click', () => {
+      selectedAmount = "5";
+      quickBtn.classList.add('active');
+      if (customInput) customInput.value = "";
+    });
+  }
+
+  // Custom amount input
+  if (customInput) {
+    customInput.addEventListener('input', () => {
+      const val = customInput.value.trim();
+      if (val && !isNaN(val) && Number(val) > 0) {
+        selectedAmount = val;
+        quickBtn.classList.remove('active');
+      }
+    });
+  }
 
   if (supportBtn && paypalPopup) {
     supportBtn.addEventListener('click', (e) => {
       e.stopPropagation();
       paypalPopup.style.display = paypalPopup.style.display === 'block' ? 'none' : 'block';
 
-      // Render PayPal button once
       if (!isPayPalRendered && typeof paypal !== "undefined") {
         paypal.Buttons({
           style: { layout: 'vertical', color: 'gold', shape: 'rect', label: 'paypal', height: 40 },
           createOrder: (data, actions) => actions.order.create({
-            purchase_units: [{ amount: { value: '5' }, description: 'Support Payment' }]
+            purchase_units: [{ amount: { value: selectedAmount }, description: 'Support Payment' }]
           }),
           onApprove: (data, actions) => actions.order.capture().then(details => {
-            alert('Thank you for your support, ' + details.payer.name.given_name);
+            alert('Thank you for your support, ' + details.payer.name.given_name + '!');
             paypalPopup.style.display = 'none';
           }),
           onError: (err) => {
@@ -80,7 +103,6 @@ document.addEventListener('DOMContentLoaded', () => {
             alert('Payment could not be processed. Try again.');
           }
         }).render('#paypal-button-small');
-
         isPayPalRendered = true;
       }
 
@@ -89,7 +111,6 @@ document.addEventListener('DOMContentLoaded', () => {
         paypalPopup.style.position = 'fixed';
         paypalPopup.style.bottom = '20px';
         paypalPopup.style.right = '20px';
-        paypalPopup.style.top = 'auto';
         paypalPopup.style.width = '90%';
         paypalPopup.style.maxWidth = '320px';
       } else {
@@ -120,9 +141,25 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // ===== 8. EmailJS (Feedback / Contact Forms) =====
+  // ===== 8. File Size Fetch =====
+  const fileSizeSpan = document.getElementById('file-size');
+  const fileUrl = "https://github.com/Ahmedjawad123/Zamini_Converter/releases/download/v1.0.0/Executable_file_.Zamini_Converter_v1.0.0.rar";
+  if (fileSizeSpan) {
+    fetch(fileUrl, { method: 'HEAD' })
+      .then(resp => {
+        const size = resp.headers.get('content-length');
+        fileSizeSpan.textContent = size ? (size / (1024 * 1024)).toFixed(2) + " MB" : "N/A";
+      })
+      .catch(err => {
+        console.error('File size fetch error:', err);
+        fileSizeSpan.textContent = "N/A";
+      });
+  }
+
+  // ===== 9. Initialize EmailJS =====
   if (typeof emailjs !== "undefined") emailjs.init('DhW4bXmuP0VP2d8bF');
 
+  // ===== 10. Feedback Form =====
   const feedbackForm = document.getElementById('contactForm');
   if (feedbackForm) {
     let statusEl = document.getElementById('feedback-status');
@@ -139,6 +176,7 @@ document.addEventListener('DOMContentLoaded', () => {
       statusEl.textContent = "Sending...";
 
       const templateParams = {
+        software: feedbackForm.software?.value || "Not selected",
         name: feedbackForm.name?.value || "Anonymous",
         email: feedbackForm.email?.value || "Not provided",
         message: feedbackForm.message?.value || "No message"
@@ -153,6 +191,38 @@ document.addEventListener('DOMContentLoaded', () => {
           console.error("EmailJS error:", err);
           statusEl.textContent = "Oops! Something went wrong. Check console.";
         });
+    });
+  }
+
+  // ===== 11. Updates Subscription Form =====
+  const updatesForm = document.getElementById('updatesForm');
+  if (updatesForm) {
+    const updatesStatus = document.getElementById('updates-status');
+
+    updatesForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      updatesStatus.textContent = "Subscribing...";
+
+      const email = updatesForm.email.value.trim();
+      if (!email) {
+        updatesStatus.textContent = "Enter a valid email!";
+        return;
+      }
+
+      if (typeof emailjs !== "undefined") {
+        emailjs.send('zamini_musafir', 'template_updates', { email })
+          .then(() => {
+            updatesStatus.textContent = "Subscribed successfully! You'll get updates soon.";
+            updatesForm.reset();
+          })
+          .catch(err => {
+            console.error("EmailJS error:", err);
+            updatesStatus.textContent = "Oops! Something went wrong. Try again.";
+          });
+      } else {
+        console.error("EmailJS not loaded!");
+        updatesStatus.textContent = "Email service not available.";
+      }
     });
   }
 
