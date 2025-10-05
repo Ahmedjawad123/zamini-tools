@@ -886,17 +886,58 @@ footer {
   }
 
 
-
+/* ===== PayPal Popup ===== */
 .paypal-popup {
   display: none;
-  position: absolute; /* JS will adjust to fixed on mobile */
+  position: absolute;
   top: 45px;
   right: 0;
   width: 300px;
-  padding: 15px;
-  background: #fffbe6;
-  border: 1px solid #ccc;
+  max-height: 400px;
+  overflow-y: auto;
+  background-color: #FFF8DC;
+  border: 1px solid #D4AF37;
   border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-  z-index: 1000; /* very important to overlay other elements */
+  padding: 10px;
+  z-index: 9999;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+/* ===== Donation Options ===== */
+.donation-options {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 10px;
+  justify-content: center;
+  align-items: center;
+}
+
+.donation-options button.donation-amount {
+  background-color: #D4AF37;
+  color: #493C2B;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.donation-options button.donation-amount.active,
+.donation-options button.donation-amount:hover {
+  background-color: #F5DEB3;
+  color: #493C2B;
+}
+
+.donation-options input#don
+
+/* ===== Hero Section ===== */
+.hero-left h2 { color: #FFF8DC; margin-bottom: 10px; }
+.hero-left p { color: #FFF8DC; }
+.badge { 
+  background-color: #D4AF37; 
+  color: #493C2B; 
+  padding: 4px 8px; 
+  border-radius: 6px; 
+  font-weight: 600; 
 }
