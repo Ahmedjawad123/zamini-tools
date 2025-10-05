@@ -370,6 +370,32 @@ header {
   color: #b0752c; 
 }
 
+/* ===================== Download Button Wrapper ===================== */
+.download-wrapper {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;          /* space between button and count */
+  justify-content: center;
+  margin-top: 4px;
+}
+
+/* ===================== Download Count Badge ===================== */
+.download-wrapper .count {
+  background: #e6b800;      /* bright gold */
+  color: #333;              /* text color */
+  font-size: 0.65rem;
+  font-weight: bold;
+  padding: 2px 6px;
+  border-radius: 50%;       /* circular badge */
+  min-width: 18px;
+  text-align: center;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.25);
+  display: inline-block;
+  line-height: 1;
+}
+
+
+
 /* ===================== Top-left Badge ===================== */
 .badge-top {
   position: absolute;
