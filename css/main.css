@@ -191,7 +191,7 @@ header {
   border: 1px solid #c48f3c; 
   border-radius: 10px; 
   padding: 10px;                  
-  flex: 1 1 calc(33.333% - 20px);
+  flex: 1 1 calc(28% - 16px);   /* smaller width for desktop */
   max-width: calc(33.333% - 20px);
 
   text-align: center;             
@@ -213,7 +213,7 @@ header {
 /* ===================== Flip Card ===================== */
 .flip-card {
   width: 100%;
-  aspect-ratio: 16 / 9;    /* keeps 16:9 ratio */
+  aspect-ratio: 4 / 3;   /* less tall than 16/9 */
   perspective: 1000px;
   margin-bottom: 8px;
   position: relative;
