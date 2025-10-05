@@ -929,7 +929,13 @@ footer {
   color: #493C2B;
 }
 
-.donation-options input#don
+.donation-options input#donate-custom {
+  padding: 6px 12px;
+  border-radius: 6px;
+  border: 1px solid #D4AF37;
+  width: 80px;
+  text-align: center;
+}
 
 /* ===== Hero Section ===== */
 .hero-left h2 { color: #FFF8DC; margin-bottom: 10px; }
