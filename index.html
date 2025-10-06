@@ -329,190 +329,38 @@
     <p>No updates yet. Check back soon!</p>
   </section>
 
-  <section id="join-support">
-    <style>
-      #join-support {
-        background: #fff8e7;
-        padding: 50px 20px;
-        font-family: Arial, sans-serif;
-        color: #333;
-      }
-  
-      .join-support-container {
-        display: flex;
-        justify-content: center;
-        align-items: flex-start;
-        flex-wrap: wrap;
-        gap: 40px;
-        max-width: 1000px;
-        margin: auto;
-      }
-  
-      .support-side, .subscribe-side {
-        background: #fff;
-        border: 1px solid #dcb97a;
-        border-radius: 12px;
-        box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-        flex: 1 1 320px;
-        min-width: 300px;
-        padding: 25px;
-        text-align: center;
-      }
-  
-      .support-side h3, .subscribe-side h3 {
-        color: #8b5a00;
-        font-size: 22px;
-        margin-bottom: 15px;
-      }
-  
-      .tooltip-btn {
-        background: linear-gradient(45deg, #b38b2f, #d9a441);
-        border: none;
-        color: #fffbe6;
-        padding: 12px 25px;
-        border-radius: 8px;
-        font-weight: 700;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        position: relative;
-      }
-      .tooltip-btn:hover {
-        background: linear-gradient(45deg, #a07c2a, #c69739);
-        transform: scale(1.05);
-      }
-  
-      .tooltip-text {
-        visibility: hidden;
-        opacity: 0;
-        background: #000;
-        color: #fff;
-        text-align: center;
-        border-radius: 6px;
-        padding: 6px 8px;
-        position: absolute;
-        bottom: 120%;
-        left: 50%;
-        transform: translateX(-50%);
-        width: 220px;
-        font-size: 12px;
-        transition: opacity 0.3s;
-        z-index: 2;
-      }
-      .tooltip-btn:hover .tooltip-text {
-        visibility: visible;
-        opacity: 1;
-      }
-  
-      /* PAYPAL POPUP */
-      .paypal-popup {
-        display: none; /* hidden by default */
-        margin-top: 15px;
-        background: #fffbe6;
-        border: 1px solid #b38b2f;
-        border-radius: 10px;
-        padding: 15px;
-      }
-  
-      .donation-options {
-        display: flex;
-        justify-content: center;
-        gap: 10px;
-        margin-bottom: 10px;
-        flex-wrap: wrap;
-      }
-  
-      .donation-amount {
-        background: #b38b2f;
-        color: #fffbe6;
-        border: none;
-        padding: 8px 14px;
-        border-radius: 6px;
-        font-weight: 700;
-        cursor: pointer;
-        transition: background 0.3s;
-      }
-      .donation-amount:hover,
-      .donation-amount.active {
-        background: #8b5a00;
-      }
-      #popup-donate-custom {
-        width: 80px;
-        border: 1px solid #b38b2f;
-        border-radius: 6px;
-        padding: 5px;
-        text-align: center;
-      }
-  
-      .subscribe-form {
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-        align-items: center;
-      }
-      .subscribe-form input {
-        width: 80%;
-        padding: 10px;
-        border: 1px solid #b38b2f;
-        border-radius: 6px;
-      }
-      .shiny-btn {
-        background: linear-gradient(45deg, #b38b2f, #d9a441);
-        border: none;
-        color: #fffbe6;
-        padding: 10px 20px;
-        border-radius: 8px;
-        font-weight: 700;
-        cursor: pointer;
-        transition: transform 0.3s;
-      }
-      .shiny-btn:hover {
-        transform: scale(1.05);
-      }
-  
-      #updates-status {
-        margin-top: 10px;
-        font-size: 14px;
-        color: green;
-        font-weight: 600;
-      }
-  
-      @media screen and (max-width: 720px) {
-        .join-support-container {
-          flex-direction: column;
-          gap: 30px;
-        }
-      }
-    </style>
-  
-    <div class="join-support-container">
+  <section id="join-support" style="padding:50px 20px; background:#fff8e7; font-family:Arial,sans-serif; color:#333;">
+    <div style="display:flex; flex-wrap:wrap; justify-content:center; gap:40px; max-width:1000px; margin:auto;">
+      
       <!-- SUPPORT SIDE -->
-      <div class="support-side">
-        <h3>Support My Work</h3>
-        <button id="supportBtn" class="tooltip-btn">
+      <div style="background:#fff; border:1px solid #dcb97a; border-radius:12px; box-shadow:0 4px 10px rgba(0,0,0,0.05); flex:1 1 320px; min-width:300px; padding:25px; text-align:center;">
+        <h3 style="color:#8b5a00; font-size:22px; margin-bottom:15px;">Support My Work</h3>
+        <button id="supportBtn" style="background:linear-gradient(45deg,#b38b2f,#d9a441); border:none; color:#fffbe6; padding:12px 25px; border-radius:8px; font-weight:700; cursor:pointer; position:relative;">
           Support Me
-          <span class="tooltip-text">Please select your country correctly before payment</span>
+          <span style="visibility:hidden; opacity:0; background:#000; color:#fff; text-align:center; border-radius:6px; padding:6px 8px; position:absolute; bottom:120%; left:50%; transform:translateX(-50%); width:220px; font-size:12px; transition:opacity 0.3s; z-index:2;" id="tooltip">Please select your country correctly before payment</span>
         </button>
   
-        <div id="paypalPopup" class="paypal-popup">
-          <div class="donation-options">
-            <button class="donation-amount active">$5</button>
-            <button class="donation-amount">$10</button>
-            <button class="donation-amount">$20</button>
-            <input id="popup-donate-custom" type="number" placeholder="Other" min="1">
+        <div id="paypalPopup" style="display:none; margin-top:15px; background:#fffbe6; border:1px solid #b38b2f; border-radius:10px; padding:15px;">
+          <div style="display:flex; justify-content:center; gap:10px; flex-wrap:wrap; margin-bottom:10px;">
+            <button class="donation-amount active" style="background:#b38b2f; color:#fffbe6; border:none; padding:8px 14px; border-radius:6px; font-weight:700; cursor:pointer;">$5</button>
+            <button class="donation-amount" style="background:#b38b2f; color:#fffbe6; border:none; padding:8px 14px; border-radius:6px; font-weight:700; cursor:pointer;">$10</button>
+            <button class="donation-amount" style="background:#b38b2f; color:#fffbe6; border:none; padding:8px 14px; border-radius:6px; font-weight:700; cursor:pointer;">$20</button>
+            <input id="popup-donate-custom" type="number" placeholder="Other" min="1" style="width:80px; border:1px solid #b38b2f; border-radius:6px; padding:5px; text-align:center;">
           </div>
           <div id="paypal-button-small"></div>
         </div>
       </div>
   
       <!-- SUBSCRIBE SIDE -->
-      <div class="subscribe-side">
-        <h3>Join Our Updates</h3>
-        <form id="updatesForm" class="subscribe-form">
-          <input type="email" name="email" placeholder="Enter your email" required>
-          <button type="submit" class="shiny-btn">Subscribe</button>
+      <div style="background:#fff; border:1px solid #dcb97a; border-radius:12px; box-shadow:0 4px 10px rgba(0,0,0,0.05); flex:1 1 320px; min-width:300px; padding:25px; text-align:center;">
+        <h3 style="color:#8b5a00; font-size:22px; margin-bottom:15px;">Join Our Updates</h3>
+        <form id="updatesForm" style="display:flex; flex-direction:column; gap:10px; align-items:center;">
+          <input type="email" name="email" placeholder="Enter your email" required style="width:80%; padding:10px; border:1px solid #b38b2f; border-radius:6px;">
+          <button type="submit" style="background:linear-gradient(45deg,#b38b2f,#d9a441); border:none; color:#fffbe6; padding:10px 20px; border-radius:8px; font-weight:700; cursor:pointer;">Subscribe</button>
         </form>
-        <div id="updates-status"></div>
+        <div id="updates-status" style="margin-top:10px; font-size:14px; color:green; font-weight:600;"></div>
       </div>
+  
     </div>
   
     <!-- PAYPAL SDK -->
@@ -520,43 +368,40 @@
     <script>
       const supportBtn = document.getElementById('supportBtn');
       const paypalPopup = document.getElementById('paypalPopup');
+      const tooltip = document.getElementById('tooltip');
   
-      // Toggle popup display
+      supportBtn.addEventListener('mouseover', ()=> tooltip.style.visibility='visible');
+      supportBtn.addEventListener('mouseout', ()=> tooltip.style.visibility='hidden');
+  
       supportBtn.addEventListener('click', () => {
-        if (paypalPopup.style.display === 'block') {
-          paypalPopup.style.display = 'none';
-        } else {
-          paypalPopup.style.display = 'block';
-          paypalPopup.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        paypalPopup.style.display = (paypalPopup.style.display === 'block') ? 'none' : 'block';
+        if(paypalPopup.style.display==='block'){
+          paypalPopup.scrollIntoView({behavior:'smooth', block:'start'});
         }
       });
   
-      // Donation amount buttons
-      document.querySelectorAll('.donation-amount').forEach(btn => {
-        btn.addEventListener('click', () => {
-          document.querySelectorAll('.donation-amount').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.donation-amount').forEach(btn=>{
+        btn.addEventListener('click', ()=>{
+          document.querySelectorAll('.donation-amount').forEach(b=>b.classList.remove('active'));
           btn.classList.add('active');
         });
       });
   
-      // PayPal button
       paypal.Buttons({
-        createOrder: (data, actions) => {
-          let amount = document.querySelector('.donation-amount.active')?.textContent.replace('$','') ||
-                       document.getElementById('popup-donate-custom').value || '5';
-          return actions.order.create({ purchase_units: [{ amount: { value: amount } }] });
+        createOrder:(data,actions)=>{
+          let amount = document.querySelector('.donation-amount.active').textContent.replace('$','') || document.getElementById('popup-donate-custom').value || '5';
+          return actions.order.create({purchase_units:[{amount:{value:amount}}]});
         },
-        onApprove: (data, actions) => actions.order.capture().then(() => {
+        onApprove:(data,actions)=>actions.order.capture().then(()=>{
           alert('Thank you for your support!');
-          paypalPopup.style.display = 'none';
+          paypalPopup.style.display='none';
         })
       }).render('#paypal-button-small');
   
-      // Subscribe demo
       const updatesForm = document.getElementById('updatesForm');
-      updatesForm.addEventListener('submit', (e) => {
+      updatesForm.addEventListener('submit',(e)=>{
         e.preventDefault();
-        document.getElementById('updates-status').textContent = 'Thank you for subscribing!';
+        document.getElementById('updates-status').textContent='Thank you for subscribing!';
         updatesForm.reset();
       });
     </script>
