@@ -330,10 +330,167 @@
   </section>
 
     <!-- ===== Join / Support Section ===== -->
-  <section class="tab-content" id="joinTab">
-    <div class="join-support-container">
+  <!-- ===================== JOIN / SUPPORT SECTION ===================== -->
+  <section id="join-support">
+    <style>
+      /* ====== Base Layout ====== */
+      #join-support {
+        background: #fff8e7;
+        padding: 50px 20px;
+        font-family: Arial, sans-serif;
+        color: #333;
+      }
   
-      <!-- ===== Left: Support / PayPal ===== -->
+      .join-support-container {
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        flex-wrap: wrap;
+        gap: 40px;
+        max-width: 1000px;
+        margin: auto;
+      }
+  
+      .support-side, .subscribe-side {
+        background: #fff;
+        border: 1px solid #dcb97a;
+        border-radius: 12px;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        flex: 1 1 320px;
+        min-width: 300px;
+        padding: 25px;
+        text-align: center;
+        position: relative;
+      }
+  
+      .support-side h3, .subscribe-side h3 {
+        color: #8b5a00;
+        font-size: 22px;
+        margin-bottom: 15px;
+      }
+  
+      /* ====== Tooltip Button ====== */
+      .tooltip-btn {
+        background: linear-gradient(45deg, #b38b2f, #d9a441);
+        border: none;
+        color: #fffbe6;
+        padding: 12px 25px;
+        border-radius: 8px;
+        font-weight: 700;
+        cursor: pointer;
+        position: relative;
+        transition: all 0.3s ease;
+      }
+      .tooltip-btn:hover {
+        background: linear-gradient(45deg, #a07c2a, #c69739);
+        transform: scale(1.05);
+      }
+      .tooltip-text {
+        visibility: hidden;
+        opacity: 0;
+        background: #000;
+        color: #fff;
+        text-align: center;
+        border-radius: 6px;
+        padding: 6px 8px;
+        position: absolute;
+        bottom: 120%;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 220px;
+        font-size: 12px;
+        transition: opacity 0.3s;
+        z-index: 2;
+      }
+      .tooltip-btn:hover .tooltip-text {
+        visibility: visible;
+        opacity: 1;
+      }
+  
+      /* ====== PayPal Popup ====== */
+      .paypal-popup {
+        display: none;
+        position: relative;
+        margin-top: 15px;
+        background: #fffbe6;
+        border: 1px solid #b38b2f;
+        border-radius: 10px;
+        padding: 15px;
+      }
+      .donation-options {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        margin-bottom: 10px;
+        flex-wrap: wrap;
+      }
+      .donation-amount {
+        background: #b38b2f;
+        color: #fffbe6;
+        border: none;
+        padding: 8px 14px;
+        border-radius: 6px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: background 0.3s;
+      }
+      .donation-amount:hover,
+      .donation-amount.active {
+        background: #8b5a00;
+      }
+      #popup-donate-custom {
+        width: 80px;
+        border: 1px solid #b38b2f;
+        border-radius: 6px;
+        padding: 5px;
+        text-align: center;
+      }
+  
+      /* ====== Subscribe Side ====== */
+      .subscribe-form {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        align-items: center;
+      }
+      .subscribe-form input {
+        width: 80%;
+        padding: 10px;
+        border: 1px solid #b38b2f;
+        border-radius: 6px;
+      }
+      .shiny-btn {
+        background: linear-gradient(45deg, #b38b2f, #d9a441);
+        border: none;
+        color: #fffbe6;
+        padding: 10px 20px;
+        border-radius: 8px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: transform 0.3s;
+      }
+      .shiny-btn:hover {
+        transform: scale(1.05);
+      }
+  
+      #updates-status {
+        margin-top: 10px;
+        font-size: 14px;
+        color: green;
+        font-weight: 600;
+      }
+  
+      /* ====== Responsive ====== */
+      @media screen and (max-width: 720px) {
+        .join-support-container {
+          flex-direction: column;
+          gap: 30px;
+        }
+      }
+    </style>
+  
+    <div class="join-support-container">
+      <!-- ====== SUPPORT SIDE ====== -->
       <div class="support-side">
         <h3>Support My Work</h3>
         <button id="supportBtn" class="tooltip-btn">
@@ -341,28 +498,68 @@
           <span class="tooltip-text">Please select your country correctly before payment</span>
         </button>
   
-        <!-- PayPal container -->
         <div id="paypalPopup" class="paypal-popup">
           <div class="donation-options">
-            <button id="popup-donate-5" class="donation-amount active">$5</button>
+            <button class="donation-amount active">$5</button>
+            <button class="donation-amount">$10</button>
+            <button class="donation-amount">$20</button>
             <input id="popup-donate-custom" type="number" placeholder="Other" min="1">
           </div>
           <div id="paypal-button-small"></div>
         </div>
       </div>
   
-      <!-- ===== Right: Subscribe / Join ===== -->
+      <!-- ====== SUBSCRIBE SIDE ====== -->
       <div class="subscribe-side">
         <h3>Join Our Updates</h3>
         <form id="updatesForm" class="subscribe-form">
           <input type="email" name="email" placeholder="Enter your email" required>
-          <button type="submit" class="btn shiny-btn">Subscribe</button>
+          <button type="submit" class="shiny-btn">Subscribe</button>
         </form>
-        <div id="updates-status" class="update-status"></div>
+        <div id="updates-status"></div>
       </div>
-  
     </div>
+  
+    <script src="https://www.paypal.com/sdk/js?client-id=AbDsUYA-obC2sHFZvv9R4Ce9gYfAqnpuoCNiLDQYeF0cUJdYFSEeuiwRk82Lr3S2NPrMUg97BhCbbVNv&currency=USD"></script>
+    <script>
+      // ===== Toggle PayPal popup =====
+      const supportBtn = document.getElementById('supportBtn');
+      const paypalPopup = document.getElementById('paypalPopup');
+      supportBtn.addEventListener('click', () => {
+        paypalPopup.style.display = paypalPopup.style.display === 'block' ? 'none' : 'block';
+      });
+  
+      // ===== Donation amount selection =====
+      document.querySelectorAll('.donation-amount').forEach(btn => {
+        btn.addEventListener('click', () => {
+          document.querySelectorAll('.donation-amount').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+        });
+      });
+  
+      // ===== PayPal Button =====
+      paypal.Buttons({
+        createOrder: (data, actions) => {
+          let amount = document.querySelector('.donation-amount.active')?.textContent.replace('$','') ||
+                       document.getElementById('popup-donate-custom').value || '5';
+          return actions.order.create({ purchase_units: [{ amount: { value: amount } }] });
+        },
+        onApprove: (data, actions) => actions.order.capture().then(() => {
+          alert('Thank you for your support!');
+          paypalPopup.style.display = 'none';
+        })
+      }).render('#paypal-button-small');
+  
+      // ===== Subscribe form (demo only) =====
+      const updatesForm = document.getElementById('updatesForm');
+      updatesForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        document.getElementById('updates-status').textContent = 'Thank you for subscribing!';
+        updatesForm.reset();
+      });
+    </script>
   </section>
+
   
   <!-- ===== Footer ===== -->
   <footer>
