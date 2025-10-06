@@ -26,14 +26,37 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // ===== 4. Views Counter (Persistent) =====
+// ===== 4. Views Counter (Firebase Firestore) =====
+  const firebaseConfig = {
+    apiKey: "AIzaSyDUUMyJDZXdGa1LyxcESOcth3e3ZPovt-0",
+    authDomain: "zaminimusafir.firebaseapp.com",
+    projectId: "zaminimusafir",
+    storageBucket: "zaminimusafir.firebasestorage.app",
+    messagingSenderId: "1066132693199",
+    appId: "1:1066132693199:web:8b87e2c3270434891d17ba",
+    measurementId: "G-YVCFZ783GR"
+  };
+  
+  if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
+  const db = firebase.firestore();
+  
   const totalViewsEl = document.getElementById('totalViews');
   if (totalViewsEl) {
-    let views = parseInt(localStorage.getItem('totalViews')) || 0;
-    views += 1;
-    localStorage.setItem('totalViews', views);
-    totalViewsEl.textContent = views;
+    const viewsRef = db.collection("siteStats").doc("totalViews");
+  
+    // Increment view count once per page load
+    viewsRef.update({ count: firebase.firestore.FieldValue.increment(1) })
+      .catch(err => {
+        // If document doesn't exist yet, create it
+        viewsRef.set({ count: 1 }).catch(e => console.error("Failed to set views:", e));
+      });
+  
+    // Listen for real-time updates
+    viewsRef.onSnapshot(doc => {
+      totalViewsEl.textContent = doc.exists ? doc.data().count || 0 : 0;
+    });
   }
+
 
   // ===== 5. Chat Toggle =====
   const chatBtn = document.getElementById('chatBtn');
