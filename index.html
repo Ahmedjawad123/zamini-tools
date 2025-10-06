@@ -411,7 +411,7 @@
 
 
 
-    
+      
   <!-- ===== Join / Support Section ===== -->
   <section id="joinTab" style="padding:40px 20px;">
     <div class="join-support-container">
@@ -451,22 +451,26 @@
         display: flex;
         justify-content: center;
         gap: 50px;
-        flex-wrap: wrap;
+        flex-wrap: nowrap; /* Prevent stacking on desktop */
         align-items: flex-start;
+        max-width: 1000px;
+        margin: 0 auto;
       }
+  
       .support-side, .subscribe-side {
-        flex: 1 1 300px;
+        flex: 1 1 0;
         text-align: center;
       }
+  
       .subscribe-side {
         background: linear-gradient(135deg, #ffd966, #e6b800);
         border-radius: 12px;
         padding: 20px;
         box-shadow: 0 4px 12px rgba(0,0,0,0.12);
       }
+  
       #paypalPopup {
         display: none;
-        position: relative;
         margin-top: 15px;
         padding: 15px;
         border: 1px solid #ccc;
@@ -474,6 +478,7 @@
         background: #fff;
         box-shadow: 0 2px 8px rgba(0,0,0,0.1);
       }
+  
       .donation-options {
         display: flex;
         justify-content: center;
@@ -481,6 +486,7 @@
         margin-bottom: 10px;
         flex-wrap: wrap;
       }
+  
       .donation-amount {
         padding: 6px 12px;
         border-radius: 6px;
@@ -489,10 +495,12 @@
         background: #f0f0f0;
         font-weight: 600;
       }
+  
       .donation-amount.active {
         background: #ffd966;
         border-color: #e6b800;
       }
+  
       .tooltip-btn {
         position: relative;
         padding: 8px 20px;
@@ -503,6 +511,7 @@
         color: #000;
         border: none;
       }
+  
       .tooltip-btn .tooltip-text {
         visibility: hidden;
         width: 180px;
@@ -520,10 +529,12 @@
         transition: opacity 0.3s;
         font-size: 12px;
       }
+  
       .tooltip-btn:hover .tooltip-text {
         visibility: visible;
         opacity: 1;
       }
+  
       .subscribe-form input {
         padding: 6px 10px;
         border-radius: 6px;
@@ -531,16 +542,28 @@
         font-size: 14px;
         width: 180px;
       }
+  
       .subscribe-form button {
         padding: 6px 16px;
         border-radius: 6px;
         font-weight: 600;
         cursor: pointer;
       }
+  
       #updates-status {
         margin-top: 8px;
         color: green;
         font-size: 0.95em;
+      }
+  
+      /* Responsive: stack on mobile */
+      @media screen and (max-width: 700px) {
+        .join-support-container {
+          flex-wrap: wrap;
+        }
+        .support-side, .subscribe-side {
+          flex: 1 1 100%;
+        }
       }
     </style>
   
