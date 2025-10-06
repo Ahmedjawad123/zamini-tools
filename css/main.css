@@ -141,38 +141,52 @@ header {
   flex-wrap: wrap;
   background: #f9e6c1;
   border-bottom: 2px solid #c48f3c;
+  overflow-x: auto;        /* allow horizontal scroll on small screens */
+  white-space: nowrap;     /* keep tabs in one line */
+  -webkit-overflow-scrolling: touch; /* smooth scrolling on iOS */
 }
-/* no phone code needed: flex-wrap handles stacking */
 
 .tab {
-  padding: 15px 25px;
+  padding: 12px 25px;
   cursor: pointer;
   font-weight: bold;
   color: #b0752c;
   transition: 0.3s;
   border-right: 1px solid #c48f3c;
+  background: #f9e6c1;
+  display: inline-block;   /* needed for mobile scroll */
 }
-/* no phone code needed */
 
 .tab:last-child {
   border-right: none;
 }
-/* no phone code needed */
 
 .tab.active {
-  background: #c48f3c; 
+  background: #c48f3c;
   color: #fff;
+  border-bottom: 2px solid #ffd966; /* highlight active tab */
 }
-/* no phone code needed */
 
 /* ===================== Tab Content ===================== */
-.tab-content { 
-  display: none; 
-  padding: 40px 20px; 
-  text-align: center; 
+.tab-content {
+  display: none;
+  padding: 40px 20px;
+  text-align: center;
+  background: #fffbe6;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
 }
-.tab-content.active { 
-  display: block; 
+
+.tab-content.active {
+  display: block;
+}
+
+/* Optional: dimmed/disabled tabs */
+.tab.dimmed {
+  opacity: 0.4;
+  pointer-events: none;
+  cursor: not-allowed;
+  color: #999;
 }
 
 
