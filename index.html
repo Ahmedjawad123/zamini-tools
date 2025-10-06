@@ -320,313 +320,96 @@
 
 
 
-  <section class="tab-content" id="aiTab" style="padding:40px 20px;">
-    <h2 style="text-align:center; margin-bottom:20px;">Frequently Asked Questions (FAQ)</h2>
-  
-    <div class="faq-container" style="max-width:800px; margin:0 auto;">
-  
-      <div class="faq-item" style="margin-bottom:12px; border-radius:8px; overflow:hidden; box-shadow:0 2px 8px rgba(0,0,0,0.1);">
-        <button class="faq-question" style="width:100%; padding:14px 20px; text-align:left; font-size:16px; background:#ffd966; border:none; cursor:pointer; font-weight:600; transition:background 0.3s;">What is Zamini Tools?</button>
-        <div class="faq-answer" style="padding:0 20px; max-height:0; overflow:hidden; transition:max-height 0.3s ease, padding 0.3s ease; background:#fffbe6;">
-          Zamini Tools is a collection of lightweight, offline productivity software designed to help you work efficiently without internet.
-        </div>
+<section class="tab-content" id="aiTab">
+  <h2>Frequently Asked Questions (FAQ)</h2>
+
+  <div class="faq-container">
+
+    <div class="faq-item">
+      <button class="faq-question">What is Zamini Tools?</button>
+      <div class="faq-answer">
+        Zamini Tools is a collection of lightweight, offline productivity software designed to help you work efficiently without internet.
       </div>
-  
-      <div class="faq-item" style="margin-bottom:12px; border-radius:8px; overflow:hidden; box-shadow:0 2px 8px rgba(0,0,0,0.1);">
-        <button class="faq-question" style="width:100%; padding:14px 20px; text-align:left; font-size:16px; background:#ffd966; border:none; cursor:pointer; font-weight:600; transition:background 0.3s;">Are Zamini Tools free?</button>
-        <div class="faq-answer" style="padding:0 20px; max-height:0; overflow:hidden; transition:max-height 0.3s ease, padding 0.3s ease; background:#fffbe6;">
-          Yes! Most tools are free. Some advanced features may require support or donations.
-        </div>
-      </div>
-  
-      <div class="faq-item" style="margin-bottom:12px; border-radius:8px; overflow:hidden; box-shadow:0 2px 8px rgba(0,0,0,0.1);">
-        <button class="faq-question" style="width:100%; padding:14px 20px; text-align:left; font-size:16px; background:#ffd966; border:none; cursor:pointer; font-weight:600; transition:background 0.3s;">Do I need an internet connection?</button>
-        <div class="faq-answer" style="padding:0 20px; max-height:0; overflow:hidden; transition:max-height 0.3s ease, padding 0.3s ease; background:#fffbe6;">
-          No. Tools are designed to work offline after download.
-        </div>
-      </div>
-  
-      <div class="faq-item" style="margin-bottom:12px; border-radius:8px; overflow:hidden; box-shadow:0 2px 8px rgba(0,0,0,0.1);">
-        <button class="faq-question" style="width:100%; padding:14px 20px; text-align:left; font-size:16px; background:#ffd966; border:none; cursor:pointer; font-weight:600; transition:background 0.3s;">How can I support Zamini Tools?</button>
-        <div class="faq-answer" style="padding:0 20px; max-height:0; overflow:hidden; transition:max-height 0.3s ease, padding 0.3s ease; background:#fffbe6;">
-          Supporting Zamini Tools helps us grow and gives you exclusive benefits like early access, free gifts, and discounts on future paid tools.
-        </div>
-      </div>
-  
-      <div class="faq-item" style="margin-bottom:12px; border-radius:8px; overflow:hidden; box-shadow:0 2px 8px rgba(0,0,0,0.1);">
-        <button class="faq-question" style="width:100%; padding:14px 20px; text-align:left; font-size:16px; background:#ffd966; border:none; cursor:pointer; font-weight:600; transition:background 0.3s;">What are the benefits of supporting?</button>
-        <div class="faq-answer" style="padding:0 20px; max-height:0; overflow:hidden; transition:max-height 0.3s ease, padding 0.3s ease; background:#fffbe6;">
-          <ul style="margin:0; padding-left:20px;">
-            <li>Early access to new tools</li>
-            <li>Free or discounted paid tools</li>
-            <li>Exclusive gifts & appreciation</li>
-            <li>Recognition on our website</li>
-            <li>Influence future tool development</li>
-          </ul>
-        </div>
-      </div>
-  
-      <div class="faq-item" style="margin-bottom:12px; border-radius:8px; overflow:hidden; box-shadow:0 2px 8px rgba(0,0,0,0.1);">
-        <button class="faq-question" style="width:100%; padding:14px 20px; text-align:left; font-size:16px; background:#ffd966; border:none; cursor:pointer; font-weight:600; transition:background 0.3s;">Can I suggest new features?</button>
-        <div class="faq-answer" style="padding:0 20px; max-height:0; overflow:hidden; transition:max-height 0.3s ease, padding 0.3s ease; background:#fffbe6;">
-          Yes! Supporters and users can submit ideas through our Join / Support section.
-        </div>
-      </div>
-  
     </div>
-  
-    <!-- ===== JS for FAQ Toggle ===== -->
-    <script>
-      document.addEventListener('DOMContentLoaded', () => {
-        const faqQuestions = document.querySelectorAll('.faq-question');
-  
-        faqQuestions.forEach(question => {
-          question.addEventListener('click', () => {
-            const answer = question.nextElementSibling;
-            if(answer.style.maxHeight && answer.style.maxHeight !== "0px"){
-              answer.style.maxHeight = "0";
-              answer.style.padding = "0 20px";
-            } else {
-              answer.style.maxHeight = answer.scrollHeight + "px";
-              answer.style.padding = "14px 20px";
-            }
-          });
-        });
-      });
-    </script>
-  </section>
 
-
-  
-
-  
-
-  <!-- ===== Updates Tab ===== -->
-  <section class="tab-content" id="updatesTab">
-    <h2>Latest Updates</h2>
-    <p>No updates yet. Check back soon!</p>
-  </section>
-
-
-
-
-
-      
-  <!-- ===== Join / Support Section ===== -->
-  <section id="joinTab" style="padding:40px 20px;">
-    <div class="join-support-container">
-  
-      <!-- ===== Left: Support / PayPal ===== -->
-      <div class="support-side">
-        <h3>Support My Work</h3>
-        <button id="supportBtn" class="tooltip-btn">
-          Support Me
-          <span class="tooltip-text">Please select your country correctly before payment</span>
-        </button>
-  
-        <div id="paypalPopup" class="paypal-popup">
-          <div class="donation-options">
-            <button id="popup-donate-5" class="donation-amount active">$5</button>
-            <input id="popup-donate-custom" type="number" placeholder="Other" min="1">
-          </div>
-          <div id="paypal-button-small"></div>
-        </div>
+    <div class="faq-item">
+      <button class="faq-question">Are Zamini Tools free?</button>
+      <div class="faq-answer">
+        Yes! Most tools are free. Some advanced features may require support or donations.
       </div>
-  
-      <!-- ===== Right: Subscribe / Join ===== -->
-      <div class="subscribe-side">
-        <h3>Join Our Updates</h3>
-        <form id="updatesForm" class="subscribe-form">
-          <input type="email" name="email" placeholder="Enter your email" required>
-          <button type="submit">Subscribe</button>
-        </form>
-        <div id="updates-status" class="update-status"></div>
-      </div>
-  
     </div>
-  
-    <!-- ===== Styles ===== -->
-    <style>
-      .join-support-container {
-        display: flex;
-        justify-content: center;
-        gap: 50px;
-        flex-wrap: nowrap; /* Prevent stacking on desktop */
-        align-items: flex-start;
-        max-width: 1000px;
-        margin: 0 auto;
-      }
-  
-      .support-side, .subscribe-side {
-        flex: 1 1 0;
-        text-align: center;
-      }
-  
-      .subscribe-side {
-        background: linear-gradient(135deg, #ffd966, #e6b800);
-        border-radius: 12px;
-        padding: 20px;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.12);
-      }
-  
-      #paypalPopup {
-        display: none;
-        margin-top: 15px;
-        padding: 15px;
-        border: 1px solid #ccc;
-        border-radius: 8px;
-        background: #fff;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-      }
-  
-      .donation-options {
-        display: flex;
-        justify-content: center;
-        gap: 10px;
-        margin-bottom: 10px;
-        flex-wrap: wrap;
-      }
-  
-      .donation-amount {
-        padding: 6px 12px;
-        border-radius: 6px;
-        border: 1px solid #ccc;
-        cursor: pointer;
-        background: #f0f0f0;
-        font-weight: 600;
-      }
-  
-      .donation-amount.active {
-        background: #ffd966;
-        border-color: #e6b800;
-      }
-  
-      .tooltip-btn {
-        position: relative;
-        padding: 8px 20px;
-        border-radius: 6px;
-        cursor: pointer;
-        font-weight: 600;
-        background: #00DDFF;
-        color: #000;
-        border: none;
-      }
-  
-      .tooltip-btn .tooltip-text {
-        visibility: hidden;
-        width: 180px;
-        background-color: #333;
-        color: #fff;
-        text-align: center;
-        border-radius: 6px;
-        padding: 5px;
-        position: absolute;
-        z-index: 1;
-        bottom: 125%;
-        left: 50%;
-        transform: translateX(-50%);
-        opacity: 0;
-        transition: opacity 0.3s;
-        font-size: 12px;
-      }
-  
-      .tooltip-btn:hover .tooltip-text {
-        visibility: visible;
-        opacity: 1;
-      }
-  
-      .subscribe-form input {
-        padding: 6px 10px;
-        border-radius: 6px;
-        border: 1px solid #d4af37;
-        font-size: 14px;
-        width: 180px;
-      }
-  
-      .subscribe-form button {
-        padding: 6px 16px;
-        border-radius: 6px;
-        font-weight: 600;
-        cursor: pointer;
-      }
-  
-      #updates-status {
-        margin-top: 8px;
-        color: green;
-        font-size: 0.95em;
-      }
-  
-      /* Responsive: stack on mobile */
-      @media screen and (max-width: 700px) {
-        .join-support-container {
-          flex-wrap: wrap;
-        }
-        .support-side, .subscribe-side {
-          flex: 1 1 100%;
-        }
-      }
-    </style>
-  
-    <!-- ===== JS ===== -->
-    <script src="https://www.paypal.com/sdk/js?client-id=AbDsUYA-obC2sHFZvv9R4Ce9gAqnpuoCNiLDQYeF0cUJdYFSEeuiwRk82Lr3S2NPrMUg97BhCbbVNv&currency=USD"></script>
-    <script>
-      document.addEventListener('DOMContentLoaded', () => {
-        const supportBtn = document.getElementById('supportBtn');
-        const paypalPopup = document.getElementById('paypalPopup');
-        const donate5 = document.getElementById('popup-donate-5');
-        const donateCustom = document.getElementById('popup-donate-custom');
-        let paypalRendered = false;
-  
-        supportBtn.addEventListener('click', (e) => {
-          e.stopPropagation();
-          paypalPopup.style.display = paypalPopup.style.display === 'block' ? 'none' : 'block';
-  
-          if (!paypalRendered) {
-            setTimeout(() => {
-              paypal.Buttons({
-                style: { layout: 'vertical', color: 'gold', shape: 'pill', label: 'paypal' },
-                createOrder: function (data, actions) {
-                  const customAmount = parseFloat(donateCustom.value);
-                  const amount = !isNaN(customAmount) && customAmount > 0 ? customAmount : 5;
-                  return actions.order.create({ purchase_units: [{ amount: { value: amount.toFixed(2) } }] });
-                },
-                onApprove: function (data, actions) {
-                  return actions.order.capture().then(function (details) {
-                    alert('Thank you, ' + details.payer.name.given_name + '! Your support means a lot.');
-                    paypalPopup.style.display = 'none';
-                  });
-                },
-              }).render('#paypal-button-small');
-              paypalRendered = true;
-            }, 100);
-          }
-        });
-  
-        document.addEventListener('click', (e) => {
-          if (!paypalPopup.contains(e.target) && e.target !== supportBtn) {
-            paypalPopup.style.display = 'none';
-          }
-        });
-  
-        donate5.addEventListener('click', () => {
-          donate5.classList.add('active');
-          donateCustom.value = '';
-        });
-  
-        donateCustom.addEventListener('input', () => {
-          donate5.classList.remove('active');
-        });
-  
-        // Subscribe form demo
-        const updatesForm = document.getElementById('updatesForm');
-        updatesForm.addEventListener('submit', (e) => {
-          e.preventDefault();
-          document.getElementById('updates-status').textContent = 'Thank you for subscribing!';
-          updatesForm.reset();
-        });
-      });
-    </script>
-  </section>
+
+    <div class="faq-item">
+      <button class="faq-question">Do I need an internet connection?</button>
+      <div class="faq-answer">
+        No. Tools are designed to work offline after download.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-question">How can I support Zamini Tools?</button>
+      <div class="faq-answer">
+        Supporting Zamini Tools helps us grow and gives you exclusive benefits like early access, free gifts, and discounts on future paid tools.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-question">What are the benefits of supporting?</button>
+      <div class="faq-answer">
+        <ul>
+          <li>Early access to new tools</li>
+          <li>Free or discounted paid tools</li>
+          <li>Exclusive gifts & appreciation</li>
+          <li>Recognition on our website</li>
+          <li>Influence future tool development</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-question">Can I suggest new features?</button>
+      <div class="faq-answer">
+        Yes! Supporters and users can submit ideas through our Join / Support section.
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section class="tab-content" id="updatesTab">
+  <h2>Latest Updates</h2>
+  <p>No updates yet. Check back soon!</p>
+</section>
+
+<section id="joinTab">
+  <div class="join-support-container">
+
+    <div class="support-side">
+      <h3>Support My Work</h3>
+      <button id="supportBtn" class="tooltip-btn">
+        Support Me
+        <span class="tooltip-text">Please select your country correctly before payment</span>
+      </button>
+      <div id="paypalPopup" class="paypal-popup">
+        <div class="donation-options">
+          <button id="popup-donate-5" class="donation-amount active">$5</button>
+          <input id="popup-donate-custom" type="number" placeholder="Other" min="1">
+        </div>
+        <div id="paypal-button-small"></div>
+      </div>
+    </div>
+
+    <div class="subscribe-side">
+      <h3>Join Our Updates</h3>
+      <form id="updatesForm" class="subscribe-form">
+        <input type="email" name="email" placeholder="Enter your email" required>
+        <button type="submit">Subscribe</button>
+      </form>
+      <div id="updates-status" class="update-status"></div>
+    </div>
+
+  </div>
+</section>
 
 
 
