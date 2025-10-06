@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // ===== 2. Smooth Scroll =====
   document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function(e) {
+    anchor.addEventListener('click', function (e) {
       e.preventDefault();
       const target = document.querySelector(this.getAttribute('href'));
       if (target) target.scrollIntoView({ behavior: 'smooth' });
@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // ===== 4. Views Counter (Persistent in localStorage) =====
+  // ===== 4. Views Counter (Persistent) =====
   const totalViewsEl = document.getElementById('totalViews');
   if (totalViewsEl) {
     let views = parseInt(localStorage.getItem('totalViews')) || 0;
@@ -50,131 +50,69 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-// ===== 6. Support Button & PayPal Popup =====
-document.addEventListener('DOMContentLoaded', () => {
+  // ===== 6. Support Button & PayPal Popup =====
   const supportBtn = document.getElementById('supportBtn');
   const paypalPopup = document.getElementById('paypalPopup');
   const quickBtn = document.getElementById('donate-5');
   const customInput = document.getElementById('donate-custom');
   let isPayPalRendered = false;
 
-  // Quick button click
-  quickBtn.addEventListener('click', () => {
-    quickBtn.classList.add('active');
-    if (customInput) customInput.value = "";
-  });
+  if (supportBtn && paypalPopup) {
 
-  // Custom input
-  customInput.addEventListener('input', () => {
-    quickBtn.classList.remove('active');
-  });
-
-  // Show / hide popup
-  supportBtn.addEventListener('click', (e) => {
-    e.stopPropagation();
-    paypalPopup.style.display =
-      paypalPopup.style.display === 'block' ? 'none' : 'block';
-
-    // Render PayPal button only once
-    if (!isPayPalRendered && typeof paypal !== "undefined") {
-      paypal.Buttons({
-        style: {
-          layout: 'vertical',
-          color: 'gold',
-          shape: 'rect',
-          label: 'paypal',
-          height: 40
-        },
-        createOrder: (data, actions) => {
-          const amount = customInput && customInput.value && !isNaN(customInput.value) && Number(customInput.value) > 0
-            ? customInput.value
-            : "5";
-          return actions.order.create({
-            purchase_units: [{ amount: { value: amount }, description: 'Support Payment' }]
-          });
-        },
-        onApprove: (data, actions) => {
-          return actions.order.capture().then(details => {
-            alert('Thank you for your support, ' + details.payer.name.given_name + '!');
-            paypalPopup.style.display = 'none';
-          });
-        },
-        onError: (err) => {
-          console.error(err);
-          alert('Payment could not be processed. Try again.');
-        }
-      }).render('#paypal-button-small');
-      isPayPalRendered = true;
+    if (quickBtn) {
+      quickBtn.addEventListener('click', () => {
+        quickBtn.classList.add('active');
+        if (customInput) customInput.value = "";
+      });
     }
 
-    // ===== Position popup directly under button =====
-    const btnRect = supportBtn.getBoundingClientRect();
-    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-
-    paypalPopup.style.position = 'absolute';
-    paypalPopup.style.top = `${supportBtn.offsetTop + supportBtn.offsetHeight + 8}px`;
-    paypalPopup.style.left = `${supportBtn.offsetLeft}px`;
-    paypalPopup.style.width = '90%';
-    paypalPopup.style.maxWidth = '320px';
-  });
-
-  // Close popup when clicking outside
-  window.addEventListener('click', (e) => {
-    if (!e.target.closest('#supportBtn') && !e.target.closest('#paypalPopup')) {
-      paypalPopup.style.display = 'none';
+    if (customInput) {
+      customInput.addEventListener('input', () => {
+        if (quickBtn) quickBtn.classList.remove('active');
+      });
     }
-  });
 
-  // Adjust popup on resize
-  window.addEventListener('resize', () => {
-    if (paypalPopup.style.display === 'block') {
-      paypalPopup.style.top = `${supportBtn.offsetTop + supportBtn.offsetHeight + 8}px`;
-      paypalPopup.style.left = `${supportBtn.offsetLeft}px`;
-      paypalPopup.style.width = '90%';
-      paypalPopup.style.maxWidth = '320px';
-    }
-  });
+    supportBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      paypalPopup.style.display = paypalPopup.style.display === 'block' ? 'none' : 'block';
 
-  // Adjust popup on scroll (for mobile)
-  window.addEventListener('scroll', () => {
-    if (paypalPopup.style.display === 'block') {
-      paypalPopup.style.top = `${supportBtn.offsetTop + supportBtn.offsetHeight + 8}px`;
-      paypalPopup.style.left = `${supportBtn.offsetLeft}px`;
-    }
-  });
-});
+      // Render PayPal button only once
+      if (!isPayPalRendered && typeof paypal !== "undefined") {
+        paypal.Buttons({
+          style: {
+            layout: 'vertical',
+            color: 'gold',
+            shape: 'rect',
+            label: 'paypal',
+            height: 40
+          },
+          createOrder: (data, actions) => {
+            const amount =
+              customInput && customInput.value && !isNaN(customInput.value) && Number(customInput.value) > 0
+                ? customInput.value
+                : "5";
+            return actions.order.create({
+              purchase_units: [{ amount: { value: amount }, description: 'Support Payment' }]
+            });
+          },
+          onApprove: (data, actions) => {
+            return actions.order.capture().then(details => {
+              alert('Thank you for your support, ' + details.payer.name.given_name + '!');
+              paypalPopup.style.display = 'none';
+            });
+          },
+          onError: (err) => {
+            console.error(err);
+            alert('Payment could not be processed. Try again.');
+          }
+        }).render('#paypal-button-small');
+        isPayPalRendered = true;
+      }
 
-    // ===== Position popup under button =====
-    const btnRect = supportBtn.getBoundingClientRect();
-    if (window.innerWidth <= 720) {
-      // Mobile
-      paypalPopup.style.position = 'fixed';
-      paypalPopup.style.top = 'auto';
-      paypalPopup.style.left = '5%';
-      paypalPopup.style.bottom = '20px';
-      paypalPopup.style.width = '90%';
-      paypalPopup.style.maxWidth = '320px';
-    } else {
-      // Desktop: under button
-      paypalPopup.style.position = 'absolute';
-      paypalPopup.style.top = `${supportBtn.offsetTop + supportBtn.offsetHeight + 8}px`;
-      paypalPopup.style.left = `${supportBtn.offsetLeft}px`;
-      paypalPopup.style.width = '300px';
-    }
-  });
-
-  // ===== Close popup when clicking outside =====
-  window.addEventListener('click', (e) => {
-    if (!e.target.closest('#supportBtn') && !e.target.closest('#paypalPopup')) {
-      paypalPopup.style.display = 'none';
-    }
-  });
-
-  // ===== Adjust popup on resize =====
-  window.addEventListener('resize', () => {
-    if (paypalPopup.style.display === 'block') {
+      // ===== Position popup under button =====
       const btnRect = supportBtn.getBoundingClientRect();
       if (window.innerWidth <= 720) {
+        // Mobile
         paypalPopup.style.position = 'fixed';
         paypalPopup.style.top = 'auto';
         paypalPopup.style.left = '5%';
@@ -182,21 +120,53 @@ document.addEventListener('DOMContentLoaded', () => {
         paypalPopup.style.width = '90%';
         paypalPopup.style.maxWidth = '320px';
       } else {
+        // Desktop
         paypalPopup.style.position = 'absolute';
         paypalPopup.style.top = `${supportBtn.offsetTop + supportBtn.offsetHeight + 8}px`;
         paypalPopup.style.left = `${supportBtn.offsetLeft}px`;
         paypalPopup.style.width = '300px';
       }
-    }
-  });
-});
-  // ===== 7. Download Buttons Tracking & Persistent Counters =====
-  document.querySelectorAll('a.btn-download').forEach((btn, index) => {
-    // Assign unique key for each download
-    const storageKey = `download_count_${index}`;
+    });
 
-    // Create count display
+    // Close popup when clicking outside
+    window.addEventListener('click', (e) => {
+      if (!e.target.closest('#supportBtn') && !e.target.closest('#paypalPopup')) {
+        paypalPopup.style.display = 'none';
+      }
+    });
+
+    // Adjust popup on resize
+    window.addEventListener('resize', () => {
+      if (paypalPopup.style.display === 'block') {
+        if (window.innerWidth <= 720) {
+          paypalPopup.style.position = 'fixed';
+          paypalPopup.style.left = '5%';
+          paypalPopup.style.bottom = '20px';
+          paypalPopup.style.width = '90%';
+          paypalPopup.style.maxWidth = '320px';
+        } else {
+          paypalPopup.style.position = 'absolute';
+          paypalPopup.style.top = `${supportBtn.offsetTop + supportBtn.offsetHeight + 8}px`;
+          paypalPopup.style.left = `${supportBtn.offsetLeft}px`;
+          paypalPopup.style.width = '300px';
+        }
+      }
+    });
+
+    // Adjust popup on scroll
+    window.addEventListener('scroll', () => {
+      if (paypalPopup.style.display === 'block' && window.innerWidth > 720) {
+        paypalPopup.style.top = `${supportBtn.offsetTop + supportBtn.offsetHeight + 8}px`;
+        paypalPopup.style.left = `${supportBtn.offsetLeft}px`;
+      }
+    });
+  }
+
+  // ===== 7. Download Buttons Tracking =====
+  document.querySelectorAll('a.btn-download').forEach((btn, index) => {
+    const storageKey = `download_count_${index}`;
     let countEl = btn.nextElementSibling;
+
     if (!countEl || !countEl.classList.contains('count')) {
       countEl = document.createElement('span');
       countEl.className = 'count';
@@ -204,11 +174,9 @@ document.addEventListener('DOMContentLoaded', () => {
       btn.insertAdjacentElement('afterend', countEl);
     }
 
-    // Load stored count
     let count = parseInt(localStorage.getItem(storageKey)) || 0;
     countEl.textContent = count;
 
-    // Increment on click
     btn.addEventListener('click', () => {
       count++;
       localStorage.setItem(storageKey, count);
