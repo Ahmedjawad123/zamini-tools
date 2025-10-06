@@ -26,37 +26,32 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-// ===== 4. Views Counter (Firebase Firestore) =====
-  const firebaseConfig = {
-    apiKey: "AIzaSyDUUMyJDZXdGa1LyxcESOcth3e3ZPovt-0",
-    authDomain: "zaminimusafir.firebaseapp.com",
-    projectId: "zaminimusafir",
-    storageBucket: "zaminimusafir.firebasestorage.app",
-    messagingSenderId: "1066132693199",
-    appId: "1:1066132693199:web:8b87e2c3270434891d17ba",
-    measurementId: "G-YVCFZ783GR"
-  };
-  
-  if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
-  const db = firebase.firestore();
-  
-  const totalViewsEl = document.getElementById('totalViews');
-  if (totalViewsEl) {
-    const viewsRef = db.collection("siteStats").doc("totalViews");
-  
-    // Increment view count once per page load
-    viewsRef.update({ count: firebase.firestore.FieldValue.increment(1) })
-      .catch(err => {
-        // If document doesn't exist yet, create it
-        viewsRef.set({ count: 1 }).catch(e => console.error("Failed to set views:", e));
-      });
-  
-    // Listen for real-time updates
-    viewsRef.onSnapshot(doc => {
-      totalViewsEl.textContent = doc.exists ? doc.data().count || 0 : 0;
-    });
-  }
+  // ===== 4. Firebase Views Counter =====
+  if (typeof firebase !== "undefined") {
+    const firebaseConfig = {
+      apiKey: "AIzaSyDUUMyJDZXdGa1LyxcESOcth3e3ZPovt-0",
+      authDomain: "zaminimusafir.firebaseapp.com",
+      projectId: "zaminimusafir",
+      storageBucket: "zaminimusafir.firebasestorage.app",
+      messagingSenderId: "1066132693199",
+      appId: "1:1066132693199:web:8b87e2c3270434891d17ba",
+      measurementId: "G-YVCFZ783GR"
+    };
+    if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+    const totalViewsEl = document.getElementById('totalViews');
 
+    if (totalViewsEl) {
+      const viewsRef = db.collection("siteStats").doc("totalViews");
+
+      viewsRef.update({ count: firebase.firestore.FieldValue.increment(1) })
+        .catch(() => viewsRef.set({ count: 1 }));
+
+      viewsRef.onSnapshot(doc => {
+        totalViewsEl.textContent = doc.exists ? doc.data().count || 0 : 0;
+      });
+    }
+  }
 
   // ===== 5. Chat Toggle =====
   const chatBtn = document.getElementById('chatBtn');
@@ -73,7 +68,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // ===== 6. Support Button & PayPal Popup =====
+  // ===== 6. Support / PayPal Popup =====
   const supportBtn = document.getElementById('supportBtn');
   const paypalPopup = document.getElementById('paypalPopup');
   const quickBtn = document.getElementById('donate-5');
@@ -81,86 +76,38 @@ document.addEventListener('DOMContentLoaded', () => {
   let isPayPalRendered = false;
 
   if (supportBtn && paypalPopup) {
-
     if (quickBtn) {
       quickBtn.addEventListener('click', () => {
         quickBtn.classList.add('active');
         if (customInput) customInput.value = "";
       });
     }
-
     if (customInput) {
-      customInput.addEventListener('input', () => {
-        if (quickBtn) quickBtn.classList.remove('active');
-      });
+      customInput.addEventListener('input', () => { if (quickBtn) quickBtn.classList.remove('active'); });
     }
 
     supportBtn.addEventListener('click', (e) => {
       e.stopPropagation();
       paypalPopup.style.display = paypalPopup.style.display === 'block' ? 'none' : 'block';
 
-      // Render PayPal button only once
       if (!isPayPalRendered && typeof paypal !== "undefined") {
         paypal.Buttons({
-          style: {
-            layout: 'vertical',
-            color: 'gold',
-            shape: 'rect',
-            label: 'paypal',
-            height: 40
-          },
+          style: { layout: 'vertical', color: 'gold', shape: 'rect', label: 'paypal', height: 40 },
           createOrder: (data, actions) => {
-            const amount =
-              customInput && customInput.value && !isNaN(customInput.value) && Number(customInput.value) > 0
-                ? customInput.value
-                : "5";
-            return actions.order.create({
-              purchase_units: [{ amount: { value: amount }, description: 'Support Payment' }]
-            });
+            const amount = customInput && customInput.value && !isNaN(customInput.value) && Number(customInput.value) > 0 ? customInput.value : "5";
+            return actions.order.create({ purchase_units: [{ amount: { value: amount }, description: 'Support Payment' }] });
           },
-          onApprove: (data, actions) => {
-            return actions.order.capture().then(details => {
-              alert('Thank you for your support, ' + details.payer.name.given_name + '!');
-              paypalPopup.style.display = 'none';
-            });
-          },
-          onError: (err) => {
-            console.error(err);
-            alert('Payment could not be processed. Try again.');
-          }
+          onApprove: (data, actions) => actions.order.capture().then(details => {
+            alert('Thank you for your support, ' + details.payer.name.given_name + '!');
+            paypalPopup.style.display = 'none';
+          }),
+          onError: (err) => { console.error(err); alert('Payment could not be processed.'); }
         }).render('#paypal-button-small');
         isPayPalRendered = true;
       }
 
-      // ===== Position popup under button =====
-      const btnRect = supportBtn.getBoundingClientRect();
-      if (window.innerWidth <= 720) {
-        // Mobile
-        paypalPopup.style.position = 'fixed';
-        paypalPopup.style.top = 'auto';
-        paypalPopup.style.left = '5%';
-        paypalPopup.style.bottom = '20px';
-        paypalPopup.style.width = '90%';
-        paypalPopup.style.maxWidth = '320px';
-      } else {
-        // Desktop
-        paypalPopup.style.position = 'absolute';
-        paypalPopup.style.top = `${supportBtn.offsetTop + supportBtn.offsetHeight + 8}px`;
-        paypalPopup.style.left = `${supportBtn.offsetLeft}px`;
-        paypalPopup.style.width = '300px';
-      }
-    });
-
-    // Close popup when clicking outside
-    window.addEventListener('click', (e) => {
-      if (!e.target.closest('#supportBtn') && !e.target.closest('#paypalPopup')) {
-        paypalPopup.style.display = 'none';
-      }
-    });
-
-    // Adjust popup on resize
-    window.addEventListener('resize', () => {
-      if (paypalPopup.style.display === 'block') {
+      // Position popup
+      const posPopup = () => {
         if (window.innerWidth <= 720) {
           paypalPopup.style.position = 'fixed';
           paypalPopup.style.left = '5%';
@@ -173,15 +120,14 @@ document.addEventListener('DOMContentLoaded', () => {
           paypalPopup.style.left = `${supportBtn.offsetLeft}px`;
           paypalPopup.style.width = '300px';
         }
-      }
+      };
+      posPopup();
+      window.addEventListener('resize', posPopup);
+      window.addEventListener('scroll', posPopup);
     });
 
-    // Adjust popup on scroll
-    window.addEventListener('scroll', () => {
-      if (paypalPopup.style.display === 'block' && window.innerWidth > 720) {
-        paypalPopup.style.top = `${supportBtn.offsetTop + supportBtn.offsetHeight + 8}px`;
-        paypalPopup.style.left = `${supportBtn.offsetLeft}px`;
-      }
+    window.addEventListener('click', (e) => {
+      if (!e.target.closest('#supportBtn') && !e.target.closest('#paypalPopup')) paypalPopup.style.display = 'none';
     });
   }
 
@@ -207,7 +153,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // ===== 8. Initialize EmailJS =====
+  // ===== 8. EmailJS Init =====
   if (typeof emailjs !== "undefined") emailjs.init('DhW4bXmuP0VP2d8bF');
 
   // ===== 9. Feedback Form =====
@@ -225,23 +171,15 @@ document.addEventListener('DOMContentLoaded', () => {
     feedbackForm.addEventListener('submit', (e) => {
       e.preventDefault();
       statusEl.textContent = "Sending...";
-
       const templateParams = {
         software: feedbackForm.software?.value || "Not selected",
         name: feedbackForm.name?.value || "Anonymous",
         email: feedbackForm.email?.value || "Not provided",
         message: feedbackForm.message?.value || "No message"
       };
-
       emailjs.send('zamini_musafir', 'template_yz15x2d', templateParams)
-        .then(() => {
-          statusEl.textContent = "Feedback sent successfully! Thank you.";
-          feedbackForm.reset();
-        })
-        .catch(err => {
-          console.error("EmailJS error:", err);
-          statusEl.textContent = "Oops! Something went wrong. Check console.";
-        });
+        .then(() => { statusEl.textContent = "Feedback sent successfully!"; feedbackForm.reset(); })
+        .catch(err => { console.error(err); statusEl.textContent = "Oops! Something went wrong."; });
     });
   }
 
@@ -252,51 +190,23 @@ document.addEventListener('DOMContentLoaded', () => {
     updatesForm.addEventListener('submit', (e) => {
       e.preventDefault();
       updatesStatus.textContent = "Subscribing...";
-
       const email = updatesForm.email.value.trim();
-      if (!email) {
-        updatesStatus.textContent = "Enter a valid email!";
-        return;
-      }
-
+      if (!email) { updatesStatus.textContent = "Enter a valid email!"; return; }
       if (typeof emailjs !== "undefined") {
         emailjs.send('zamini_musafir', 'template_updates', { email })
-          .then(() => {
-            updatesStatus.textContent = "Subscribed successfully! You'll get updates soon.";
-            updatesForm.reset();
-          })
-          .catch(err => {
-            console.error("EmailJS error:", err);
-            updatesStatus.textContent = "Oops! Something went wrong. Try again.";
-          });
-      } else {
-        updatesStatus.textContent = "Email service not available.";
-      }
+          .then(() => { updatesStatus.textContent = "Subscribed successfully!"; updatesForm.reset(); })
+          .catch(err => { console.error(err); updatesStatus.textContent = "Oops! Something went wrong."; });
+      } else updatesStatus.textContent = "Email service not available.";
     });
   }
 
-});
-
-
-
-//==================== FAQ collapse/expand====================================
-document.addEventListener('DOMContentLoaded', () => {
+  // ===== 11. FAQ Collapse/Expand =====
   const faqQuestions = document.querySelectorAll('.faq-question');
-
   faqQuestions.forEach(question => {
     question.addEventListener('click', () => {
       const answer = question.nextElementSibling;
       answer.classList.toggle('open');
     });
   });
+
 });
-
-
-
-
-
-
-
-
-
-
