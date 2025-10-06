@@ -329,7 +329,6 @@
     <p>No updates yet. Check back soon!</p>
   </section>
 
-  <!-- ===================== JOIN / SUPPORT SECTION ===================== -->
   <section id="join-support">
     <style>
       #join-support {
@@ -375,11 +374,13 @@
         font-weight: 700;
         cursor: pointer;
         transition: all 0.3s ease;
+        position: relative;
       }
       .tooltip-btn:hover {
         background: linear-gradient(45deg, #a07c2a, #c69739);
         transform: scale(1.05);
       }
+  
       .tooltip-text {
         visibility: hidden;
         opacity: 0;
@@ -402,19 +403,13 @@
         opacity: 1;
       }
   
-      /* ===== PayPal popup now pushes content down ===== */
+      /* PAYPAL POPUP */
       .paypal-popup {
-        max-height: 0;
-        overflow: hidden;
-        transition: max-height 0.5s ease, padding 0.5s ease;
+        display: none; /* hidden by default */
         margin-top: 15px;
         background: #fffbe6;
         border: 1px solid #b38b2f;
         border-radius: 10px;
-        padding: 0 15px;
-      }
-      .paypal-popup.active {
-        max-height: 500px; /* adjust if needed */
         padding: 15px;
       }
   
@@ -425,6 +420,7 @@
         margin-bottom: 10px;
         flex-wrap: wrap;
       }
+  
       .donation-amount {
         background: #b38b2f;
         color: #fffbe6;
@@ -519,15 +515,20 @@
       </div>
     </div>
   
+    <!-- PAYPAL SDK -->
     <script src="https://www.paypal.com/sdk/js?client-id=AbDsUYA-obC2sHFZvv9R4Ce9gAqnpuoCNiLDQYeF0cUJdYFSEeuiwRk82Lr3S2NPrMUg97BhCbbVNv&currency=USD"></script>
     <script>
       const supportBtn = document.getElementById('supportBtn');
       const paypalPopup = document.getElementById('paypalPopup');
   
-      // Toggle popup
+      // Toggle popup display
       supportBtn.addEventListener('click', () => {
-        paypalPopup.classList.toggle('active');
-        paypalPopup.scrollIntoView({ behavior: 'smooth', block: 'start' }); // scroll nicely
+        if (paypalPopup.style.display === 'block') {
+          paypalPopup.style.display = 'none';
+        } else {
+          paypalPopup.style.display = 'block';
+          paypalPopup.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
       });
   
       // Donation amount buttons
@@ -547,7 +548,7 @@
         },
         onApprove: (data, actions) => actions.order.capture().then(() => {
           alert('Thank you for your support!');
-          paypalPopup.classList.remove('active');
+          paypalPopup.style.display = 'none';
         })
       }).render('#paypal-button-small');
   
