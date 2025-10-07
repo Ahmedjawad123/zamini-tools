@@ -209,4 +209,25 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
+
+
+
+
+
+  
+/* ===== Tab Visibility Control ===== */
+.tab-content {
+  display: none;
+  padding: 20px;
+  animation: fadeIn 0.3s ease-in-out;
+}
+.tab-content.active {
+  display: block;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
 });
