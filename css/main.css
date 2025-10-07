@@ -1265,63 +1265,222 @@ footer {
 
 
 
-  /* Generic tab content */
+
+
+
+
+/* ==========================
+   General Tab Content
+========================== */
 .tab-content {
   display: none;
-  padding: 20px;
+  padding: 40px 20px;
 }
 
 .tab-content.active {
   display: block;
 }
 
-/* Specific styling for Join / Support */
+/* ==========================
+   FAQ / AI Assistant Tab
+========================== */
+#aiTab h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+#aiTab .faq-container {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+#aiTab .faq-item {
+  margin-bottom: 12px;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+#aiTab .faq-question {
+  width: 100%;
+  padding: 14px 20px;
+  text-align: left;
+  font-size: 16px;
+  background: #ffd966;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background 0.3s;
+}
+
+#aiTab .faq-answer {
+  padding: 0 20px;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease, padding 0.3s ease;
+  background: #fffbe6;
+}
+
+#aiTab .faq-item.active .faq-answer {
+  max-height: 1000px; /* large enough to fit content */
+  padding: 14px 20px;
+}
+
+/* ==========================
+   Join / Support Tab
+========================== */
 #joinTab .join-support-container {
   display: flex;
-  gap: 20px;
+  justify-content: center;
+  gap: 50px;
+  flex-wrap: nowrap;
+  align-items: flex-start;
+  max-width: 1000px;
+  margin: 0 auto;
 }
 
 #joinTab .support-side,
 #joinTab .subscribe-side {
-  flex: 1;
+  flex: 1 1 0;
+  text-align: center;
 }
 
-/* Specific styling for Contact */
+#joinTab .subscribe-side {
+  background: linear-gradient(135deg, #ffd966, #e6b800);
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+}
+
+#joinTab #paypalPopup {
+  display: none;
+  margin-top: 15px;
+  padding: 15px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+#joinTab .donation-options {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 10px;
+  flex-wrap: wrap;
+}
+
+#joinTab .donation-amount {
+  padding: 6px 12px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  cursor: pointer;
+  background: #f0f0f0;
+  font-weight: 600;
+}
+
+#joinTab .donation-amount.active {
+  background: #ffd966;
+  border-color: #e6b800;
+}
+
+#joinTab .tooltip-btn {
+  position: relative;
+  padding: 8px 20px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  background: #00DDFF;
+  color: #000;
+  border: none;
+}
+
+#joinTab .tooltip-btn .tooltip-text {
+  visibility: hidden;
+  width: 180px;
+  background-color: #333;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 50%;
+  transform: translateX(-50%);
+  opacity: 0;
+  transition: opacity 0.3s;
+  font-size: 12px;
+}
+
+#joinTab .tooltip-btn:hover .tooltip-text {
+  visibility: visible;
+  opacity: 1;
+}
+
+#joinTab .subscribe-form input {
+  padding: 6px 10px;
+  border-radius: 6px;
+  border: 1px solid #d4af37;
+  font-size: 14px;
+  width: 180px;
+}
+
+#joinTab .subscribe-form button {
+  padding: 6px 16px;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+#joinTab #updates-status {
+  margin-top: 8px;
+  color: green;
+  font-size: 0.95em;
+}
+
+/* Responsive: stack on mobile */
+@media screen and (max-width: 700px) {
+  #joinTab .join-support-container {
+    flex-wrap: wrap;
+  }
+  #joinTab .support-side,
+  #joinTab .subscribe-side {
+    flex: 1 1 100%;
+  }
+}
+
+/* ==========================
+   Contact Tab
+========================== */
 #contactTab form {
   display: flex;
   flex-direction: column;
   gap: 10px;
+  max-width: 500px;
+  margin: 0 auto;
 }
 
 #contactTab input,
-#contactTab textarea,
+#contactTab textarea {
+  padding: 10px;
+  font-size: 14px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  width: 100%;
+  box-sizing: border-box;
+}
+
 #contactTab button {
   padding: 10px;
-  font-size: 1em;
-}
-
-/* Specific styling for FAQ / AI Assistant */
-#aiTab .faq-container {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-}
-
-#aiTab .faq-question {
-  background-color: #f1f1f1;
-  border: none;
-  padding: 10px;
+  font-weight: 600;
   cursor: pointer;
-  text-align: left;
+  border-radius: 6px;
+  border: none;
+  background: #ffd966;
+  transition: background 0.3s;
 }
 
-#aiTab .faq-answer {
-  display: none;
-  padding: 10px;
-  border-left: 3px solid #4CAF50;
+#contactTab button:hover {
+  background: #e6b800;
 }
-
-#aiTab .faq-item.active .faq-answer {
-  display: block;
-}
-
