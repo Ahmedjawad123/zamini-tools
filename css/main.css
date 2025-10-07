@@ -134,6 +134,80 @@ header {
 }
 /* no phone code needed */
 
+/* ===================== Tabs ===================== */
+.tabs {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;           /* stack tabs on small screens */
+  background: #f9e6c1;
+  border-bottom: 2px solid #c48f3c;
+  overflow-x: auto;          /* scroll on narrow screens */
+  white-space: nowrap;
+  -webkit-overflow-scrolling: touch;
+  gap: 2px;
+}
+
+.tab {
+  padding: 12px 25px;
+  cursor: pointer;
+  font-weight: bold;
+  color: #b0752c;
+  transition: 0.3s;
+  border-right: 1px solid #c48f3c;
+  background: #f9e6c1;
+  display: inline-block;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.tab:last-child {
+  border-right: none;
+}
+
+.tab.active {
+  background: #c48f3c;
+  color: #fff;
+  border-bottom: 2px solid #ffd966;
+}
+
+/* ===================== Tab Content ===================== */
+.tab-content {
+  display: none;
+  padding: 30px 20px;
+  text-align: center;
+  background: #fffbe6;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  margin-top: 10px;
+}
+
+.tab-content.active {
+  display: block;
+}
+
+/* Dimmed tabs (optional) */
+.tab.dimmed {
+  opacity: 0.4;
+  pointer-events: none;
+  cursor: not-allowed;
+  color: #999;
+}
+
+/* ===== Mobile adjustments ===== */
+@media (max-width: 700px) {
+  .tabs {
+    justify-content: flex-start;  /* allow scrolling from left */
+    gap: 4px;
+  }
+
+  .tab {
+    padding: 10px 18px;
+    font-size: 0.9rem;
+  }
+}
+
+
+/* no phone code needed: padding is fine */
 
 /* ===================== Card Container Wrapper ===================== */
 .products, .features { 
@@ -277,7 +351,7 @@ header {
 
   .flip-card-back {
     transform: rotateY(180deg);
-  }
+  }h3
 }
 
 @media (max-width: 480px) {
@@ -949,123 +1023,63 @@ footer {
   }
 
 
-/* ===================== Tabs CSS ===================== */
-.tabs {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  background: #f9e6c1;
-  border-bottom: 2px solid #c48f3c;
-  overflow-x: auto;
-  white-space: nowrap;
-  gap: 2px;
-}
-
-.tab {
-  padding: 12px 25px;
-  cursor: pointer;
-  font-weight: bold;
-  color: #b0752c;
-  transition: 0.3s;
-  border-right: 1px solid #c48f3c;
-  background: #f9e6c1;
-  text-align: center;
-  flex-shrink: 0;
-}
-
-.tab:last-child { border-right: none; }
-
-.tab.active {
-  background: #c48f3c;
-  color: #fff;
-  border-bottom: 2px solid #ffd966;
-}
-
-.tab.dimmed {
-  opacity: 0.4;
-  pointer-events: none;
-  cursor: not-allowed;
-  color: #999;
-}
-
-/* ===================== Tab Content ===================== */
-.tab-content {
-  display: none;
-  padding: 20px;
-  animation: fadeIn 0.3s ease-in-out;
-}
-
-.tab-content.active {
-  display: block;
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-/* ===================== Join & Support Container ===================== */
+/* ===== Join & Support Container ===== */
 .join-support-container {
   display: flex;
   justify-content: center;
-  gap: 50px;
-  flex-wrap: nowrap; /* Prevent stacking on desktop */
+  gap: 40px;
+  flex-wrap: wrap;
   align-items: flex-start;
-  max-width: 1000px;
-  margin: 0 auto;
   padding: 40px 20px;
 }
 
-.support-side,
-.subscribe-side {
-  flex: 1 1 0;
-  text-align: center;
-}
-
+/* ===== Support Side (PayPal) ===== */
 .support-side {
+  flex: 1 1 320px;
   background-color: #fffbe6;
   border: 1px solid #D4AF37;
   border-radius: 10px;
   padding: 20px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  text-align: center;
   position: relative;
-}
-
-.subscribe-side {
-  background: linear-gradient(135deg, #ffd966, #e6b800);
-  border-radius: 12px;
-  padding: 20px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.12);
 }
 
 /* Tooltip button */
 .tooltip-btn {
   position: relative;
-  padding: 8px 20px;
-  border-radius: 6px;
+  padding: 12px 25px;
+  border-radius: 8px;
+  font-weight: bold;
   cursor: pointer;
-  font-weight: 600;
-  background: #00DDFF;
-  color: #000;
+  background: linear-gradient(135deg, #00FFA5, #00DDFF);
   border: none;
+  color: #fff;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  font-size: 16px;
+  transition: 0.2s;
 }
 
-.tooltip-btn .tooltip-text {
+.tooltip-btn:hover {
+  background: linear-gradient(135deg, #00FFBF, #00CFFF);
+}
+
+/* Tooltip text */
+.tooltip-text {
   visibility: hidden;
-  width: 180px;
+  opacity: 0;
+  width: 220px;
   background-color: #333;
   color: #fff;
   text-align: center;
   border-radius: 6px;
-  padding: 5px;
+  padding: 6px;
   position: absolute;
-  z-index: 1;
   bottom: 125%;
   left: 50%;
   transform: translateX(-50%);
-  opacity: 0;
-  transition: opacity 0.3s;
-  font-size: 12px;
+  transition: 0.2s;
+  z-index: 10;
 }
 
 .tooltip-btn:hover .tooltip-text {
@@ -1073,51 +1087,7 @@ footer {
   opacity: 1;
 }
 
-/* Donation options */
-.donation-options {
-  display: flex;
-  justify-content: center;
-  gap: 10px;
-  margin-bottom: 10px;
-  flex-wrap: wrap;
-}
-
-.donation-amount {
-  padding: 6px 12px;
-  border-radius: 6px;
-  border: 1px solid #ccc;
-  cursor: pointer;
-  background: #f0f0f0;
-  font-weight: 600;
-}
-
-.donation-amount.active {
-  background: #ffd966;
-  border-color: #e6b800;
-}
-
-.subscribe-form input {
-  padding: 6px 10px;
-  border-radius: 6px;
-  border: 1px solid #d4af37;
-  font-size: 14px;
-  width: 180px;
-}
-
-.subscribe-form button {
-  padding: 6px 16px;
-  border-radius: 6px;
-  font-weight: 600;
-  cursor: pointer;
-}
-
-#updates-status {
-  margin-top: 8px;
-  color: green;
-  font-size: 0.95em;
-}
-
-/* ===================== FAQ Section ===================== */
+/* ===== FAQ Section ===== */
 .faq-container {
   max-width: 800px;
   margin: 0 auto;
@@ -1155,110 +1125,31 @@ footer {
   padding-left: 20px;
 }
 
-/* ===================== Responsive ===================== */
-@media screen and (max-width: 700px) {
-  .join-support-container {
-    flex-wrap: wrap;
-  }
-  .support-side,
-  .subscribe-side {
-    flex: 1 1 100%;
-  }
-  .tabs { justify-content: flex-start; gap: 4px; }
-  .tab { padding: 10px 18px; font-size: 0.9rem; }
-}
-
-
-
-
-
-
-
-
-/* ==========================
-   General Tab Content
-========================== */
-.tab-content {
-  display: none;
-  padding: 40px 20px;
-}
-
-.tab-content.active {
-  display: block;
-}
-
-/* ==========================
-   FAQ / AI Assistant Tab
-========================== */
-#aiTab h2 {
-  text-align: center;
-  margin-bottom: 20px;
-}
-
-#aiTab .faq-container {
-  max-width: 800px;
-  margin: 0 auto;
-}
-
-#aiTab .faq-item {
-  margin-bottom: 12px;
-  border-radius: 8px;
-  overflow: hidden;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-}
-
-#aiTab .faq-question {
-  width: 100%;
-  padding: 14px 20px;
-  text-align: left;
-  font-size: 16px;
-  background: #ffd966;
-  border: none;
-  cursor: pointer;
-  font-weight: 600;
-  transition: background 0.3s;
-}
-
-#aiTab .faq-answer {
-  padding: 0 20px;
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height 0.3s ease, padding 0.3s ease;
-  background: #fffbe6;
-}
-
-#aiTab .faq-item.active .faq-answer {
-  max-height: 1000px; /* large enough to fit content */
-  padding: 14px 20px;
-}
-
-/* ==========================
-   Join / Support Tab
-========================== */
-#joinTab .join-support-container {
+/* ===== Join / Support Section ===== */
+.join-support-container {
   display: flex;
   justify-content: center;
   gap: 50px;
-  flex-wrap: nowrap;
+  flex-wrap: nowrap; /* Prevent stacking on desktop */
   align-items: flex-start;
   max-width: 1000px;
   margin: 0 auto;
 }
 
-#joinTab .support-side,
-#joinTab .subscribe-side {
+.support-side,
+.subscribe-side {
   flex: 1 1 0;
   text-align: center;
 }
 
-#joinTab .subscribe-side {
+.subscribe-side {
   background: linear-gradient(135deg, #ffd966, #e6b800);
   border-radius: 12px;
   padding: 20px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.12);
 }
 
-#joinTab #paypalPopup {
+#paypalPopup {
   display: none;
   margin-top: 15px;
   padding: 15px;
@@ -1268,7 +1159,7 @@ footer {
   box-shadow: 0 2px 8px rgba(0,0,0,0.1);
 }
 
-#joinTab .donation-options {
+.donation-options {
   display: flex;
   justify-content: center;
   gap: 10px;
@@ -1276,7 +1167,7 @@ footer {
   flex-wrap: wrap;
 }
 
-#joinTab .donation-amount {
+.donation-amount {
   padding: 6px 12px;
   border-radius: 6px;
   border: 1px solid #ccc;
@@ -1285,12 +1176,12 @@ footer {
   font-weight: 600;
 }
 
-#joinTab .donation-amount.active {
+.donation-amount.active {
   background: #ffd966;
   border-color: #e6b800;
 }
 
-#joinTab .tooltip-btn {
+.tooltip-btn {
   position: relative;
   padding: 8px 20px;
   border-radius: 6px;
@@ -1301,7 +1192,7 @@ footer {
   border: none;
 }
 
-#joinTab .tooltip-btn .tooltip-text {
+.tooltip-btn .tooltip-text {
   visibility: hidden;
   width: 180px;
   background-color: #333;
@@ -1319,12 +1210,12 @@ footer {
   font-size: 12px;
 }
 
-#joinTab .tooltip-btn:hover .tooltip-text {
+.tooltip-btn:hover .tooltip-text {
   visibility: visible;
   opacity: 1;
 }
 
-#joinTab .subscribe-form input {
+.subscribe-form input {
   padding: 6px 10px;
   border-radius: 6px;
   border: 1px solid #d4af37;
@@ -1332,136 +1223,41 @@ footer {
   width: 180px;
 }
 
-#joinTab .subscribe-form button {
+.subscribe-form button {
   padding: 6px 16px;
   border-radius: 6px;
   font-weight: 600;
   cursor: pointer;
 }
 
-#joinTab #updates-status {
+#updates-status {
   margin-top: 8px;
   color: green;
   font-size: 0.95em;
 }
 
-/* Responsive: stack on mobile */
+/* ===== Responsive: stack on mobile ===== */
 @media screen and (max-width: 700px) {
-  #joinTab .join-support-container {
+  .join-support-container {
     flex-wrap: wrap;
   }
-  #joinTab .support-side,
-  #joinTab .subscribe-side {
+  .support-side,
+  .subscribe-side {
     flex: 1 1 100%;
   }
 }
 
-/* ==========================
-   Contact Tab
-========================== */
-#contactTab form {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  max-width: 500px;
-  margin: 0 auto;
-}
-
-#contactTab input,
-#contactTab textarea {
-  padding: 10px;
-  font-size: 14px;
-  border-radius: 6px;
-  border: 1px solid #ccc;
-  width: 100%;
-  box-sizing: border-box;
-}
-
-#contactTab button {
-  padding: 10px;
-  font-weight: 600;
-  cursor: pointer;
-  border-radius: 6px;
-  border: none;
-  background: #ffd966;
-  transition: background 0.3s;
-}
-
-#contactTab button:hover {
-  background: #e6b800;
-}
-  /* ===================== Tabs ===================== */
-.tabs {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;           /* stack tabs on small screens */
-  background: #f9e6c1;
-  border-bottom: 2px solid #c48f3c;
-  overflow-x: auto;          /* scroll on narrow screens */
-  white-space: nowrap;
-  -webkit-overflow-scrolling: touch;
-  gap: 2px;
-}
-
-.tab {
-  padding: 12px 25px;
-  cursor: pointer;
-  font-weight: bold;
-  color: #b0752c;
-  transition: 0.3s;
-  border-right: 1px solid #c48f3c;
-  background: #f9e6c1;
-  display: inline-block;
-  text-align: center;
-  flex-shrink: 0;
-}
-
-.tab:last-child {
-  border-right: none;
-}
-
-.tab.active {
-  background: #c48f3c;
-  color: #fff;
-  border-bottom: 2px solid #ffd966;
-}
-
-/* ===================== Tab Content ===================== */
+/* ===== Tab Visibility Control ===== */
 .tab-content {
   display: none;
-  padding: 30px 20px;
-  text-align: center;
-  background: #fffbe6;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-  margin-top: 10px;
+  padding: 20px;
+  animation: fadeIn 0.3s ease-in-out;
 }
-
 .tab-content.active {
   display: block;
 }
 
-/* Dimmed tabs (optional) */
-.tab.dimmed {
-  opacity: 0.4;
-  pointer-events: none;
-  cursor: not-allowed;
-  color: #999;
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
 }
-
-/* ===== Mobile adjustments ===== */
-@media (max-width: 700px) {
-  .tabs {
-    justify-content: flex-start;  /* allow scrolling from left */
-    gap: 4px;
-  }
-
-  .tab {
-    padding: 10px 18px;
-    font-size: 0.9rem;
-  }
-}
-
-
-/* no phone code needed: padding is fine */
-
