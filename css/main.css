@@ -1265,8 +1265,63 @@ footer {
 
 
 
+  /* Generic tab content */
+.tab-content {
+  display: none;
+  padding: 20px;
+}
 
-  #joinTab, #contactTab, #aiTab {
-  border: 2px solid red !important;
+.tab-content.active {
+  display: block;
+}
+
+/* Specific styling for Join / Support */
+#joinTab .join-support-container {
+  display: flex;
+  gap: 20px;
+}
+
+#joinTab .support-side,
+#joinTab .subscribe-side {
+  flex: 1;
+}
+
+/* Specific styling for Contact */
+#contactTab form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+#contactTab input,
+#contactTab textarea,
+#contactTab button {
+  padding: 10px;
+  font-size: 1em;
+}
+
+/* Specific styling for FAQ / AI Assistant */
+#aiTab .faq-container {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+#aiTab .faq-question {
+  background-color: #f1f1f1;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  text-align: left;
+}
+
+#aiTab .faq-answer {
+  display: none;
+  padding: 10px;
+  border-left: 3px solid #4CAF50;
+}
+
+#aiTab .faq-item.active .faq-answer {
+  display: block;
 }
 
