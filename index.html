@@ -404,14 +404,17 @@
 
   
   <!--=================================== Join / Support Tab ===========================================================================-->  
-  <section id="joinTab" class="tab-content">
+  <!-- Join / Support Tab Content -->
+  <section class="tab-content active" id="joinTab">
     <div class="join-support-container">
   
-      <!-- Support Side -->
+      <!-- Left: Support / PayPal -->
       <div class="support-side">
-        <h3>Support My Work</h3>
-        <button id="supportBtn" class="tooltip-btn">Support Me</button>
-        <span class="tooltip-text">Please select your country correctly before payment</span>
+        <h3 class="support-title">Support My Work</h3>
+        <button id="supportBtn" class="tooltip-btn">
+          Support Me
+          <span class="tooltip-text">Please select your country correctly before payment</span>
+        </button>
   
         <div id="paypalPopup" class="paypal-popup">
           <div class="donation-options">
@@ -422,18 +425,19 @@
         </div>
       </div>
   
-      <!-- Subscribe Side -->
+      <!-- Right: Subscribe / Join -->
       <div class="subscribe-side">
         <h3>Join Our Updates</h3>
         <form id="updatesForm" class="subscribe-form">
           <input type="email" name="email" placeholder="Enter your email" required>
-          <button type="submit">Subscribe</button>
+          <button type="submit" class="shiny-btn">Subscribe</button>
         </form>
         <div id="updates-status" class="update-status"></div>
       </div>
   
     </div>
   </section>
+
 
 
 
