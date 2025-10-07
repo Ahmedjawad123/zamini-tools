@@ -1010,6 +1010,7 @@ footer {
 
 
 /* =============================================== Join / Support Tab ============================================= */
+/* =============================================== Join / Support Tab ============================================= */
 #joinTab .join-support-container {
   display: flex;
   justify-content: space-between;
@@ -1032,6 +1033,12 @@ footer {
   border-radius: 10px;
   padding: 20px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  transition: 0.3s;
+}
+
+#joinTab .support-side:hover,
+#joinTab .subscribe-side:hover {
+  box-shadow: 0 6px 16px rgba(0,0,0,0.12);
 }
 
 /* ================= Tooltip Button ================= */
@@ -1053,7 +1060,7 @@ footer {
   background: linear-gradient(135deg, #00FFBF, #00CFFF);
 }
 
-/* Tooltip text (placed outside button) */
+/* Tooltip text (outside button) */
 #joinTab .support-side .tooltip-text {
   visibility: hidden;
   opacity: 0;
@@ -1144,12 +1151,21 @@ footer {
 /* ================= Mobile Adjustments ================= */
 @media screen and (max-width: 700px) {
   #joinTab .join-support-container {
-    flex-wrap: wrap;
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px 10px;
   }
 
   #joinTab .support-side,
   #joinTab .subscribe-side {
     flex: 1 1 100%;
+    min-width: 100%;
+  }
+
+  #joinTab .subscribe-form input,
+  #joinTab .subscribe-form button {
+    width: 100%;
+    margin: 5px 0;
   }
 }
 
