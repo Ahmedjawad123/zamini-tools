@@ -1261,3 +1261,12 @@ footer {
   from { opacity: 0; transform: translateY(10px); }
   to { opacity: 1; transform: translateY(0); }
 }
+
+
+
+
+
+  #joinTab, #contactTab, #aiTab {
+  border: 2px solid red !important;
+}
+
