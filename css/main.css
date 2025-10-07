@@ -886,7 +886,7 @@ footer {
 }
 
 
-/* About Section */
+/*=================== ============================ 2ND TAB About ============================================*/
 .about-title {
   text-align: center;
   margin-bottom: 20px;
@@ -952,8 +952,6 @@ footer {
 }
 
 
-
-
 /* --- Mobile Fixes --- */
 @media (max-width: 900px) {
   /* 1️⃣ Cards stack earlier */
@@ -999,7 +997,7 @@ footer {
     width: 100%;
   }
 
-  /* 6️⃣ Social buttons smaller */
+  /* ================6️⃣ Social buttons smaller======================= */
   .social {
     top: auto;
     bottom: 120px;
@@ -1011,21 +1009,32 @@ footer {
 
 
 
+/* =============================================== Join / Support Tab ============================================= */
+.joinTab .join-support-container {
+  display: flex;
+  justify-content: space-between;
+  gap: 30px;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  padding: 40px 20px;
+  max-width: 1000px;
+  margin: 0 auto;
+}
 
-/* ===== Support Side (PayPal) ===== */
-.support-side {
-  flex: 1 1 320px;
+.joinTab .support-side,
+.joinTab .subscribe-side {
+  flex: 1 1 45%;
+  min-width: 280px;
+  text-align: center;
   background-color: #fffbe6;
   border: 1px solid #D4AF37;
   border-radius: 10px;
   padding: 20px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-  text-align: center;
-  position: relative;
 }
 
-/* Tooltip button */
-.tooltip-btn {
+/* Tooltip button inside support-side */
+.joinTab .support-side .tooltip-btn {
   position: relative;
   padding: 12px 25px;
   border-radius: 8px;
@@ -1039,12 +1048,11 @@ footer {
   transition: 0.2s;
 }
 
-.tooltip-btn:hover {
+.joinTab .support-side .tooltip-btn:hover {
   background: linear-gradient(135deg, #00FFBF, #00CFFF);
 }
 
-/* Tooltip text */
-.tooltip-text {
+.joinTab .support-side .tooltip-text {
   visibility: hidden;
   opacity: 0;
   width: 220px;
@@ -1061,25 +1069,214 @@ footer {
   z-index: 10;
 }
 
-.tooltip-text {
+.joinTab .support-side .tooltip-btn:hover + .tooltip-text {
   visibility: visible;
   opacity: 1;
 }
 
-/* ===== FAQ Section ===== */
-.faq-container {
+/* Donation options */
+.joinTab .donation-options {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 10px;
+  flex-wrap: wrap;
+}
+
+.joinTab .donation-amount {
+  padding: 6px 12px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  cursor: pointer;
+  background: #f0f0f0;
+  font-weight: 600;
+}
+
+.joinTab .donation-amount.active {
+  background: #ffd966;
+  border-color: #e6b800;
+}
+
+/* Subscribe side */
+.joinTab .subscribe-side {
+  background: linear-gradient(135deg, #ffd966, #e6b800);
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+}
+
+.joinTab .subscribe-form input {
+  padding: 6px 10px;
+  border-radius: 6px;
+  border: 1px solid #d4af37;
+  font-size: 14px;
+  width: 180px;
+}
+
+.joinTab .subscribe-form button {
+  padding: 6px 16px;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.joinTab #updates-status {
+  margin-top: 8px;
+  color: green;
+  font-size: 0.95em;
+}
+
+/* Mobile adjustments */
+@media screen and (max-width: 700px) {
+  .joinTab .join-support-container {
+    flex-wrap: wrap;
+  }
+  .joinTab .support-side,
+  .joinTab .subscribe-side {
+    flex: 1 1 100%;
+  }
+}
+
+
+  
+  /* ======================================= Contact / AI Chat Tab ========================================== */
+.contactTab #chatBtn {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: linear-gradient(135deg, #ffd966, #e6b800);
+  padding: 12px 15px;
+  border-radius: 50px;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(230,184,0,0.5);
+  z-index: 1000;
+  color: #333;
+  transition: transform 0.2s ease;
+}
+
+.contactTab #chatBtn:hover {
+  transform: scale(1.05);
+}
+
+.contactTab #chatBox {
+  display: none;
+  position: fixed;
+  bottom: 70px;
+  right: 20px;
+  width: 300px;
+  max-width: 90%;
+  background: #fffbe6;
+  padding: 15px;
+  border-radius: 8px;
+  border: 1px solid #c48f3c;
+  box-shadow: 0 4px 12px rgba(230,184,0,0.4);
+  z-index: 1000;
+  max-height: 400px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.contactTab #chatBox .chat-messages {
+  flex: 1;
+  overflow-y: auto;
+  padding-right: 5px;
+  font-size: 0.85rem;
+  line-height: 1.3;
+  color: #333;
+}
+
+.contactTab #chatBox input,
+.contactTab #chatBox textarea {
+  width: 100%;
+  padding: 10px;
+  margin: 0;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  background: #fff8e7;
+  color: #333;
+  box-sizing: border-box;
+  font-size: 0.85rem;
+  resize: none;
+}
+
+.contactTab #chatBox textarea {
+  min-height: 60px;
+  max-height: 120px;
+  overflow-y: auto;
+}
+
+.contactTab #chatBox button {
+  width: 100%;
+  padding: 10px;
+  background: linear-gradient(135deg, #ffd966, #e6b800);
+  color: #333;
+  border: none;
+  border-radius: 5px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.contactTab #chatBox button:hover {
+  box-shadow: 0 4px 10px rgba(230,184,0,0.5);
+  transform: translateY(-2px);
+}
+
+/* Mobile adjustments */
+@media (max-width: 900px) {
+  .contactTab #chatBtn {
+    bottom: 15px;
+    right: 15px;
+    padding: 10px 12px;
+    font-size: 0.9rem;
+  }
+  .contactTab #chatBox {
+    width: 90%;
+    right: 5%;
+    bottom: 60px;
+    padding: 12px;
+    max-height: 350px;
+  }
+  .contactTab #chatBox input,
+  .contactTab #chatBox textarea {
+    padding: 8px;
+    font-size: 0.85rem;
+  }
+  .contactTab #chatBox button {
+    padding: 8px;
+  }
+}
+
+@media (max-width: 480px) {
+  .contactTab #chatBox {
+    bottom: 50px;
+    right: 5%;
+    width: 90%;
+    max-height: 300px;
+  }
+  .contactTab #chatBox textarea {
+    min-height: 50px;
+    max-height: 100px;
+  }
+}
+/* ======================================= FAQ / AI Tab ================================== */
+.faqTab .faq-container {
   max-width: 800px;
   margin: 0 auto;
 }
 
-.faq-item {
+.faqTab .faq-item {
   margin-bottom: 12px;
   border-radius: 8px;
   overflow: hidden;
   box-shadow: 0 2px 8px rgba(0,0,0,0.1);
 }
 
-.faq-question {
+.faqTab .faq-question {
   width: 100%;
   padding: 14px 20px;
   text-align: left;
@@ -1091,7 +1288,11 @@ footer {
   transition: background 0.3s;
 }
 
-.faq-answer {
+.faqTab .faq-question:hover {
+  background: #e6b800;
+}
+
+.faqTab .faq-answer {
   padding: 0 20px;
   max-height: 0;
   overflow: hidden;
@@ -1099,130 +1300,15 @@ footer {
   background: #fffbe6;
 }
 
-.faq-answer ul {
+.faqTab .faq-answer ul {
   margin: 0;
   padding-left: 20px;
 }
 
-/* ===== Join / Support Section ===== */
-.join-support-container {
-  display: flex;
-  justify-content: center;
-  gap: 40px;
-  flex-wrap: wrap; /* stack on mobile */
-  align-items: flex-start;
-  padding: 40px 20px;
-  max-width: 1000px;
-  margin: 0 auto;
+/* Expand active FAQ */
+.faqTab .faq-item.active .faq-answer {
+  max-height: 500px; /* adjust if needed */
+  padding: 12px 20px;
 }
 
 
-.support-side,
-.subscribe-side {
-  flex: 1 1 0;
-  text-align: center;
-}
-
-.subscribe-side {
-  background: linear-gradient(135deg, #ffd966, #e6b800);
-  border-radius: 12px;
-  padding: 20px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.12);
-}
-
-#paypalPopup {
-  display: none;
-  margin-top: 15px;
-  padding: 15px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  background: #fff;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-}
-
-.donation-options {
-  display: flex;
-  justify-content: center;
-  gap: 10px;
-  margin-bottom: 10px;
-  flex-wrap: wrap;
-}
-
-.donation-amount {
-  padding: 6px 12px;
-  border-radius: 6px;
-  border: 1px solid #ccc;
-  cursor: pointer;
-  background: #f0f0f0;
-  font-weight: 600;
-}
-
-.donation-amount.active {
-  background: #ffd966;
-  border-color: #e6b800;
-} 
-
-
-.tooltip-btn {
-  position: relative;
-  padding: 8px 20px; 
-  border-radius: 6px;
-  cursor: pointer;
-  font-weight: 600;
-  background: #00DDFF;
-  color: #000;
-  border: none;
-}
-
-.tooltip-btn:hover {
-  background: linear-gradient(135deg, #00FFBF, #00CFFF);
-}
-
-}
-
-.subscribe-form input {
-  padding: 6px 10px;
-  border-radius: 6px;
-  border: 1px solid #d4af37;
-  font-size: 14px;
-  width: 180px;
-}
-
-.subscribe-form button {
-  padding: 6px 16px;
-  border-radius: 6px;
-  font-weight: 600;
-  cursor: pointer;
-}
-
-#updates-status {
-  margin-top: 8px;
-  color: green;
-  font-size: 0.95em;
-}
-
-/* ===== Responsive: stack on mobile ===== */
-@media screen and (max-width: 700px) {
-  .join-support-container {
-    flex-wrap: wrap;
-  }
-  .support-side,
-  .subscribe-side {
-    flex: 1 1 100%;
-  }
-}
-
-/* ===== Tab Visibility Control ===== */
-.tab-content {
-  display: none;
-  padding: 20px;
-  animation: fadeIn 0.3s ease-in-out;
-}
-.tab-content.active {
-  display: block;
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
-}
