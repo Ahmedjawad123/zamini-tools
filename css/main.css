@@ -1010,7 +1010,7 @@ footer {
 
 
 /* =============================================== Join / Support Tab ============================================= */
-.joinTab .join-support-container {
+#joinTab .join-support-container {
   display: flex;
   justify-content: space-between;
   gap: 30px;
@@ -1021,8 +1021,9 @@ footer {
   margin: 0 auto;
 }
 
-.joinTab .support-side,
-.joinTab .subscribe-side {
+/* Support and Subscribe sides */
+#joinTab .support-side,
+#joinTab .subscribe-side {
   flex: 1 1 45%;
   min-width: 280px;
   text-align: center;
@@ -1033,8 +1034,8 @@ footer {
   box-shadow: 0 4px 12px rgba(0,0,0,0.08);
 }
 
-/* Tooltip button inside support-side */
-.joinTab .support-side .tooltip-btn {
+/* ================= Tooltip Button ================= */
+#joinTab .support-side .tooltip-btn {
   position: relative;
   padding: 12px 25px;
   border-radius: 8px;
@@ -1048,11 +1049,12 @@ footer {
   transition: 0.2s;
 }
 
-.joinTab .support-side .tooltip-btn:hover {
+#joinTab .support-side .tooltip-btn:hover {
   background: linear-gradient(135deg, #00FFBF, #00CFFF);
 }
 
-.joinTab .support-side .tooltip-text {
+/* Tooltip text (placed outside button) */
+#joinTab .support-side .tooltip-text {
   visibility: hidden;
   opacity: 0;
   width: 220px;
@@ -1069,13 +1071,18 @@ footer {
   z-index: 10;
 }
 
-.joinTab .support-side .tooltip-btn:hover + .tooltip-text {
+#joinTab .support-side .tooltip-btn:hover + .tooltip-text {
   visibility: visible;
   opacity: 1;
 }
 
-/* Donation options */
-.joinTab .donation-options {
+/* ================= Donation Options ================= */
+#joinTab .paypal-popup {
+  margin-top: 15px;
+  text-align: center;
+}
+
+#joinTab .donation-options {
   display: flex;
   justify-content: center;
   gap: 10px;
@@ -1083,56 +1090,65 @@ footer {
   flex-wrap: wrap;
 }
 
-.joinTab .donation-amount {
+#joinTab .donation-amount {
   padding: 6px 12px;
   border-radius: 6px;
   border: 1px solid #ccc;
   cursor: pointer;
   background: #f0f0f0;
   font-weight: 600;
+  transition: 0.2s;
 }
 
-.joinTab .donation-amount.active {
+#joinTab .donation-amount:hover {
+  background: #ffe680;
+}
+
+#joinTab .donation-amount.active {
   background: #ffd966;
   border-color: #e6b800;
 }
 
-/* Subscribe side */
-.joinTab .subscribe-side {
+/* ================= Subscribe Side ================= */
+#joinTab .subscribe-side {
   background: linear-gradient(135deg, #ffd966, #e6b800);
   border-radius: 12px;
   padding: 20px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.12);
 }
 
-.joinTab .subscribe-form input {
+#joinTab .subscribe-form input {
   padding: 6px 10px;
   border-radius: 6px;
   border: 1px solid #d4af37;
   font-size: 14px;
   width: 180px;
+  height: 36px;
+  margin-right: 8px;
 }
 
-.joinTab .subscribe-form button {
+#joinTab .subscribe-form button {
   padding: 6px 16px;
   border-radius: 6px;
   font-weight: 600;
   cursor: pointer;
+  height: 36px;
 }
 
-.joinTab #updates-status {
+#joinTab #updates-status {
   margin-top: 8px;
   color: green;
   font-size: 0.95em;
 }
 
-/* Mobile adjustments */
+/* ================= Mobile Adjustments ================= */
 @media screen and (max-width: 700px) {
-  .joinTab .join-support-container {
+  #joinTab .join-support-container {
     flex-wrap: wrap;
   }
-  .joinTab .support-side,
-  .joinTab .subscribe-side {
+
+  #joinTab .support-side,
+  #joinTab .subscribe-side {
     flex: 1 1 100%;
   }
 }
