@@ -185,13 +185,6 @@ header {
   display: block;
 }
 
-/* Dimmed tabs (optional) */
-.tab.dimmed {
-  opacity: 0.4;
-  pointer-events: none;
-  cursor: not-allowed;
-  color: #999;
-}
 
 /* ===== Mobile adjustments ===== */
 @media (max-width: 700px) {
@@ -220,23 +213,22 @@ header {
 
 /* ===================== Card Styling ===================== */
 .card, .feature { 
-  background: #fff3d6;              /* warmer, richer beige */
-  border: 2px solid #d4af37;        /* gold-ish border for premium feel */
-  border-radius: 12px; 
-  padding: 12px;                    
-  flex: 1 1 calc(20% - 20px);       
-  max-width: calc(25% - 20px);      
-  text-align: center;               
-  transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s; 
-  position: relative; 
-  display: flex; 
-  flex-direction: column;           
-  gap: 8px;                        
-  overflow: hidden;                
-  font-size: 0.75rem;              
-  box-sizing: border-box;          
-  min-height: 230px;               /* slightly taller for content */
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1); /* subtle depth */
+  flex: 1 1 calc(25% - 20px);
+  max-width: calc(25% - 20px);
+  background: #fff3d6;
+  border: 2px solid #d4af37;
+  border-radius: 12px;
+  padding: 12px;
+  text-align: center;
+  transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  overflow: hidden;
+  font-size: 0.75rem;
+  box-sizing: border-box;
+  min-height: 230px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
 }
 
 /* Hover effect for cards */
@@ -309,11 +301,6 @@ header {
   justify-content: center; 
 }
 
-.card, .feature { 
-  flex: 1 1 calc(25% - 20px);
-  max-width: calc(25% - 20px);
-}
-
 @media (max-width: 1200px) {
   .card, .feature {
     flex: 1 1 calc(33.333% - 20px);
@@ -351,7 +338,7 @@ header {
 
   .flip-card-back {
     transform: rotateY(180deg);
-  }h3
+  }
 }
 
 @media (max-width: 480px) {
@@ -1023,15 +1010,7 @@ footer {
   }
 
 
-/* ===== Join & Support Container ===== */
-.join-support-container {
-  display: flex;
-  justify-content: center;
-  gap: 40px;
-  flex-wrap: wrap;
-  align-items: flex-start;
-  padding: 40px 20px;
-}
+
 
 /* ===== Support Side (PayPal) ===== */
 .support-side {
@@ -1082,7 +1061,7 @@ footer {
   z-index: 10;
 }
 
-.tooltip-btn:hover .tooltip-text {
+.tooltip-text {
   visibility: visible;
   opacity: 1;
 }
@@ -1129,12 +1108,14 @@ footer {
 .join-support-container {
   display: flex;
   justify-content: center;
-  gap: 50px;
-  flex-wrap: nowrap; /* Prevent stacking on desktop */
+  gap: 40px;
+  flex-wrap: wrap; /* stack on mobile */
   align-items: flex-start;
+  padding: 40px 20px;
   max-width: 1000px;
   margin: 0 auto;
 }
+
 
 .support-side,
 .subscribe-side {
@@ -1179,11 +1160,12 @@ footer {
 .donation-amount.active {
   background: #ffd966;
   border-color: #e6b800;
-}
+} 
+
 
 .tooltip-btn {
   position: relative;
-  padding: 8px 20px;
+  padding: 8px 20px; 
   border-radius: 6px;
   cursor: pointer;
   font-weight: 600;
@@ -1192,27 +1174,10 @@ footer {
   border: none;
 }
 
-.tooltip-btn .tooltip-text {
-  visibility: hidden;
-  width: 180px;
-  background-color: #333;
-  color: #fff;
-  text-align: center;
-  border-radius: 6px;
-  padding: 5px;
-  position: absolute;
-  z-index: 1;
-  bottom: 125%;
-  left: 50%;
-  transform: translateX(-50%);
-  opacity: 0;
-  transition: opacity 0.3s;
-  font-size: 12px;
+.tooltip-btn:hover {
+  background: linear-gradient(135deg, #00FFBF, #00CFFF);
 }
 
-.tooltip-btn:hover .tooltip-text {
-  visibility: visible;
-  opacity: 1;
 }
 
 .subscribe-form input {
