@@ -1021,7 +1021,12 @@ footer {
   max-width: 1000px;
   margin: 0 auto;
 }
+#joinTab .join-support-container {
+  align-items: stretch;
+}
 
+
+  
 /* Support and Subscribe sides */
 #joinTab .support-side,
 #joinTab .subscribe-side {
@@ -1078,7 +1083,7 @@ footer {
   z-index: 10;
 }
 
-#joinTab .support-side .tooltip-btn:hover + .tooltip-text {
+#joinTab .support-side .tooltip-btn:hover .tooltip-text {
   visibility: visible;
   opacity: 1;
 }
@@ -1088,6 +1093,16 @@ footer {
   margin-top: 15px;
   text-align: center;
 }
+#paypalPopup {
+  display: none;
+  animation: fadeIn 0.4s ease forwards;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
 
 #joinTab .donation-options {
   display: flex;
