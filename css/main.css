@@ -1010,178 +1010,190 @@ footer {
 
 
 /* =============================================== Join / Support Tab ============================================= */
-/* =============================================== Join / Support Tab ============================================= */
 #joinTab .join-support-container {
-  display: flex;
-  justify-content: space-between;
-  gap: 30px;
-  flex-wrap: wrap;
-  align-items: flex-start;
-  padding: 40px 20px;
-  max-width: 1000px;
-  margin: 0 auto;
-}
-#joinTab .join-support-container {
-  align-items: stretch;
+    display: flex;
+    justify-content: space-between;
+    gap: 30px;
+    flex-wrap: wrap;
+    align-items: stretch; /* ensures equal height columns */
+    padding: 40px 20px;
+    max-width: 1000px;
+    margin: 0 auto;
 }
 
-
-  
 /* Support and Subscribe sides */
 #joinTab .support-side,
 #joinTab .subscribe-side {
-  flex: 1 1 45%;
-  min-width: 280px;
-  text-align: center;
-  background-color: #fffbe6;
-  border: 1px solid #D4AF37;
-  border-radius: 10px;
-  padding: 20px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-  transition: 0.3s;
+    flex: 1 1 45%;
+    min-width: 280px;
+    text-align: center;
+    background-color: #fffbe6;
+    border: 1px solid #D4AF37;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    transition: 0.3s;
 }
 
 #joinTab .support-side:hover,
 #joinTab .subscribe-side:hover {
-  box-shadow: 0 6px 16px rgba(0,0,0,0.12);
+    box-shadow: 0 6px 16px rgba(0,0,0,0.12);
 }
 
 /* ================= Tooltip Button ================= */
 #joinTab .support-side .tooltip-btn {
-  position: relative;
-  padding: 12px 25px;
-  border-radius: 8px;
-  font-weight: bold;
-  cursor: pointer;
-  background: linear-gradient(135deg, #00FFA5, #00DDFF);
-  border: none;
-  color: #fff;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-  font-size: 16px;
-  transition: 0.2s;
+    position: relative;
+    padding: 12px 25px;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    background: linear-gradient(135deg, #00FFA5, #00DDFF);
+    border: none;
+    color: #fff;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    font-size: 16px;
+    transition: 0.2s;
 }
 
 #joinTab .support-side .tooltip-btn:hover {
-  background: linear-gradient(135deg, #00FFBF, #00CFFF);
+    background: linear-gradient(135deg, #00FFBF, #00CFFF);
 }
 
-/* Tooltip text (outside button) */
+/* ================= Tooltip Text ================= */
 #joinTab .support-side .tooltip-text {
-  visibility: hidden;
-  opacity: 0;
-  width: 220px;
-  background-color: #333;
-  color: #fff;
-  text-align: center;
-  border-radius: 6px;
-  padding: 6px;
-  position: absolute;
-  bottom: 125%;
-  left: 50%;
-  transform: translateX(-50%);
-  transition: 0.2s;
-  z-index: 10;
+    visibility: hidden;
+    opacity: 0;
+    width: 220px;
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 6px;
+    position: absolute;
+    bottom: 125%; /* tooltip above button */
+    left: 50%;
+    transform: translateX(-50%);
+    transition: opacity 0.2s ease, visibility 0.2s ease;
+    z-index: 10;
+    pointer-events: none; /* doesn’t block clicks */
 }
 
-#joinTab .support-side .tooltip-btn:hover .tooltip-text {
-  visibility: visible;
-  opacity: 1;
+#joinTab .support-side .tooltip-btn:hover + .tooltip-text {
+    visibility: visible;
+    opacity: 1;
+}
+
+#joinTab .support-side .tooltip-text::after {
+    content: "";
+    position: absolute;
+    top: 100%; /* arrow at bottom of tooltip */
+    left: 50%;
+    transform: translateX(-50%);
+    border-width: 5px;
+    border-style: solid;
+    border-color: #333 transparent transparent transparent;
 }
 
 /* ================= Donation Options ================= */
 #joinTab .paypal-popup {
-  margin-top: 15px;
-  text-align: center;
+    margin-top: 15px;
+    text-align: center;
 }
+
 #paypalPopup {
-  display: none;
-  animation: fadeIn 0.4s ease forwards;
+    display: none;
+    animation: fadeIn 0.4s ease forwards;
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
-
 #joinTab .donation-options {
-  display: flex;
-  justify-content: center;
-  gap: 10px;
-  margin-bottom: 10px;
-  flex-wrap: wrap;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 10px;
+    flex-wrap: wrap;
 }
 
 #joinTab .donation-amount {
-  padding: 6px 12px;
-  border-radius: 6px;
-  border: 1px solid #ccc;
-  cursor: pointer;
-  background: #f0f0f0;
-  font-weight: 600;
-  transition: 0.2s;
+    padding: 6px 12px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    cursor: pointer;
+    background: #f0f0f0;
+    font-weight: 600;
+    transition: 0.2s;
 }
 
 #joinTab .donation-amount:hover {
-  background: #ffe680;
+    background: #ffe680;
 }
 
 #joinTab .donation-amount.active {
-  background: #ffd966;
-  border-color: #e6b800;
+    background: #ffd966;
+    border-color: #e6b800;
 }
 
 /* ================= Subscribe Side ================= */
 #joinTab .subscribe-side {
-  background: linear-gradient(135deg, #ffd966, #e6b800);
-  border-radius: 12px;
-  padding: 20px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+    background: linear-gradient(135deg, #ffd966, #e6b800);
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.12);
 }
 
 #joinTab .subscribe-form input {
-  padding: 6px 10px;
-  border-radius: 6px;
-  border: 1px solid #d4af37;
-  font-size: 14px;
-  width: 180px;
-  height: 36px;
-  margin-right: 8px;
+    padding: 6px 10px;
+    border-radius: 6px;
+    border: 1px solid #d4af37;
+    font-size: 14px;
+    width: 180px;
+    height: 36px;
+    margin-right: 8px;
 }
 
 #joinTab .subscribe-form button {
-  padding: 6px 16px;
-  border-radius: 6px;
-  font-weight: 600;
-  cursor: pointer;
-  height: 36px;
+    padding: 6px 16px;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    height: 36px;
 }
 
 #joinTab #updates-status {
-  margin-top: 8px;
-  color: green;
-  font-size: 0.95em;
+    margin-top: 8px;
+    color: green;
+    font-size: 0.95em;
 }
 
 /* ================= Mobile Adjustments ================= */
 @media screen and (max-width: 700px) {
-  #joinTab .join-support-container {
-    flex-direction: column;
-    gap: 20px;
-    padding: 20px 10px;
-  }
+    #joinTab .join-support-container {
+        flex-direction: column;
+        gap: 20px;
+        padding: 20px 10px;
+    }
 
-  #joinTab .support-side,
-  #joinTab .subscribe-side {
-    flex: 1 1 100%;
-    min-width: 100%;
-  }
+    #joinTab .support-side,
+    #joinTab .subscribe-side {
+        flex: 1 1 100%;
+        min-width: 100%;
+    }
 
-  #joinTab .subscribe-form input,
-  #joinTab .subscribe-form button {
-    width: 100%;
-    margin: 5px 0;
-  }
+    #joinTab .subscribe-form input,
+    #joinTab .subscribe-form button {
+        width: 100%;
+        margin: 5px 0;
+    }
+
+    #joinTab .support-side .tooltip-text {
+        width: 180px;
+        font-size: 14px;
+        bottom: 140%;
+    }
 }
 
 
