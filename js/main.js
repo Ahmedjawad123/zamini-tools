@@ -149,3 +149,81 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 });
+document.addEventListener('DOMContentLoaded', () => {
+  const supportBtn = document.getElementById('supportBtn');
+  const paypalPopup = document.getElementById('paypalPopup');
+  const donationBtns = document.querySelectorAll('.donation-amount');
+  const customAmount = document.getElementById('customAmount');
+  let selectedAmount = '5';
+  let paypalRendered = false;
+
+  // Toggle popup with slide-down
+  supportBtn.addEventListener('click', () => {
+    paypalPopup.classList.toggle('show');
+    if (!paypalRendered) {
+      renderPayPal(selectedAmount);
+      paypalRendered = true;
+    }
+  });
+
+  // Preset donation buttons
+  donationBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      donationBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      selectedAmount = btn.dataset.amount;
+      customAmount.value = '';
+      renderPayPal(selectedAmount);
+    });
+  });
+
+  // Custom amount
+  customAmount.addEventListener('input', () => {
+    donationBtns.forEach(b => b.classList.remove('active'));
+    selectedAmount = customAmount.value;
+    renderPayPal(selectedAmount);
+  });
+
+  // Render PayPal buttons
+  function renderPayPal(amount) {
+    const container = document.getElementById('paypal-button-container');
+    container.innerHTML = ''; // Clear previous buttons
+
+    if (!amount || isNaN(amount) || amount <= 0) return;
+
+    paypal.Buttons({
+      style: { layout: 'vertical', shape: 'rect', label: 'paypal' },
+      createOrder: (data, actions) => {
+        return actions.order.create({
+          purchase_units: [{ amount: { value: amount } }]
+        });
+      },
+      onApprove: (data, actions) => {
+        return actions.order.capture().then(details => {
+          alert('Thanks for your support, ' + details.payer.name.given_name + '!');
+        });
+      },
+      onError: err => {
+        console.error(err);
+        alert('Payment could not be completed.');
+      }
+    }).render('#paypal-button-container');
+  }
+});
+// ===== Close PayPal popup when clicking outside =====
+document.addEventListener('click', (e) => {
+  const supportBtn = document.getElementById('supportBtn');
+  const paypalPopup = document.getElementById('paypalPopup');
+
+  if (paypalPopup.classList.contains('show')) {
+    // if click is outside the popup and button, hide popup
+    if (!paypalPopup.contains(e.target) && e.target !== supportBtn) {
+      paypalPopup.classList.remove('show');
+    }
+  }
+});
+
+// Prevent popup clicks from closing it
+paypalPopup.addEventListener('click', (e) => {
+  e.stopPropagation();
+});
