@@ -329,41 +329,64 @@
 
 
   <!--=================================== Join / Support Tab ===========================================================================-->  
-  <!-- Join / Support Tab Content -->
   <section class="tab-content" id="joinTab">
     <div class="join-support-container">
-  
-      <!-- Left: Support / PayPal -->
-      <div class="support-side">
-        <h3 class="support-title">Support My Work</h3>
-        <button id="supportBtn" class="tooltip-btn">
-          Support Me
-          <span class="tooltip-text">Please select your country correctly before payment</span>
-        </button>
-  
-        <div id="paypalPopup" class="paypal-popup">
-          <div class="donation-options">
-            <button id="popup-donate-5" class="donation-amount active">$5</button>
-            <input id="popup-donate-custom" type="number" placeholder="Other" min="1">
+
+      <div class="support-wrapper">
+        <h2>Support My Work</h2>
+
+        <!-- Two-column layout -->
+        <div class="support-content">
+          <!-- Left side: Description -->
+          <div class="support-left">
+            <div class="support-description">
+              <strong>How to support me via PayPal:</strong>
+              <ol>
+                <li>Click <strong>"Support Me"</strong>.</li>
+                <li>Choose a preset amount ($5, $10, $20) or enter your own.</li>
+                <li>In the PayPal window:
+                  <ul>
+                    <li>Log in if you have a PayPal account.</li>
+                    <li>Or click <strong>"Debit or Credit Card"</strong> to pay without an account.</li>
+                  </ul>
+                </li>
+                <li>Confirm your payment — that’s it!</li>
+              </ol>
+              <small>Secure & simple: PayPal handles payments safely, even without an account.</small>
+            </div>
+
+            <button id="supportBtn">Support Me</button>
+            <div id="supportGuide">Click the button to open PayPal on the right side.</div>
           </div>
-          <div id="paypal-button-small"></div>
+
+          <!-- Right side: PayPal window -->
+          <div class="support-right" id="paypalPopup">
+            <button id="closePaypal">×</button>
+            <h4>Choose Donation Amount</h4>
+            <div class="donation-wrapper">
+              <button class="donation-amount active" data-amount="5">$5</button>
+              <button class="donation-amount" data-amount="10">$10</button>
+              <button class="donation-amount" data-amount="20">$20</button>
+              <input type="number" id="customAmount" placeholder="Other" min="1">
+            </div>
+            <div id="paypal-button-container"></div>
+          </div>
         </div>
       </div>
-  
-      <!-- Right: Subscribe / Join -->
-      <div class="subscribe-side">
-        <h3>Join Our Updates</h3>
-        <form id="updatesForm" class="subscribe-form">
-          <input type="email" name="email" placeholder="Enter your email" required>
-          <button type="submit" class="shiny-btn">Subscribe</button>
-        </form>
-        <div id="updates-status" class="update-status"></div>
-      </div>
-  
-    </div>
-  </section>
 
-  
+          <!-- Subscribe Section -->
+          <div class="subscribe-side">
+            <h3>Join Our Updates</h3>
+            <form id="updatesForm">
+              <input type="email" name="email" placeholder="Enter your email" required>
+              <button type="submit" class="shiny-btn">Subscribe</button>
+            </form>
+            <div id="updates-status" class="update-status"></div>
+          </div>
+
+        </div>
+      </section>
+      
   <!--=================================== Contact Tab ===========================================================================-->  
   <!-- =====  ===== -->
   <section class="tab-content" id="contactTab">
@@ -510,6 +533,7 @@
   
   <!-- EmailJS SDK -->
   <script type="text/javascript" src="https://cdn.emailjs.com/dist/email.min.js"></script>
+  <script src="https://www.paypal.com/sdk/js?client-id=AbDsUYA-obC2sHFZvv9R4Ce9gYfAqnpuoCNiLDQYeF0cUJdYFSEeuiwRk82Lr3S2NPrMUg97BhCbbVNv&currency=USD"></script>
 
   <!-- Firebase App (core SDK) -->
   <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
