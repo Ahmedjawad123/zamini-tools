@@ -69,11 +69,12 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
 
-  // ===== 7. Download Buttons Tracking =====
-  document.querySelectorAll('a.btn-download').forEach((btn, index) => {
-    const storageKey = `download_count_${index}`;
-    let countEl = btn.nextElementSibling;
+// ===== 7. Download Buttons Tracking (Firebase) =====
+if (typeof firebase !== "undefined") {
+  const db = firebase.firestore();
 
+  document.querySelectorAll('a.btn-download').forEach((btn, index) => {
+    let countEl = btn.nextElementSibling;
     if (!countEl || !countEl.classList.contains('count')) {
       countEl = document.createElement('span');
       countEl.className = 'count';
@@ -81,15 +82,25 @@ document.addEventListener('DOMContentLoaded', () => {
       btn.insertAdjacentElement('afterend', countEl);
     }
 
-    let count = parseInt(localStorage.getItem(storageKey)) || 0;
-    countEl.textContent = count;
+    const downloadsRef = db.collection("siteStats").doc(`download_${index}`);
 
+    // Initialize if document doesn't exist
+    downloadsRef.get().then(doc => {
+      if (!doc.exists) downloadsRef.set({ count: 0 });
+    });
+
+    // Listen for live updates
+    downloadsRef.onSnapshot(doc => {
+      countEl.textContent = doc.exists ? doc.data().count || 0 : 0;
+    });
+
+    // Increment count on click
     btn.addEventListener('click', () => {
-      count++;
-      localStorage.setItem(storageKey, count);
-      countEl.textContent = count;
+      downloadsRef.update({ count: firebase.firestore.FieldValue.increment(1) })
+        .catch(() => downloadsRef.set({ count: 1 }));
     });
   });
+}
 
   // ===== 8. EmailJS Init =====
   if (typeof emailjs !== "undefined") emailjs.init('DhW4bXmuP0VP2d8bF');
